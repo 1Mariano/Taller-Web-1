@@ -1,17 +1,75 @@
 package ar.edu.unlam.tallerweb1.domain.pedidos;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor;
+import ar.edu.unlam.tallerweb1.domain.contenedor.IContenedor;
+import ar.edu.unlam.tallerweb1.domain.producto.IProducto;
+import ar.edu.unlam.tallerweb1.domain.producto.Producto;
+import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 
 @Entity
-public class Pedido {
+public class Pedido implements IPedido{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    //@ManyToOne
+    //private Usuario usuario;
+    private List<IContenedor> contenedores;
+
+
+    public Pedido(Long id) {
+        this.id = id;
+        this.contenedores = new ArrayList<IContenedor>();
+    }
+
+
+    @Override
+    public List<IProducto> getProductos() {
+        return null;
+    }
+
+    @Override
+    public List<IContenedor> getContenedores() {
+        return this.contenedores;
+    }
+
+    @Override
+    public void addContenedor(IContenedor contenedor) {
+        contenedores.add(contenedor);
+    }
+
+    @Override
+    public IContenedor addProducto(IProducto producto) {
+        return null;
+    }
+
+
+
+
+
+
+
+
+    /*public Pedido(Long id, Date fecha, Usuario usuario, Double dimension, Double peso, String direccionDeEntrega, List<Contenedor> listaContenedor) {
+        this.id = id;
+        this.fecha = fecha;
+        this.usuario = usuario;
+        this.dimension = dimension;
+        this.peso = peso;
+        this.direccionDeEntrega = direccionDeEntrega;
+        this.listaContenedor = listaContenedor;
+    }*/
+
+
+    /*
     public Long getId() {
         return id;
     }
@@ -19,4 +77,53 @@ public class Pedido {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public Double getDimension() {
+        return dimension;
+    }
+
+    public void setDimension(Double dimension) {
+        this.dimension = dimension;
+    }
+
+    public Double getPeso() {
+        return peso;
+    }
+
+    public void setPeso(Double peso) {
+        this.peso = peso;
+    }
+
+    public String getDireccionDeEntrega() {
+        return direccionDeEntrega;
+    }
+
+    public void setDireccionDeEntrega(String direccionDeEntrega) {
+        this.direccionDeEntrega = direccionDeEntrega;
+    }
+
+    public List<Contenedor> getListaContenedor() {
+        return listaContenedor;
+    }
+
+    public void setListaContenedor(List<Contenedor> listaContenedor) {
+        this.listaContenedor = listaContenedor;
+    }
+     */
 }
