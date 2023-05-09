@@ -17,6 +17,6 @@ public class Alimentacion extends Producto{
 
     @Override
     public Boolean esCompatible(IProducto p) {
-        return null;
+        return Categoria.ALIMENTACION.equals(p.getCategoria());
     }
 }

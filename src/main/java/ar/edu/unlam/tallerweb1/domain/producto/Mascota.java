@@ -10,11 +10,11 @@ public class Mascota extends Producto{
 
     @Override
     public Categoria getCategoria() {
-        return Categoria.MASCOTA;
+        return Categoria.MASCOTAS;
     }
 
     @Override
     public Boolean esCompatible(IProducto p) {
-        return null;
+        return !Categoria.DROGUERIA.equals(p.getCategoria());
     }
 }

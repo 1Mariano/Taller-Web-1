@@ -1,25 +1,24 @@
 package ar.edu.unlam.tallerweb1.domain.contenedor;
 
 import ar.edu.unlam.tallerweb1.domain.enums.TipoContenedor;
+import ar.edu.unlam.tallerweb1.domain.producto.Caducable;
 import ar.edu.unlam.tallerweb1.domain.producto.IProducto;
+import ar.edu.unlam.tallerweb1.domain.vehiculos.Vehiculo;
 
-public class Bolsa extends Contenedor{
+import java.time.LocalDate;
+import java.util.List;
+
+public class Bolsa extends Contenedor implements Caducable {
 
     private Integer ancho;
+    private static final int ANYOS_CADUCIDAD = 5;
+    private LocalDate fechaFabricacion;
 
-    public Bolsa(Long id, Integer alto, Integer ancho) {
-        super(id, alto);
+
+    public Bolsa(Long id, Integer alto, Integer ancho, Integer resistencia, LocalDate fechaFabricacion) {
+        super(id, alto, resistencia);
         this.ancho = ancho;
-    }
-
-    @Override
-    public Integer getSuperficie() {
-        Integer radio = getDiametro()/2;
-        return (int) (Math.PI * radio * radio);
-    }
-
-    private Integer getDiametro() {
-        return (int) ((2*ancho) / Math.PI);
+        this.fechaFabricacion = fechaFabricacion;
     }
 
     @Override
@@ -27,13 +26,22 @@ public class Bolsa extends Contenedor{
         return TipoContenedor.BOLSA;
     }
 
+
+
     @Override
-    public Boolean meter(IProducto producto) {
-        return null;
+    public Integer getSuperficie() {
+        Integer radio = getDiametro()/2;
+        return (int) (Math.PI * radio * radio);
+    }
+
+
+    private Integer getDiametro() {
+        return (int) ((2*ancho) / Math.PI);
     }
 
     @Override
-    public Boolean resiste(IProducto producto) {
-        return null;
+    public boolean estaCaducado() {
+        return LocalDate.now().isBefore(fechaFabricacion.plusYears(ANYOS_CADUCIDAD));
     }
+
 }

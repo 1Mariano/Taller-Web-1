@@ -14,6 +14,7 @@ public abstract class Producto implements IProducto{
     private Long id;
     private Integer peso;
     private Integer volumen;
+    private IContenedor contenedor;
 
     public Producto(Long id, Integer peso, Integer volumen) {
         this.id = id;
@@ -43,6 +44,17 @@ public abstract class Producto implements IProducto{
 
     @Override
     public Boolean tengoEspacio(IContenedor contenedor) {
-        return null;
+        return contenedor.volumenDisponibleContenedor() > volumen;
     }
+    @Override
+    public void meter(IContenedor contenedor) {
+        this.contenedor = contenedor;
+    }
+
+    //toDo
+    //@Override
+    //	public String toString() {
+    //		return "Producto [categoria=" + getCategoria() + ", referencia=" + referencia + ", peso=" + peso + ", volumen="
+    //				+ volumen + ", contenedor=" + contenedor.getReferencia() + "]";
+    //	}
 }

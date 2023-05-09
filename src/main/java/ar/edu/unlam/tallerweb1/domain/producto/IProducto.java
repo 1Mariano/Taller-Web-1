@@ -10,4 +10,5 @@ public interface IProducto {
     Categoria getCategoria();
     Boolean esCompatible(IProducto p);
     Boolean tengoEspacio(IContenedor contenedor);
+    void meter(IContenedor contenedor);
 }

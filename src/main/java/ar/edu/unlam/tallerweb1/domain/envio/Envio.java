@@ -9,6 +9,6 @@ public abstract class Envio {
     private Pedido pedido;
 
 
-    public getCalcularDistancia()
+
 
 }

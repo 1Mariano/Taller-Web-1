@@ -22,18 +22,29 @@ public class Pedido implements IPedido{
 
     //@ManyToOne
     //private Usuario usuario;
+    @Lob
+    //@Lob
+    //@Column(name = "photo", columnDefinition="BLOB")
+    //private byte[] photo;
     private List<IContenedor> contenedores;
 
-
-    public Pedido(Long id) {
-        this.id = id;
+    public Pedido() {
         this.contenedores = new ArrayList<IContenedor>();
     }
 
 
     @Override
     public List<IProducto> getProductos() {
-        return null;
+        List<IProducto> productos = null;
+        for (IContenedor c : contenedores) {
+            if (productos == null) {
+                productos = c.getProductos();
+            } else {
+                productos.addAll(c.getProductos());
+            }
+        }
+        return productos;
+
     }
 
     @Override
@@ -48,7 +59,15 @@ public class Pedido implements IPedido{
 
     @Override
     public IContenedor addProducto(IProducto producto) {
+        for (IContenedor contenedor : contenedores) {
+            if (contenedor.meter(producto)) {
+                return contenedor;
+            }
+        }
+        //ToDo
+        //System.err.println(producto.getId() + " rechazado del pedido");
         return null;
+
     }
 
 

@@ -2,6 +2,7 @@ package ar.edu.unlam.tallerweb1.domain.contenedor;
 
 import ar.edu.unlam.tallerweb1.domain.enums.TipoContenedor;
 import ar.edu.unlam.tallerweb1.domain.producto.IProducto;
+import ar.edu.unlam.tallerweb1.domain.vehiculos.Vehiculo;
 
 public class Caja extends Contenedor {
 
@@ -10,7 +11,7 @@ public class Caja extends Contenedor {
     private Integer largo;
 
     public Caja(Long id, Integer alto, Integer ancho, Integer largo) {
-        super(id, alto);
+        super(id, alto, 0);
         this.ancho = ancho;
         this.largo = largo;
     }
@@ -25,13 +26,11 @@ public class Caja extends Contenedor {
         return TipoContenedor.CAJA;
     }
 
-    @Override
-    public Boolean meter(IProducto producto) {
-        return null;
-    }
 
     @Override
     public Boolean resiste(IProducto producto) {
-        return null;
+        return true;
     }
+
+
 }

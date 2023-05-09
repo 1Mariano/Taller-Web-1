@@ -15,6 +15,6 @@ public class Drogueria extends Producto{
 
     @Override
     public Boolean esCompatible(IProducto p) {
-        return null;
+        return !Categoria.ALIMENTACION.equals(p.getCategoria()) && !Categoria.MASCOTAS.equals(p.getCategoria()) ;
     }
 }

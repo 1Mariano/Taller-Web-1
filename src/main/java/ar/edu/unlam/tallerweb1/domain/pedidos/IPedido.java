@@ -9,6 +9,7 @@ import java.util.List;
 public interface IPedido {
     List<IProducto> getProductos();
     List<IContenedor> getContenedores();
+    //ToDo ver devolucion
     void addContenedor(IContenedor contenedor);
     IContenedor addProducto(IProducto producto);
 }
