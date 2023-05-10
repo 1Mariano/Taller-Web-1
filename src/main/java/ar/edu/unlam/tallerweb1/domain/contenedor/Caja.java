@@ -2,10 +2,18 @@ package ar.edu.unlam.tallerweb1.domain.contenedor;
 
 import ar.edu.unlam.tallerweb1.domain.enums.TipoContenedor;
 import ar.edu.unlam.tallerweb1.domain.producto.IProducto;
-import ar.edu.unlam.tallerweb1.domain.vehiculos.Vehiculo;
+import ar.edu.unlam.tallerweb1.domain.producto.Producto;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Caja extends Contenedor {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private Integer ancho;
     private Integer largo;
@@ -14,6 +22,10 @@ public class Caja extends Contenedor {
         super(id, alto, 0);
         this.ancho = ancho;
         this.largo = largo;
+    }
+
+    public Caja() {
+
     }
 
     @Override
@@ -28,7 +40,7 @@ public class Caja extends Contenedor {
 
 
     @Override
-    public Boolean resiste(IProducto producto) {
+    public Boolean resiste(Producto producto) {
         return true;
     }
 

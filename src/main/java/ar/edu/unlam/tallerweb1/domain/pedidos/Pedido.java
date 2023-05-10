@@ -4,12 +4,9 @@ import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor;
 import ar.edu.unlam.tallerweb1.domain.contenedor.IContenedor;
 import ar.edu.unlam.tallerweb1.domain.producto.IProducto;
 import ar.edu.unlam.tallerweb1.domain.producto.Producto;
-import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -22,21 +19,22 @@ public class Pedido implements IPedido{
 
     //@ManyToOne
     //private Usuario usuario;
-    @Lob
+
     //@Lob
     //@Column(name = "photo", columnDefinition="BLOB")
     //private byte[] photo;
-    private List<IContenedor> contenedores;
+    @OneToMany
+    private List<Contenedor> contenedores;
 
     public Pedido() {
-        this.contenedores = new ArrayList<IContenedor>();
+        this.contenedores = new ArrayList<Contenedor>();
     }
 
 
     @Override
-    public List<IProducto> getProductos() {
-        List<IProducto> productos = null;
-        for (IContenedor c : contenedores) {
+    public List<Producto> getProductos() {
+        List<Producto> productos = null;
+        for (Contenedor c : contenedores) {
             if (productos == null) {
                 productos = c.getProductos();
             } else {
@@ -48,18 +46,18 @@ public class Pedido implements IPedido{
     }
 
     @Override
-    public List<IContenedor> getContenedores() {
+    public List<Contenedor> getContenedores() {
         return this.contenedores;
     }
 
     @Override
-    public void addContenedor(IContenedor contenedor) {
+    public void addContenedor(Contenedor contenedor) {
         contenedores.add(contenedor);
     }
 
     @Override
-    public IContenedor addProducto(IProducto producto) {
-        for (IContenedor contenedor : contenedores) {
+    public Contenedor addProducto(Producto producto) {
+        for (Contenedor contenedor : contenedores) {
             if (contenedor.meter(producto)) {
                 return contenedor;
             }

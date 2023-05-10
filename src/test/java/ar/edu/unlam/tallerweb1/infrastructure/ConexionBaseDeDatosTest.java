@@ -1,10 +1,18 @@
 package ar.edu.unlam.tallerweb1.infrastructure;
 
 import ar.edu.unlam.tallerweb1.SpringTest;
+import ar.edu.unlam.tallerweb1.domain.enums.Categoria;
+import ar.edu.unlam.tallerweb1.domain.producto.Alimentacion;
+import ar.edu.unlam.tallerweb1.domain.producto.Drogueria;
+import ar.edu.unlam.tallerweb1.domain.producto.Fresco;
+import ar.edu.unlam.tallerweb1.domain.producto.Producto;
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 import org.junit.Test;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+
 import static org.assertj.core.api.Assertions.*;
 
 // Clase que prueba la conexion a la base de datos. Hereda de SpringTest por lo que corre dentro del contexto
@@ -26,5 +34,21 @@ public class ConexionBaseDeDatosTest extends SpringTest{
         usuario.setRol("ADMIN");
         session().save(usuario);
         assertThat(usuario.getId()).isNotNull();
+    }
+
+    @Test
+    @Transactional @Rollback
+    public void crearProducto(){
+        Producto producto = new Drogueria();
+        producto.setPeso(50);
+        producto.setNombre("Paracetamol");
+        producto.setMarca("Geniol");
+        producto.setAlto(10);
+        producto.setAncho(5);
+        producto.setLargo(5);
+
+        session().save(producto);
+        assertThat(producto.getId()).isNotNull();
+
     }
 }

@@ -3,15 +3,20 @@ package ar.edu.unlam.tallerweb1.domain.contenedor;
 import ar.edu.unlam.tallerweb1.domain.enums.TipoContenedor;
 import ar.edu.unlam.tallerweb1.domain.producto.Caducable;
 import ar.edu.unlam.tallerweb1.domain.producto.IProducto;
-import ar.edu.unlam.tallerweb1.domain.vehiculos.Vehiculo;
 
+import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
-
+@Entity
 public class Bolsa extends Contenedor implements Caducable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private Integer ancho;
+
+
     private static final int ANYOS_CADUCIDAD = 5;
+
     private LocalDate fechaFabricacion;
 
 
@@ -19,6 +24,10 @@ public class Bolsa extends Contenedor implements Caducable {
         super(id, alto, resistencia);
         this.ancho = ancho;
         this.fechaFabricacion = fechaFabricacion;
+    }
+
+    public Bolsa() {
+
     }
 
     @Override

@@ -7,7 +7,7 @@ public class Camioneta extends Vehiculo{
     private final static Integer PESO_MAXIMO_SOPORTADO_CAMIONETA = 300;
     private final static Integer DISTANCIA_MAXIMA_SOPORTADA_CAMIONETA = 150;
 
-    public Camioneta(Long id, String patente, String modelo, Integer ancho, Integer alto, Integer largo, Integer distanciaMaxima) {
+    public Camioneta(Long id, String patente, String modelo, Integer ancho, Integer alto, Integer largo) {
         super(id, patente, modelo, ancho, alto, largo);
         this.volumen = (alto * ancho * largo);
     }

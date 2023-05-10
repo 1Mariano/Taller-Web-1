@@ -1,11 +1,9 @@
 package ar.edu.unlam.tallerweb1.domain.vehiculos;
 
+import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor;
 import ar.edu.unlam.tallerweb1.domain.contenedor.IContenedor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +21,8 @@ public abstract class Vehiculo implements IVehiculo{
     private Integer volumen;
 
     //ToDo lista de contenedores y pedido
-    private List<IContenedor> contenedores;
+    @OneToMany
+    private List<Contenedor> contenedores;
 
     public Vehiculo(Long id, String patente, String modelo, Integer ancho, Integer alto, Integer largo) {
         this.id = id;
@@ -33,7 +32,7 @@ public abstract class Vehiculo implements IVehiculo{
         this.volumen = (alto*ancho*largo);
         this.alto = alto;
         this.largo = largo;
-        this.contenedores = new ArrayList<IContenedor>();
+        this.contenedores = new ArrayList<Contenedor>();
 
     }
 
@@ -54,7 +53,7 @@ public abstract class Vehiculo implements IVehiculo{
 
     private Integer volumenOcupadoVehiculo() {
         int res = 0;
-        for (IContenedor c : contenedores) {
+        for (Contenedor c : contenedores) {
             res += c.getVolumenContenedor();
         }
         return res;
@@ -63,7 +62,7 @@ public abstract class Vehiculo implements IVehiculo{
 
 
     @Override
-    public Boolean guardar(IContenedor contenedor) {
+    public Boolean guardar(Contenedor contenedor) {
         Boolean resistenciaOk = soporta(contenedor);
         Boolean volumenOk = contenedor.tengoEspacio(this);
 
@@ -81,12 +80,12 @@ public abstract class Vehiculo implements IVehiculo{
 
 
     @Override
-    public Boolean soporta(IContenedor contenedor) {
+    public Boolean soporta(Contenedor contenedor) {
         return getPesoSoportadoVehiculo() > contenedor.pesoTotalContenedor();
     }
 
     @Override
-    public List<IContenedor> getContenedores() {
+    public List<Contenedor> getContenedores() {
         return contenedores;
     }
 }

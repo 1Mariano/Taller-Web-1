@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.domain.vehiculos;
 
+import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor;
 import ar.edu.unlam.tallerweb1.domain.contenedor.IContenedor;
 import ar.edu.unlam.tallerweb1.domain.enums.TipoVehiculo;
 
@@ -13,10 +14,10 @@ public interface IVehiculo {
     Integer getPesoSoportadoVehiculo();
     Integer getDistanciaMaximaVehiculo();
 
-    List<IContenedor> getContenedores();
+    List<Contenedor> getContenedores();
     TipoVehiculo getTipo();
 
-    Boolean guardar(IContenedor contenedor);
-    Boolean soporta(IContenedor contenedor);
+    Boolean guardar(Contenedor contenedor);
+    Boolean soporta(Contenedor contenedor);
 
 }

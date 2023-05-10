@@ -7,7 +7,7 @@ public class Auto extends Vehiculo{
     private final static Integer pesoMaximoSoportadoAuto = 80;
     private final static Integer distanciaMaximaAuto = 80;
 
-    public Auto(Long id, String patente, String modelo, Integer ancho, Integer alto, Integer largo, Integer distanciaMaxima) {
+    public Auto(Long id, String patente, String modelo, Integer ancho, Integer alto, Integer largo) {
         super(id, patente, modelo, ancho, alto, largo);
         this.volumen = (alto * ancho * largo);
     }

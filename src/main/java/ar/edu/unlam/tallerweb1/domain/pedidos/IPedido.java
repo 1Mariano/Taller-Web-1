@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.domain.pedidos;
 
+import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor;
 import ar.edu.unlam.tallerweb1.domain.contenedor.IContenedor;
 import ar.edu.unlam.tallerweb1.domain.producto.IProducto;
 import ar.edu.unlam.tallerweb1.domain.producto.Producto;
@@ -7,9 +8,9 @@ import ar.edu.unlam.tallerweb1.domain.producto.Producto;
 import java.util.List;
 
 public interface IPedido {
-    List<IProducto> getProductos();
-    List<IContenedor> getContenedores();
+    List<Producto> getProductos();
+    List<Contenedor> getContenedores();
     //ToDo ver devolucion
-    void addContenedor(IContenedor contenedor);
-    IContenedor addProducto(IProducto producto);
+    void addContenedor(Contenedor contenedor);
+    IContenedor addProducto(Producto producto);
 }
