@@ -12,8 +12,8 @@ public class Fresco extends Alimentacion implements Caducable{
     private Long id;
     private LocalDate caducidad;
 
-    public Fresco(Long id, Integer peso, Integer volumen, LocalDate caducidad, String nombre, String marca, Integer alto, Integer ancho, Integer largo) {
-        super(id, peso, volumen, nombre, marca, alto, ancho, largo);
+    public Fresco(Long id, Integer peso, Integer volumen, LocalDate caducidad, String nombre, String marca, Integer alto, Integer ancho, Integer largo, Integer precioArs,String descripcion,String img) {
+        super(id, peso, volumen, nombre, marca, alto, ancho, largo, precioArs,descripcion,img);
         this.caducidad = caducidad;
     }
 

@@ -14,8 +14,8 @@ public class NoPerecedero extends Alimentacion implements Caducable{
     private LocalDate fechaFabricacion;
     private static final int ANYOS_CADUCIDAD = 5;
 
-    public NoPerecedero(Long id, Integer peso, Integer volumen, LocalDate fechaFabricacion, String nombre, String marca, Integer alto, Integer ancho, Integer largo) {
-        super(id, peso, volumen, nombre, marca, alto, ancho, largo);
+    public NoPerecedero(Long id, Integer peso, Integer volumen, LocalDate fechaFabricacion, String nombre, String marca, Integer alto, Integer ancho, Integer largo, Integer precioArs,String descripcion,String img) {
+        super(id, peso, volumen, nombre, marca, alto, ancho, largo, precioArs,descripcion,img);
         this.fechaFabricacion = fechaFabricacion;
     }
 

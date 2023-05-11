@@ -9,7 +9,7 @@ import java.util.List;
 public interface ServicioEnvio {
 
 
-    List<IContenedor> getContenedores();
+    List<Contenedor> getContenedores();
     Double espacioDisponible();
     Double espacioOcupado();
     Double distanciaEnvio();

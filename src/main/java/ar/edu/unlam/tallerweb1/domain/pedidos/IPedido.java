@@ -12,5 +12,5 @@ public interface IPedido {
     List<Contenedor> getContenedores();
     //ToDo ver devolucion
     void addContenedor(Contenedor contenedor);
-    IContenedor addProducto(Producto producto);
+    Contenedor addProducto(Producto producto);
 }

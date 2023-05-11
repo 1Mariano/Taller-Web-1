@@ -19,12 +19,15 @@ public abstract class Producto implements IProducto{
     private Integer alto;
     private Integer ancho;
     private Integer largo;
+    private Integer precioArs;
 
+    private String descripcion;
+    private String img;
 
     @ManyToOne
     private Contenedor contenedor;
 
-    public Producto(Long id, Integer peso, Integer volumen, String nombre, String marca, Integer alto, Integer ancho, Integer largo) {
+    public Producto(Long id, Integer peso, Integer volumen, String nombre, String marca, Integer alto, Integer ancho, Integer largo, Integer precioArs, String descripcion, String img) {
         this.id = id;
         this.peso = peso;
         this.volumen = volumen;
@@ -33,6 +36,9 @@ public abstract class Producto implements IProducto{
         this.alto = alto;
         this.ancho = ancho;
         this.largo = largo;
+        this.precioArs = precioArs;
+        this.descripcion = descripcion;
+        this.img = img;
     }
 
     public Integer getAlto() {
@@ -57,6 +63,13 @@ public abstract class Producto implements IProducto{
 
     public void setLargo(Integer largo) {
         this.largo = largo;
+    }
+    public Contenedor getContenedor() {
+        return contenedor;
+    }
+
+    public void setContenedor(Contenedor contenedor) {
+        this.contenedor = contenedor;
     }
 
     public Producto() {
@@ -110,6 +123,31 @@ public abstract class Producto implements IProducto{
 
     public void setMarca(String marca) {
         this.marca = marca;
+    }
+
+    public Integer getPrecioArs() {
+        return this.precioArs;
+    }
+
+    public void setPrecioArs(Integer precioArs) {
+        this.precioArs = precioArs;
+    }
+    @Override
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    @Override
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 //toDo
     //@Override
