@@ -4,9 +4,12 @@ import ar.edu.unlam.tallerweb1.domain.producto.Producto;
 import ar.edu.unlam.tallerweb1.domain.producto.RepositorioProducto;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository("repositorioProducto")
 public class RepositorioProductoImpl implements RepositorioProducto {
@@ -34,10 +37,9 @@ public class RepositorioProductoImpl implements RepositorioProducto {
     }
 
     @Override
-    public Producto buscar(String nombre) {
-        return (Producto) sessionFactory.getCurrentSession().createCriteria(Producto.class)
-                .add(Restrictions.eq("nombre", nombre));
-                //ToDo cual es el valor por defecto  .uniqueResult();
+    public List<Producto> buscar(String nombre) {
+        return sessionFactory.getCurrentSession().createCriteria(Producto.class)
+                .add(Restrictions.like("nombre", nombre, MatchMode.ANYWHERE)).list();
     }
 
 
