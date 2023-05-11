@@ -22,12 +22,13 @@ public class RepositorioProductoImpl implements RepositorioProducto {
         this.sessionFactory = sessionFactory;
     }
     @Override
-    public Producto buscarProducto(Long id, Integer peso, Integer volumen, String nombre, String marca) {
+    public Producto buscarProducto(Long id, Integer peso, Integer volumen, String nombre, String marca, Integer precioArs) {
         final Session session = sessionFactory.getCurrentSession();
         return (Producto) session.createCriteria(Producto.class)
                 .add(Restrictions.eq("nombre", nombre))
                 .add(Restrictions.eq("marca", marca))
                 .add(Restrictions.eq("peso", peso))
+                .add(Restrictions.eq("precioArs", precioArs))
                 .uniqueResult();
     }
 

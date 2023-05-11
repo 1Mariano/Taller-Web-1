@@ -13,8 +13,8 @@ public class Mascota extends Producto{
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     private Long id;
 
-    public Mascota(Long id, Integer peso, Integer volumen, String nombre, String marca, Integer alto, Integer ancho, Integer largo) {
-        super(id, peso, volumen, nombre, marca, alto, ancho, largo);
+    public Mascota(Long id, Integer peso, Integer volumen, String nombre, String marca, Integer alto, Integer ancho, Integer largo, Integer precio,String descripcion,String img) {
+        super(id, peso, volumen, nombre, marca, alto, ancho, largo, precio,descripcion,img);
     }
 
     public Mascota() {

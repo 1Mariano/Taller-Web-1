@@ -16,14 +16,16 @@ public class Congelado extends Alimentacion implements Caducable{
         return id;
     }
 
+
+
     public void setId(Long id) {
         this.id = id;
     }
 
     private LocalDate caducidad;
 
-    public Congelado(Long id, Integer peso, Integer volumen, LocalDate caducidad, String nombre, String marca, Integer alto, Integer ancho, Integer largo) {
-        super(id, peso, volumen, nombre, marca, alto, ancho, largo);
+    public Congelado(Long id, Integer peso, Integer volumen, LocalDate caducidad, String nombre, String marca, Integer alto, Integer ancho, Integer largo, Integer precioArs,String descripcion,String img) {
+        super(id, peso, volumen, nombre, marca, alto, ancho, largo, precioArs,descripcion, img);
         this.caducidad = caducidad;
     }
 

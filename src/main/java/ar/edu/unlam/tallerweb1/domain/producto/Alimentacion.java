@@ -11,8 +11,8 @@ public abstract class Alimentacion extends Producto{
     private Long id;
 
 
-    public Alimentacion(Long id, Integer peso, Integer volumen, String nombre, String marca, Integer alto, Integer ancho, Integer largo) {
-        super(id, peso, volumen, nombre, marca, alto, ancho, largo);
+    public Alimentacion(Long id, Integer peso, Integer volumen, String nombre, String marca, Integer alto, Integer ancho, Integer largo, Integer precioArs, String descripcion,String img ) {
+        super(id, peso, volumen, nombre, marca, alto, ancho, largo, precioArs, descripcion,img);
     }
 
     public Alimentacion() {

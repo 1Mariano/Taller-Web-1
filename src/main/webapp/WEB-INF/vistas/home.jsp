@@ -1,15 +1,22 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <%@ page contentType="text/html; charset=UTF-8" %>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MiAplicación</title>
 
+    <script src="https://cdn.misdeliver.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 
-   <!--Bootstrap core CSS
+  <!-- Bootstrap core CSS
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
     Bootstrap theme
     <link href="../../css/bootstrap-theme.min.css" rel="stylesheet">-->
@@ -22,7 +29,7 @@
         <form action="#" method="post" class="focus-ring">
             <div class="input-group flex-nowrap" style="width: 500px;">
                 <input type="text" class="form-control" placeholder="Buscá por producto, marca, categoría...">
-                <span class="input-group-text" id="addon-wrapping"><a href="#"><img src="../../img/buscar.png" alt=""
+                <span class="input-group-text" id="addon-wrapping"><a href="#"><img src="../src/main/webapp/img/buscar.png" alt=""
                                                                                     width="20" height="20"></a></span>
             </div>
         </form>
@@ -50,7 +57,7 @@
                             <li class="d-flex">
                                 <div class="dropdown-item d-flex align-items-center waves-effect">
                                     <div class="preview-thumbnail">
-                                        <img src="../../img/alimentacion.png" height="25" width="25">
+                                        <img src="..\webapp\img\alimentacion.png" height="25" width="25">
                                     </div>
                                     <div>
                                         <a class="dropdown-item m-0" href="#">Alimentación</a>
@@ -60,7 +67,7 @@
                             <li class="d-flex">
                                 <div class="dropdown-item d-flex align-items-center waves-effect">
                                     <div class="preview-thumbnail">
-                                        <img src="../../img/mascotas.png" height="25" width="25">
+                                        <img src="D:\Taller-Web-1\src\main\webapp\img\drogueria.png" height="25" width="25">
                                     </div>
                                     <div>
                                         <a class="dropdown-item m-0" href="#">Mascotas</a>
@@ -70,7 +77,7 @@
                             <li class="d-flex">
                                 <div class="dropdown-item d-flex align-items-center waves-effect">
                                     <div class="preview-thumbnail">
-                                        <img src="../../img/drogueria.png" height="25" width="25">
+                                        <img src="D:\Taller-Web-1\src\main\webapp\img\drogueria.png" height="25" width="25">
                                     </div>
                                     <div>
                                         <a class="dropdown-item m-0" href="#">Droguería</a>
@@ -80,7 +87,7 @@
                             <li class="d-flex">
                                 <div class="dropdown-item d-flex align-items-center waves-effect">
                                     <div class="preview-thumbnail">
-                                        <img src="../../img/higiene.png" height="25" width="25">
+                                        <img src="D:\Taller-Web-1\src\main\webapp\img\paracetamol-geniol.png" height="25" width="25">
                                     </div>
                                     <div>
                                         <a class="dropdown-item m-0" href="#">Higiene</a>
@@ -124,7 +131,7 @@
                 </div>
             </div>
             <div class="card col-4 mx-2" style="width: 18rem;">
-                <img src="../../img/paracetamol-geniol.png" class="card-img-top" alt="...">
+                <img src="D:\Taller-Web-1\src\main\webapp\img\paracetamol-geniol.png" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">Paracetamol Geniol</h5>
                     <p class="card-text">Geniol 500 Mg Comp. X 16</p>
@@ -140,10 +147,10 @@
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
         crossorigin="anonymous"></script>
 
-<!--
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
 <script src="../../js/bootstrap.min.js" type="text/javascript"></script>
--->
+
 </body>
 </html>

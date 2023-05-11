@@ -12,8 +12,8 @@ public class Higiene extends Producto{
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     private Long id;
 
-    public Higiene(Long id, Integer peso, Integer volumen, String nombre, String marca, Integer alto, Integer ancho, Integer largo) {
-        super(id, peso, volumen, nombre, marca, alto, ancho, largo);
+    public Higiene(Long id, Integer peso, Integer volumen, String nombre, String marca, Integer alto, Integer ancho, Integer largo, Integer precioArs,String descripcion,String img) {
+        super(id, peso, volumen, nombre, marca, alto, ancho, largo, precioArs,descripcion,img);
     }
 
     public Higiene() {

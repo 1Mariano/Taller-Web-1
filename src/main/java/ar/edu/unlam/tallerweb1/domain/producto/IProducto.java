@@ -15,4 +15,8 @@ public interface IProducto {
 
     String getNombre();
     String getMarca();
+    Integer getPrecioArs();
+
+    String getDescripcion();
+    String getImg();
 }
