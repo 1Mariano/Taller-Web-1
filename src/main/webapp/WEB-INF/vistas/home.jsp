@@ -16,132 +16,118 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 
-  <!-- Bootstrap core CSS
-    <link href="../../css/bootstrap.min.css" rel="stylesheet">
-    Bootstrap theme
-    <link href="../../css/bootstrap-theme.min.css" rel="stylesheet">-->
+    <!-- Bootstrap core CSS
+      <link href="../../css/bootstrap.min.css" rel="stylesheet">
+      Bootstrap theme
+      <link href="../../css/bootstrap-theme.min.css" rel="stylesheet">-->
 
 </head>
 
 <body>
-<div>
-    <nav class="navbar bg-primary p-3 d-flex justify-content-center">
-        <form action="#" method="post" class="focus-ring">
-            <div class="input-group flex-nowrap" style="width: 500px;">
-                <input type="text" class="form-control" placeholder="Buscá por producto, marca, categoría...">
-                <span class="input-group-text" id="addon-wrapping"><a href="#"><img src="../src/main/webapp/img/buscar.png" alt=""
-                                                                                    width="20" height="20"></a></span>
-            </div>
-        </form>
-    </nav>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="d-flex align-items-center m-2">
-            <div class="d-flex align-items-center me-3">
-                <a class="navbar-brand ms-3 me-1" href="#">
-                    <img src="../../img/logo-ejemplo.png" alt="Bootstrap" width="35" height="35">
-                </a>
-                <a class="navbar-brand p-2 m-0 text-primary fw-semibold" href="#">MiAplicación</a>
-            </div>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+<header class="bg-info-subtle py-5">
+    <div>
+        <div class="input-group mb-3 w-50 mx-auto">
+            <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2"/>
+            <button class="btn btn-outline-secondary" type="button" id="button-addon2">
+                Button
             </button>
-            <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav">
-                    <li class="nav-item dropdown">
-                        <span href="lineas-de-opciones.png"></span>
-                        <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown"
-                           aria-expanded="false">Categorías</a>
-                        <ul class="dropdown-menu">
-                            <li class="d-flex">
-                                <div class="dropdown-item d-flex align-items-center waves-effect">
-                                    <div class="preview-thumbnail">
-                                        <img src="..\webapp\img\alimentacion.png" height="25" width="25">
-                                    </div>
-                                    <div>
-                                        <a class="dropdown-item m-0" href="#">Alimentación</a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="d-flex">
-                                <div class="dropdown-item d-flex align-items-center waves-effect">
-                                    <div class="preview-thumbnail">
-                                        <img src="D:\Taller-Web-1\src\main\webapp\img\drogueria.png" height="25" width="25">
-                                    </div>
-                                    <div>
-                                        <a class="dropdown-item m-0" href="#">Mascotas</a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="d-flex">
-                                <div class="dropdown-item d-flex align-items-center waves-effect">
-                                    <div class="preview-thumbnail">
-                                        <img src="D:\Taller-Web-1\src\main\webapp\img\drogueria.png" height="25" width="25">
-                                    </div>
-                                    <div>
-                                        <a class="dropdown-item m-0" href="#">Droguería</a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="d-flex">
-                                <div class="dropdown-item d-flex align-items-center waves-effect">
-                                    <div class="preview-thumbnail">
-                                        <img src="D:\Taller-Web-1\src\main\webapp\img\paracetamol-geniol.png" height="25" width="25">
-                                    </div>
-                                    <div>
-                                        <a class="dropdown-item m-0" href="#">Higiene</a>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Features</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Iniciar sesión</a>
-                    </li>
-                </ul>
+        </div>
+    </div>
+    <div>
+        <ul class="list-unstyled d-flex gap-3 d-flex justify-content-center align-items-center">
+            <a class="rounded text-decoration-none text-light" href="#">
+                <li class="bg-dark py-1 px-2">Productos</li>
+            </a>
+            <a class="rounded text-decoration-none text-light" href="#">
+                <li class="bg-dark py-1 px-2">Productos</li>
+            </a>
+            <a class="rounded text-decoration-none text-light" href="#">
+                <li class="bg-dark py-1 px-2">Productos</li>
+            </a>
+            <a class="rounded text-decoration-none text-light" href="#">
+                <li class="bg-dark py-1 px-2">Productos</li>
+            </a>
+        </ul>
+    </div>
+</header>
+<main>
+    <h3 class="m-4 text-center">Droguería</h3>
+    <!-- Example Code -->
+    <div class="d-flex flex-wrap gap-5 justify-content-center">
+        <div class="card" style="width: 18rem">
+            <svg
+                    class="bd-placeholder-img card-img-top"
+                    width="100%"
+                    height="180"
+                    xmlns="http://www.w3.org/2000/svg"
+                    role="img"
+                    aria-label="Placeholder: Image cap"
+                    preserveAspectRatio="xMidYMid slice"
+                    focusable="false"
+            >
+                <title>Placeholder</title>
+                <rect width="100%" height="100%" fill="#868e96"></rect>
+                <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
+            </svg>
+            <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">
+                    Some quick example text to build on the card title and make up the
+                    bulk of the card's content.
+                </p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
             </div>
         </div>
-    </nav>
-    <h3 class="m-4">Droguería</h3>
-    <div class="m-5">
-        <div class="row justify-content-around mx-3">
-            <div class="card col-4 mx-2" style="width: 18rem;">
-                <img src="../../img/paracetamol-geniol.png" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Paracetamol Geniol</h5>
-                    <p class="card-text">Geniol 500 Mg Comp. X 16</p>
-                    <h3 class="card-subtitle mb-2 text-body-secondary">$600</h3>
-                    <a href="#" class="btn btn-primary">Agregar al carrito</a>
-                </div>
+        <div class="card" style="width: 18rem">
+            <svg
+                    class="bd-placeholder-img card-img-top"
+                    width="100%"
+                    height="180"
+                    xmlns="http://www.w3.org/2000/svg"
+                    role="img"
+                    aria-label="Placeholder: Image cap"
+                    preserveAspectRatio="xMidYMid slice"
+                    focusable="false"
+            >
+                <title>Placeholder</title>
+                <rect width="100%" height="100%" fill="#868e96"></rect>
+                <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
+            </svg>
+            <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">
+                    Some quick example text to build on the card title and make up the
+                    bulk of the card's content.
+                </p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
             </div>
-            <div class="card col-4 mx-2" style="width: 18rem;">
-                <img src="../../img/paracetamol-geniol.png" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Paracetamol Geniol</h5>
-                    <p class="card-text">Geniol 500 Mg Comp. X 16</p>
-                    <h3 class="card-subtitle mb-2 text-body-secondary">$600</h3>
-                    <a href="#" class="btn btn-primary">Agregar al carrito</a>
-                </div>
-            </div>
-            <div class="card col-4 mx-2" style="width: 18rem;">
-                <img src="D:\Taller-Web-1\src\main\webapp\img\paracetamol-geniol.png" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Paracetamol Geniol</h5>
-                    <p class="card-text">Geniol 500 Mg Comp. X 16</p>
-                    <h3 class="card-subtitle mb-2 text-body-secondary">$600</h3>
-                    <a href="#" class="btn btn-primary">Agregar al carrito</a>
-                </div>
+        </div>
+        <div class="card" style="width: 18rem">
+            <svg
+                    class="bd-placeholder-img card-img-top"
+                    width="100%"
+                    height="180"
+                    xmlns="http://www.w3.org/2000/svg"
+                    role="img"
+                    aria-label="Placeholder: Image cap"
+                    preserveAspectRatio="xMidYMid slice"
+                    focusable="false"
+            >
+                <title>Placeholder</title>
+                <rect width="100%" height="100%" fill="#868e96"></rect>
+                <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
+            </svg>
+            <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">
+                    Some quick example text to build on the card title and make up the
+                    bulk of the card's content.
+                </p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
             </div>
         </div>
     </div>
-</div>
+</main>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
