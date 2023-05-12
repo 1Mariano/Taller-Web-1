@@ -25,6 +25,7 @@
 
 <body>
 <header class="bg-info-subtle py-5">
+
     <div>
         <div class="input-group mb-3 w-50 mx-auto">
             <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2"/>
@@ -34,7 +35,7 @@
         </div>
     </div>
     <div>
-        <ul class="list-unstyled d-flex gap-3 d-flex justify-content-center align-items-center">
+        <ul class="m-0 list-unstyled d-flex gap-3 d-flex justify-content-center align-items-center">
             <a class="rounded text-decoration-none text-light" href="#">
                 <li class="bg-dark py-1 px-2">Productos</li>
             </a>
