@@ -6,7 +6,8 @@ import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 public interface RepositorioUsuario {
 	
 	Usuario buscarUsuario(String email, String password);
-	void guardar(Usuario usuario);
+	Usuario buscarUsuarioExistente(String email);
+	void guardarUsuario(Usuario usuario);
     Usuario buscar(String email);
 	void modificar(Usuario usuario);
 }

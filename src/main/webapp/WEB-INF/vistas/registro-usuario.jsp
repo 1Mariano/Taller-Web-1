@@ -11,11 +11,10 @@
 <body>
 <div class = "container">
     <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-        <form:form action="registrarme" method="POST" modelAttribute="usuario">
-            <h3 class="form-signin-heading">Nuevo Usuario</h3>
+        <form:form action="validar-registro" method="POST" modelAttribute="usuario">
+            <h3 class="form-signin-heading">Registrar usuario</h3>
             <hr class="colorgraph"><br>
-
-            <form:input path="email" id="email" class="form-control" />
+            <form:input path="email" type="email" id="email" class="form-control" />
             <form:input path="clave" type="password" id="clave" class="form-control"/>
 
             <button id="btn-registrarme" class="btn btn-lg btn-primary btn-block" Type="Submit"/>Registrarme</button>
