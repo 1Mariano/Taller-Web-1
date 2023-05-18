@@ -6,4 +6,6 @@ import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 public interface ServicioLogin {
 
 	Usuario consultarUsuario(String email, String password);
+
+	Usuario obtenerUsuarioPorId(Long id);
 }

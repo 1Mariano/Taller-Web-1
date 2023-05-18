@@ -1,11 +1,11 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <%@ page contentType="text/html; charset=UTF-8" %>
+
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MiAplicación</title>
@@ -26,7 +26,10 @@
 <body>
 <header class="bg-info-subtle py-5">
 
-    <div>
+    <div class="text-center  my-2" >
+        <p class="bg-primary d-inline py-3 px-4 rounded text-white">Bienvenido: <b>${usuario.email}</b></p>
+    </div>
+    <div class="my-4">
         <div class="input-group mb-3 w-50 mx-auto">
             <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2"/>
             <button class="btn btn-outline-secondary" type="button" id="button-addon2">
@@ -40,16 +43,18 @@
                 <li class="bg-dark py-1 px-2">Productos</li>
             </a>
             <a class="rounded text-decoration-none text-light" href="#">
-                <li class="bg-dark py-1 px-2">Productos</li>
+                <li class="bg-dark py-1 px-2">Otra info</li>
             </a>
             <a class="rounded text-decoration-none text-light" href="#">
-                <li class="bg-dark py-1 px-2">Productos</li>
+                <li class="bg-dark py-1 px-2">Otra info</li>
             </a>
             <a class="rounded text-decoration-none text-light" href="#">
-                <li class="bg-dark py-1 px-2">Productos</li>
+                <li class="bg-dark py-1 px-2">Otra info</li>
             </a>
         </ul>
+
     </div>
+
 </header>
 <main>
     <h3 class="m-4 text-center">Droguería</h3>

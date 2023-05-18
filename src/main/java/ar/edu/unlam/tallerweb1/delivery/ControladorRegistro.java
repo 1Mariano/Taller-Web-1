@@ -59,10 +59,9 @@ public class ControladorRegistro {
                 usuarioARegistrarConfirmado.setActivo(true);
                 this.servicioRegistro.guardarUsuario(usuarioARegistrarConfirmado);
                 request.getSession().setAttribute("ROL", usuarioARegistrarConfirmado.getRol());
-                modelo.put("usuario", new Usuario());
                 //String email = usuarioARegistrarConfirmado.getEmail();
-                modelo.put("email", usuarioARegistrarConfirmado.getEmail());
-                return new ModelAndView("redirect:/home", modelo);
+                //modelo.put("email", usuarioARegistrarConfirmado.getEmail());
+                return new ModelAndView("redirect:/login");
             } else{
                 modelo.put("error", "Usuario ya existente o no valido");
             }

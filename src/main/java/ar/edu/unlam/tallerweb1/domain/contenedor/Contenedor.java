@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.domain.contenedor;
 
+import ar.edu.unlam.tallerweb1.domain.pedidos.Pedido;
 import ar.edu.unlam.tallerweb1.domain.producto.IProducto;
 import ar.edu.unlam.tallerweb1.domain.producto.Producto;
 import ar.edu.unlam.tallerweb1.domain.vehiculos.IVehiculo;
@@ -25,6 +26,8 @@ public abstract class Contenedor  implements IContenedor{
     @ManyToOne
     private Vehiculo vehiculo;
     private Integer pesoContenedorCargado;
+    @ManyToOne
+    private Pedido pedido;
 
     public Contenedor(Long id, Integer alto, Integer resistencia) {
         this.id = id;
