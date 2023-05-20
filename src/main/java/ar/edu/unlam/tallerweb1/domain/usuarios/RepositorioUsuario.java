@@ -1,6 +1,8 @@
 package ar.edu.unlam.tallerweb1.domain.usuarios;
 
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
+import ar.edu.unlam.tallerweb1.exceptions.ClavesLongitudException;
+import ar.edu.unlam.tallerweb1.exceptions.UsuarioYaExistenteException;
 
 // Interface que define los metodos del Repositorio de Usuarios.
 public interface RepositorioUsuario {

@@ -3,6 +3,8 @@ package ar.edu.unlam.tallerweb1.delivery;
 import ar.edu.unlam.tallerweb1.domain.usuarios.ServicioLogin;
 import ar.edu.unlam.tallerweb1.domain.usuarios.ServicioRegistro;
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
+import ar.edu.unlam.tallerweb1.exceptions.ClavesLongitudException;
+import ar.edu.unlam.tallerweb1.exceptions.UsuarioYaExistenteException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -37,7 +39,7 @@ public class ControladorRegistro {
     }
     @RequestMapping(path = "/validar-registro", method = RequestMethod.POST)
     public ModelAndView validarLogin(@ModelAttribute("usuario") DatosRegistro datosRegistro, HttpServletRequest request) {
-        ModelMap modelo = new ModelMap();
+
 
         // invoca el metodo consultarUsuario del servicio y hace un redirect a la URL /home, esto es, en lugar de enviar a una vista
         // hace una llamada a otro action a traves de la URL correspondiente a esta
@@ -47,9 +49,24 @@ public class ControladorRegistro {
             model.put("error", "Usuario ya existente");
         } else {*/
             //Usuario usuarioARegistrar = new Usuario();
+        ModelMap modelo = new ModelMap();
+        try {
+            Usuario usuarioARegistrarConfirmado = new Usuario();
+            usuarioARegistrarConfirmado.setEmail(datosRegistro.getEmail());
+            usuarioARegistrarConfirmado.setPassword(datosRegistro.getClave());
+            usuarioARegistrarConfirmado.setRol("admin");
+            usuarioARegistrarConfirmado.setActivo(true);
+            this.servicioRegistro.guardarUsuario(usuarioARegistrarConfirmado);
+            //request.getSession().setAttribute("ROL", usuarioARegistrarConfirmado.getRol());
+        } catch (ClavesLongitudException e){
+            return registroFallido(modelo, "La claves debe tener al menos 8 caracteres");
+        } catch (UsuarioYaExistenteException e){
+            return registroFallido(modelo, "El usuario ya se encuentra registrado");
+        }
+        return registroExitoso();
 
 
-            Usuario usuarioARegistrar = servicioRegistro.consultarUsuarioExistente(datosRegistro.getEmail());
+            /*Usuario usuarioARegistrar = servicioRegistro.consultarUsuarioExistente(datosRegistro.getEmail());
             if (usuarioARegistrar == null)
             {
                 Usuario usuarioARegistrarConfirmado = new Usuario();
@@ -64,14 +81,22 @@ public class ControladorRegistro {
                 return new ModelAndView("redirect:/login");
             } else{
                 modelo.put("error", "Usuario ya existente o no valido");
-            }
+            }*/
 
-        return new ModelAndView("registro-usuario", modelo);
+        //return new ModelAndView("registro-usuario", modelo);
 
 
         //}
         //return new ModelAndView("registro-usuario", model);
     }
+    private ModelAndView registroExitoso(){
+        return new ModelAndView("redirect:/login");
+    }
+    private ModelAndView registroFallido(ModelMap modelo, String mensaje){
+        modelo.put("error", mensaje);
+        return new ModelAndView("registro-usuario", modelo);
+    }
+
 /*
     @RequestMapping(path = "/home", method = RequestMethod.GET)
     public ModelAndView irAHome() {
