@@ -14,4 +14,6 @@ public interface RepositorioUsuario {
 	void guardarUsuario(Usuario usuario);
     Usuario buscar(String email);
 	void modificar(Usuario usuario);
+
+	Usuario buscarUsuarioPorEmail(String email);
 }

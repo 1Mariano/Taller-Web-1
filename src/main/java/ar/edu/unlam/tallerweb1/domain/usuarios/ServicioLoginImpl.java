@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.domain.usuarios;
 
+import ar.edu.unlam.tallerweb1.exceptions.UsuarioNoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,13 +23,21 @@ public class ServicioLoginImpl implements ServicioLogin {
 	}
 
 	@Override
-	public Usuario consultarUsuario (String email, String password) {
+	public Usuario consultarUsuario (String email, String password) throws UsuarioNoEncontradoException {
+		if (servicioLoginDao.buscarUsuario(email, password) == null){
+			throw new UsuarioNoEncontradoException();
+		}
 		return servicioLoginDao.buscarUsuario(email, password);
 	}
 
 	@Override
 	public Usuario obtenerUsuarioPorId(Long id) {
 		return servicioLoginDao.buscarUsuarioPorId(id);
+	}
+
+	@Override
+	public Usuario consultarUsuarioPorEmail(String email) {
+		return servicioLoginDao.buscarUsuarioPorEmail(email);
 	}
 
 

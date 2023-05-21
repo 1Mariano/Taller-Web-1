@@ -28,6 +28,9 @@
 
     <div class="text-center  my-2" >
         <p class="bg-primary d-inline py-3 px-4 rounded text-white">Bienvenido: <b>${usuario.email}</b></p>
+        <form action="logout" method="post">
+            <button class="bg-danger py-3 px-4 rounded text-white" Type="submit">Logout</button>
+        </form>
     </div>
     <div class="my-4">
         <div class="input-group mb-3 w-50 mx-auto">
