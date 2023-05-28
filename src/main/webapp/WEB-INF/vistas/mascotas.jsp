@@ -60,8 +60,10 @@
 
 </header>
 <main>
-    <h3 class="m-4 text-center">Productos</h3>
+    <h3 class="m-4 text-center ">Productos de Mascotas</h3>
     <!-- Example Code -->
+    <div class="d-flex flex-wrap gap-5 justify-content-center">
+    <c:forEach var="item" items="${lista}">
     <div class="d-flex flex-wrap gap-5 justify-content-center">
         <div class="card" style="width: 18rem">
             <svg
@@ -79,63 +81,20 @@
                 <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
             </svg>
             <div class="card-body">
-                <h5 class="card-title">Card title</h5>
+                <h5 class="card-title"><c:out value="${item.nombreMascota}"/></h5>
                 <p class="card-text">
-                    Some quick example text to build on the card title and make up the
-                    bulk of the card's content.
+                    <c:out value="${item.descripcionMascota}"/>
                 </p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+                <a href="#" class="btn btn-primary"><c:out value="${item.id}"/></a>
             </div>
         </div>
-        <div class="card" style="width: 18rem">
-            <svg
-                    class="bd-placeholder-img card-img-top"
-                    width="100%"
-                    height="180"
-                    xmlns="http://www.w3.org/2000/svg"
-                    role="img"
-                    aria-label="Placeholder: Image cap"
-                    preserveAspectRatio="xMidYMid slice"
-                    focusable="false"
-            >
-                <title>Placeholder</title>
-                <rect width="100%" height="100%" fill="#868e96"></rect>
-                <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
-            </svg>
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">
-                    Some quick example text to build on the card title and make up the
-                    bulk of the card's content.
-                </p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-        </div>
-        <div class="card" style="width: 18rem">
-            <svg
-                    class="bd-placeholder-img card-img-top"
-                    width="100%"
-                    height="180"
-                    xmlns="http://www.w3.org/2000/svg"
-                    role="img"
-                    aria-label="Placeholder: Image cap"
-                    preserveAspectRatio="xMidYMid slice"
-                    focusable="false"
-            >
-                <title>Placeholder</title>
-                <rect width="100%" height="100%" fill="#868e96"></rect>
-                <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
-            </svg>
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">
-                    Some quick example text to build on the card title and make up the
-                    bulk of the card's content.
-                </p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-        </div>
+
     </div>
+
+        </c:forEach>
+    </div>
+
+
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"

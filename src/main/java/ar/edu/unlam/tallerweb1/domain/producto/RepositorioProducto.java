@@ -10,4 +10,10 @@ public interface RepositorioProducto {
     void guardar(Producto producto);
     List<Producto> buscar(String nombre);
     void modificar(Producto producto);
+
+    List<Mascota> listarMascotas();
+
+    List<Higiene> listarHigiene();
+
+    List<Drogueria> listarDrogueria();
 }

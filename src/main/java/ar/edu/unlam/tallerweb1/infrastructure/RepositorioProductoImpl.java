@@ -1,7 +1,6 @@
 package ar.edu.unlam.tallerweb1.infrastructure;
 
-import ar.edu.unlam.tallerweb1.domain.producto.Producto;
-import ar.edu.unlam.tallerweb1.domain.producto.RepositorioProducto;
+import ar.edu.unlam.tallerweb1.domain.producto.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.MatchMode;
@@ -48,5 +47,23 @@ public class RepositorioProductoImpl implements RepositorioProducto {
     @Override
     public void modificar(Producto producto) {
         sessionFactory.getCurrentSession().update(producto);
+    }
+
+    @Override
+    public List<Mascota> listarMascotas() {
+        return sessionFactory.getCurrentSession().createCriteria(Mascota.class)
+                .list();
+    }
+
+    @Override
+    public List<Higiene> listarHigiene() {
+        return sessionFactory.getCurrentSession().createCriteria(Higiene.class)
+                .list();
+    }
+
+    @Override
+    public List<Drogueria> listarDrogueria() {
+        return sessionFactory.getCurrentSession().createCriteria(Drogueria.class)
+                .list();
     }
 }

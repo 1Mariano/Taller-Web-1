@@ -7,19 +7,44 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 @Entity
-public class Drogueria extends Producto{
+public class Drogueria{
+
 
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     private Long id;
-    public Drogueria(Long id, Integer peso, Integer volumen, String nombre, String marca, Integer alto, Integer ancho, Integer largo, Integer precioArs,String descripcion,String img) {
-        super(id, peso, volumen, nombre, marca, alto, ancho, largo, precioArs, descripcion,img);
+    private String nombreDrogueria;
+    private String descripcionDrogueria;
+    public Drogueria(Long id, String nombreDrogueria, String descripcionDrogueria) {
+        this.id = id;
+        this.nombreDrogueria = nombreDrogueria;
+        this.descripcionDrogueria = descripcionDrogueria;
     }
 
     public Drogueria() {
 
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public String getNombreDrogueria() {
+        return nombreDrogueria;
+    }
+
+    public void setNombreDrogueria(String nombreDrogueria) {
+        this.nombreDrogueria = nombreDrogueria;
+    }
+
+    public String getDescripcionDrogueria() {
+        return descripcionDrogueria;
+    }
+
+    public void setDescripcionDrogueria(String descripcionDrogueria) {
+        this.descripcionDrogueria = descripcionDrogueria;
+    }
+    /*
     @Override
     public Categoria getCategoria() {
         return Categoria.DROGUERIA;
@@ -29,4 +54,6 @@ public class Drogueria extends Producto{
     public Boolean esCompatible(Producto p) {
         return !Categoria.ALIMENTACION.equals(p.getCategoria()) && !Categoria.MASCOTAS.equals(p.getCategoria()) ;
     }
+    */
+
 }
