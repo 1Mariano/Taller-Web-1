@@ -2,6 +2,7 @@ package ar.edu.unlam.tallerweb1.delivery;
 
 import ar.edu.unlam.tallerweb1.domain.usuarios.ServicioLogin;
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
+import ar.edu.unlam.tallerweb1.exceptions.UsuarioNoEncontradoException;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.web.servlet.ModelAndView;
@@ -25,7 +26,7 @@ public class ControladorLoginTest {
     }
 
     @Test
-    public void dadoUnUsuarioExistenteQueSePuedaIniciarSesion() {
+    public void dadoUnUsuarioExistenteQueSePuedaIniciarSesion() throws UsuarioNoEncontradoException {
 
         String ROL = "admin";
 
@@ -52,7 +53,7 @@ public class ControladorLoginTest {
     }
 
     //Dado
-    private ModelAndView cuandoQuieroValidarElLogin(DatosLogin datosLogin, Usuario usuarioEsperado,String rol) {
+    private ModelAndView cuandoQuieroValidarElLogin(DatosLogin datosLogin, Usuario usuarioEsperado,String rol) throws UsuarioNoEncontradoException {
         when(servicioLogin.consultarUsuario(any(), any())).thenReturn(usuarioEsperado);
         when(request.getSession()).thenReturn(sesion);
         when(sesion.getAttribute("ROL")).thenReturn(rol);

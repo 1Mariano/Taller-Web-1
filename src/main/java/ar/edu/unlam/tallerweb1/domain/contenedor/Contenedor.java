@@ -1,30 +1,31 @@
 package ar.edu.unlam.tallerweb1.domain.contenedor;
 
-import ar.edu.unlam.tallerweb1.domain.producto.IProducto;
+import ar.edu.unlam.tallerweb1.domain.pedidos.Pedido;
 import ar.edu.unlam.tallerweb1.domain.producto.Producto;
-import ar.edu.unlam.tallerweb1.domain.vehiculos.IVehiculo;
 import ar.edu.unlam.tallerweb1.domain.vehiculos.Vehiculo;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 // ToDo ver relacion de bdd, ver get y set de id
-@Entity
-@Inheritance(strategy = InheritanceType.JOINED)
+/*@Entity
+@Inheritance(strategy = InheritanceType.JOINED)*/
 public abstract class Contenedor  implements IContenedor{
 
 
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    /*@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)*/
     private Long id;
     private Integer alto;
     private Integer resistencia;
-    @OneToMany
+    //@OneToMany
     private List<Producto> productos;
-    @ManyToOne
+    //@ManyToOne
     private Vehiculo vehiculo;
     private Integer pesoContenedorCargado;
+    //@ManyToOne
+    private Pedido pedido;
 
     public Contenedor(Long id, Integer alto, Integer resistencia) {
         this.id = id;
@@ -43,25 +44,25 @@ public abstract class Contenedor  implements IContenedor{
         return (alto*getSuperficie());
     }
 
-    @Override
+   /* @Override
     public Integer volumenDisponibleContenedor() {
         return  getVolumenContenedor() - volumenOcupadoContenedor();
-    }
+    }*/
 
-    private Integer volumenOcupadoContenedor() {
+    /*private Integer volumenOcupadoContenedor() {
         int res = 0;
         for (IProducto p : productos) {
             res += p.getVolumen();
         }
         return res;
-    }
+    }*/
 
     @Override
     public Integer getResistencia() {
         return resistencia;
     }
 
-    @Override
+    /*@Override
     public Boolean meter(Producto producto) {
         boolean resistenciaOk = resiste(producto);
         boolean volumenOk = producto.tengoEspacio(this);
@@ -79,7 +80,7 @@ public abstract class Contenedor  implements IContenedor{
             pesoContenedorCargado += producto.getPeso();
         }
         return acepta;
-    }
+    }*/
 
     @Override
     public Boolean resiste(Producto producto) {

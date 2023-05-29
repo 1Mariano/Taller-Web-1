@@ -1,8 +1,6 @@
 package ar.edu.unlam.tallerweb1.domain.pedidos;
 
 import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor;
-import ar.edu.unlam.tallerweb1.domain.contenedor.IContenedor;
-import ar.edu.unlam.tallerweb1.domain.producto.IProducto;
 import ar.edu.unlam.tallerweb1.domain.producto.Producto;
 
 import javax.persistence.*;
@@ -10,11 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Entity
+//@Entity
 public class Pedido implements IPedido{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@Id
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     //@ManyToOne
@@ -23,7 +21,7 @@ public class Pedido implements IPedido{
     //@Lob
     //@Column(name = "photo", columnDefinition="BLOB")
     //private byte[] photo;
-    @OneToMany
+    //@OneToMany
     private List<Contenedor> contenedores;
 
     public Pedido() {

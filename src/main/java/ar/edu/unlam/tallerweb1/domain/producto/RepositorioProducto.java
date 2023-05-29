@@ -10,4 +10,18 @@ public interface RepositorioProducto {
     void guardar(Producto producto);
     List<Producto> buscar(String nombre);
     void modificar(Producto producto);
+
+    List<Producto> listarTodosLosProductos();
+
+    Usuario buscarUsuarioPorId(Long id);
+
+    //List<Producto> listarDrogueria();
+    /*
+    List<Mascota> listarMascotas();
+
+    List<Higiene> listarHigiene();
+
+
+
+     */
 }

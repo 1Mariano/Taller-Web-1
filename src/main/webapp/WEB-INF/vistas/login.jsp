@@ -15,6 +15,7 @@
 				<%--debe referenciar con el nombre usuario, spring mapea los elementos de la vista con los atributos de dicho objeto--%>
 					<%--para eso debe coincidir el valor del elemento path de cada input con el nombre de un atributo del objeto --%>
 				<form:form action="validar-login" method="POST" modelAttribute="datosLogin">
+
 			    	<h3 class="form-signin-heading text-center">Supermercado</h3>
 					<hr class="colorgraph"><br>
 
@@ -32,7 +33,9 @@
 			        <br>
 		        </c:if>
 				${msg}
+
 			</div>
+
 		</div>
 		
 		<!-- Placed at the end of the document so the pages load faster -->

@@ -1,12 +1,10 @@
 package ar.edu.unlam.tallerweb1.domain.contenedor;
 
 import ar.edu.unlam.tallerweb1.domain.enums.TipoContenedor;
-import ar.edu.unlam.tallerweb1.domain.producto.Caducable;
-import ar.edu.unlam.tallerweb1.domain.producto.IProducto;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-@Entity
+/*@Entity
 public class Bolsa extends Contenedor implements Caducable {
 
     @Id
@@ -54,3 +52,4 @@ public class Bolsa extends Contenedor implements Caducable {
     }
 
 }
+*/

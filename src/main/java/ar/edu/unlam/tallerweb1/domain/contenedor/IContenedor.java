@@ -1,7 +1,6 @@
 package ar.edu.unlam.tallerweb1.domain.contenedor;
 
 import ar.edu.unlam.tallerweb1.domain.enums.TipoContenedor;
-import ar.edu.unlam.tallerweb1.domain.producto.IProducto;
 import ar.edu.unlam.tallerweb1.domain.producto.Producto;
 import ar.edu.unlam.tallerweb1.domain.vehiculos.Vehiculo;
 

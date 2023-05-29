@@ -1,5 +1,7 @@
 package ar.edu.unlam.tallerweb1.domain.usuarios;
 
+import ar.edu.unlam.tallerweb1.exceptions.ClavesLongitudException;
+import ar.edu.unlam.tallerweb1.exceptions.UsuarioYaExistenteException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,9 +24,20 @@ public class ServicioRegistroImpl implements ServicioRegistro{
     }
 
     @Override
-    public void guardarUsuario(Usuario usuarioNuevo) {
+    public Usuario guardarUsuario(Usuario usuarioNuevo) throws ClavesLongitudException, UsuarioYaExistenteException {
+        if(laclaveTieneLongitudIncorrecta(usuarioNuevo)){
+            throw new ClavesLongitudException();
+        }
+        if (servicioRegistro.buscar(usuarioNuevo.getEmail()) != null){
+            throw new UsuarioYaExistenteException();
+        }
 
         servicioRegistro.guardarUsuario(usuarioNuevo);
+        return usuarioNuevo;
+    }
+
+    private boolean laclaveTieneLongitudIncorrecta(Usuario usuarioNuevo) {
+        return usuarioNuevo.getPassword().length() < 8;
     }
 
     @Override

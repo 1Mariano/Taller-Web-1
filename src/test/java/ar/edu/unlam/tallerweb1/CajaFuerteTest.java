@@ -7,9 +7,6 @@ package ar.edu.unlam.tallerweb1;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertThat;
 
-import ar.edu.unlam.tallerweb1.domain.vehiculos.Auto;
-import ar.edu.unlam.tallerweb1.domain.vehiculos.Moto;
-import ar.edu.unlam.tallerweb1.domain.vehiculos.Vehiculo;
 import org.junit.Test;
 
 public class CajaFuerteTest {
@@ -95,6 +92,7 @@ public class CajaFuerteTest {
 	private void whenAbroLaCajaConCodigo(CajaFuerte caja, String pass) {
 		// TODO Auto-generated method stub
 		caja.abrir(pass);
+
 	}
 
 	

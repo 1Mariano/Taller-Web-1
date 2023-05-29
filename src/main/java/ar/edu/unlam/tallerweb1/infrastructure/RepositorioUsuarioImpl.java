@@ -36,6 +36,8 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 				.uniqueResult();
 	}
 
+
+
 	@Override
 	public Usuario buscarUsuarioExistente(String email) {
 
@@ -45,6 +47,14 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 		final Session session = sessionFactory.getCurrentSession();
 		return (Usuario) session.createCriteria(Usuario.class)
 				.add(Restrictions.eq("email", email))
+				.uniqueResult();
+	}
+
+	@Override
+	public Usuario buscarUsuarioPorId(Long id) {
+		final Session session = sessionFactory.getCurrentSession();
+		return (Usuario) session.createCriteria(Usuario.class)
+				.add(Restrictions.eq("id", id))
 				.uniqueResult();
 	}
 
@@ -65,6 +75,13 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 	@Override
 	public void modificar(Usuario usuario) {
 		sessionFactory.getCurrentSession().update(usuario);
+	}
+
+	@Override
+	public Usuario buscarUsuarioPorEmail(String email) {
+		return (Usuario) sessionFactory.getCurrentSession().createCriteria(Usuario.class)
+				.add(Restrictions.eq("email", email))
+				.uniqueResult();
 	}
 
 }

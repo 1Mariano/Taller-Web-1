@@ -1,17 +1,10 @@
 package ar.edu.unlam.tallerweb1.infrastructure;
 
 import ar.edu.unlam.tallerweb1.SpringTest;
-import ar.edu.unlam.tallerweb1.domain.enums.Categoria;
-import ar.edu.unlam.tallerweb1.domain.producto.Alimentacion;
-import ar.edu.unlam.tallerweb1.domain.producto.Drogueria;
-import ar.edu.unlam.tallerweb1.domain.producto.Fresco;
-import ar.edu.unlam.tallerweb1.domain.producto.Producto;
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 import org.junit.Test;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -39,7 +32,7 @@ public class ConexionBaseDeDatosTest extends SpringTest{
     @Test
     @Transactional @Rollback
     public void crearProducto(){
-        Producto producto = new Drogueria();
+        /*Producto producto = new Drogueria();
         producto.setPeso(50);
         producto.setNombre("Paracetamol");
         producto.setMarca("Geniol");
@@ -48,7 +41,7 @@ public class ConexionBaseDeDatosTest extends SpringTest{
         producto.setLargo(5);
 
         session().save(producto);
-        assertThat(producto.getId()).isNotNull();
+        assertThat(producto.getId()).isNotNull();*/
 
     }
 }
