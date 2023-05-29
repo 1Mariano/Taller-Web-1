@@ -7,11 +7,11 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
+//@Entity
 public abstract class Vehiculo implements IVehiculo{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    /*@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)*/
     private Long id;
     private String patente;
     private String modelo;
@@ -21,7 +21,7 @@ public abstract class Vehiculo implements IVehiculo{
     private Integer volumen;
 
     //ToDo lista de contenedores y pedido
-    @OneToMany
+    //@OneToMany
     private List<Contenedor> contenedores;
 
     public Vehiculo(Long id, String patente, String modelo, Integer ancho, Integer alto, Integer largo) {

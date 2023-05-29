@@ -2,12 +2,15 @@ package ar.edu.unlam.tallerweb1.domain.producto;
 
 import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor;
 import ar.edu.unlam.tallerweb1.domain.contenedor.IContenedor;
+import ar.edu.unlam.tallerweb1.domain.enums.CategoriaProducto;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
+//TODO BORRAR LOS COMENTARIOS UNA VEZ QUE ESTE VERIFICADO EL FUNCIONAMIENTO DEL CODIGO
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Producto implements IProducto{
+public /*abstract*/ class Producto /*implements IProducto*/{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,11 +26,13 @@ public abstract class Producto implements IProducto{
 
     private String descripcion;
     private String img;
+    private LocalDate fechaVencimiento;
+    private CategoriaProducto categoria;
 
-    @ManyToOne
-    private Contenedor contenedor;
+    /*@ManyToOne
+    private Contenedor contenedor;*/
 
-    public Producto(Long id, Integer peso, Integer volumen, String nombre, String marca, Integer alto, Integer ancho, Integer largo, Integer precioArs, String descripcion, String img) {
+    public Producto(Long id, Integer peso, Integer volumen, String nombre, String marca, Integer alto, Integer ancho, Integer largo, Integer precioArs, String descripcion, String img, LocalDate fechaVencimiento, CategoriaProducto categoria) {
         this.id = id;
         this.peso = peso;
         this.volumen = volumen;
@@ -35,10 +40,13 @@ public abstract class Producto implements IProducto{
         this.nombre = nombre;
         this.alto = alto;
         this.ancho = ancho;
+
         this.largo = largo;
         this.precioArs = precioArs;
         this.descripcion = descripcion;
         this.img = img;
+        this.categoria = categoria;
+        this.fechaVencimiento = fechaVencimiento;
     }
 
     public Integer getAlto() {
@@ -64,50 +72,57 @@ public abstract class Producto implements IProducto{
     public void setLargo(Integer largo) {
         this.largo = largo;
     }
-    public Contenedor getContenedor() {
+    /*public Contenedor getContenedor() {
         return contenedor;
-    }
+    }*/
 
-    public void setContenedor(Contenedor contenedor) {
+    /*public void setContenedor(Contenedor contenedor) {
         this.contenedor = contenedor;
-    }
+    }*/
 
     public Producto() {
 
     }
-    @Override
+    //@Override
     public  String getNombre(){
         return this.nombre;
     }
 
-    @Override
+    //@Override
     public  String getMarca(){
         return this.marca;
     }
 
-    @Override
+    //@Override
     public Long getId() {
         return this.id;
     }
 
-    @Override
+    //@Override
     public Integer getPeso() {
         return this.peso;
     }
 
-    @Override
+    //@Override
     public Integer getVolumen() {
         return this.volumen;
     }
+    public CategoriaProducto getCategoria() {
+        return categoria;
+    }
 
-    @Override
+    public void setCategoria(CategoriaProducto categoria) {
+        this.categoria = categoria;
+    }
+
+    //@Override
     public Boolean tengoEspacio(Contenedor contenedor) {
         return contenedor.volumenDisponibleContenedor() > volumen;
     }
-    @Override
-    public void meter(Contenedor contenedor) {
+    // @Override
+    /*public void meter(Contenedor contenedor) {
         this.contenedor = contenedor;
-    }
+    }*/
 
     public void setPeso(Integer peso) {
         this.peso = peso;
@@ -132,7 +147,7 @@ public abstract class Producto implements IProducto{
     public void setPrecioArs(Integer precioArs) {
         this.precioArs = precioArs;
     }
-    @Override
+    //@Override
     public String getDescripcion() {
         return descripcion;
     }
@@ -141,13 +156,35 @@ public abstract class Producto implements IProducto{
         this.descripcion = descripcion;
     }
 
-    @Override
+    //@Override
     public String getImg() {
         return img;
     }
 
     public void setImg(String img) {
         this.img = img;
+    }
+    public LocalDate getFechaVencimiento() {
+        return fechaVencimiento;
+    }
+
+    public void setFechaVencimiento(LocalDate fechaVencimiento) {
+        this.fechaVencimiento = fechaVencimiento;
+    }
+
+    public boolean sePuedeEmpaquetar() {
+        // Verificar si el producto se puede empaquetar con otros según su categoría
+        return categoria != CategoriaProducto.HIGIENE;
+    }
+    public boolean estaVencido() {
+        LocalDate fechaActual = LocalDate.now();
+        if (categoria == CategoriaProducto.ALIMENTOS_FRESCOS || categoria == CategoriaProducto.CONGELADOS || categoria == CategoriaProducto.HIGIENE || categoria == CategoriaProducto.MASCOTAS) {
+            return fechaActual.isAfter(fechaVencimiento);
+        } else if (categoria == CategoriaProducto.NO_PERECEDEROS) {
+            LocalDate fechaVencimientoLimite = fechaVencimiento.minusMonths(3);
+            return fechaActual.isAfter(fechaVencimientoLimite);
+        }
+        return false;
     }
 //toDo
     //@Override
@@ -156,3 +193,4 @@ public abstract class Producto implements IProducto{
     //				+ volumen + ", contenedor=" + contenedor.getReferencia() + "]";
     //	}
 }
+

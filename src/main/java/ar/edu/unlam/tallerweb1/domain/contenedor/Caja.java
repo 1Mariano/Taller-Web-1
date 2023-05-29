@@ -1,7 +1,6 @@
 package ar.edu.unlam.tallerweb1.domain.contenedor;
 
 import ar.edu.unlam.tallerweb1.domain.enums.TipoContenedor;
-import ar.edu.unlam.tallerweb1.domain.producto.IProducto;
 import ar.edu.unlam.tallerweb1.domain.producto.Producto;
 
 import javax.persistence.Entity;
@@ -9,7 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity
+/*@Entity
 public class Caja extends Contenedor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,3 +45,4 @@ public class Caja extends Contenedor {
 
 
 }
+*/

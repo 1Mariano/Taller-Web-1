@@ -105,14 +105,14 @@ public class ControladorLogin {
 	}
 
 	// Escucha la URL /home por GET, y redirige a una vista.
-	@RequestMapping(path = "/home", method = RequestMethod.GET)
+	/*@RequestMapping(path = "/home", method = RequestMethod.GET)
 	public ModelAndView irAHome(@RequestParam (value = "id") Long id) {
 		Usuario usuario = this.servicioLogin.obtenerUsuarioPorId(id);
 		ModelMap model = new ModelMap();
 		model.put("usuario", usuario);
 
 		return new ModelAndView("home", model);
-	}
+	}*/
 
 		// Escucha la url /, y redirige a la URL /login, es lo mismo que si se invoca la url /login directamente.
 		@RequestMapping(path = "/", method = RequestMethod.GET)

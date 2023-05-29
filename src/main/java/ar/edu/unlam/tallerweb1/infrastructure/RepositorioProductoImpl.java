@@ -1,6 +1,7 @@
 package ar.edu.unlam.tallerweb1.infrastructure;
 
 import ar.edu.unlam.tallerweb1.domain.producto.*;
+import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.MatchMode;
@@ -30,6 +31,15 @@ public class RepositorioProductoImpl implements RepositorioProducto {
                 .add(Restrictions.eq("precioArs", precioArs))
                 .uniqueResult();
     }
+    @Override
+    public Usuario buscarUsuarioPorId(Long id) {
+        final Session session = sessionFactory.getCurrentSession();
+        return (Usuario) session.createCriteria(Usuario.class)
+                .add(Restrictions.eq("id", id))
+                .uniqueResult();
+    }
+
+
 
     @Override
     public void guardar(Producto producto) {
@@ -50,6 +60,12 @@ public class RepositorioProductoImpl implements RepositorioProducto {
     }
 
     @Override
+    public List<Producto> listarTodosLosProductos() {
+        return sessionFactory.getCurrentSession().createCriteria(Producto.class)
+                .list();
+    }
+    /*
+    @Override
     public List<Mascota> listarMascotas() {
         return sessionFactory.getCurrentSession().createCriteria(Mascota.class)
                 .list();
@@ -61,9 +77,6 @@ public class RepositorioProductoImpl implements RepositorioProducto {
                 .list();
     }
 
-    @Override
-    public List<Drogueria> listarDrogueria() {
-        return sessionFactory.getCurrentSession().createCriteria(Drogueria.class)
-                .list();
-    }
+
+    */
 }

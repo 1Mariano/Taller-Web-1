@@ -1,17 +1,10 @@
 package ar.edu.unlam.tallerweb1.infrastructure;
 
 import ar.edu.unlam.tallerweb1.SpringTest;
-import ar.edu.unlam.tallerweb1.domain.enums.Categoria;
-import ar.edu.unlam.tallerweb1.domain.producto.Alimentacion;
-import ar.edu.unlam.tallerweb1.domain.producto.Drogueria;
-import ar.edu.unlam.tallerweb1.domain.producto.Fresco;
-import ar.edu.unlam.tallerweb1.domain.producto.Producto;
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 import org.junit.Test;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.*;
 
