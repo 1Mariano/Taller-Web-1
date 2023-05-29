@@ -22,23 +22,47 @@ public class RepositorioProductoImpl implements RepositorioProducto {
         this.sessionFactory = sessionFactory;
     }
     @Override
-    public Producto buscarProducto(Long id, Integer peso, Integer volumen, String nombre, String marca, Integer precioArs) {
+    public Producto buscarProducto(Integer peso, String nombre, String marca) {
         final Session session = sessionFactory.getCurrentSession();
         return (Producto) session.createCriteria(Producto.class)
                 .add(Restrictions.eq("nombre", nombre))
                 .add(Restrictions.eq("marca", marca))
                 .add(Restrictions.eq("peso", peso))
-                .add(Restrictions.eq("precioArs", precioArs))
                 .uniqueResult();
     }
 
+   /* @Override
+    public void guardarProducto(Producto producto) {
+
+    }*/
+
+   /* @Override
+    public List<Producto> buscarProductoPorNombre(String nombre) {
+        return null;
+    }*/
+
+    /*@Override
+    public void modificarProducto(Producto producto) {
+
+    }*/
+
     @Override
-    public void guardar(Producto producto) {
+    public void eliminarProducto(Producto producto) {
+
+    }
+
+    @Override
+    public Producto obtenerProductoPorId(Long id) {
+        return null;
+    }
+
+    @Override
+    public void guardarProducto(Producto producto) {
         sessionFactory.getCurrentSession().save(producto);
     }
 
     @Override
-    public List<Producto> buscar(String nombre) {
+    public List<Producto> buscarProductoPorNombre(String nombre) {
         return sessionFactory.getCurrentSession().createCriteria(Producto.class)
                 .add(Restrictions.like("nombre", nombre, MatchMode.ANYWHERE)).list();
     }
@@ -46,7 +70,7 @@ public class RepositorioProductoImpl implements RepositorioProducto {
 
     //ToDo logica?
     @Override
-    public void modificar(Producto producto) {
+    public void modificarProducto(Producto producto) {
         sessionFactory.getCurrentSession().update(producto);
     }
 }

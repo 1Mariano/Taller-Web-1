@@ -1,0 +1,29 @@
+<!--
+  Created by IntelliJ IDEA.
+  User: jenni
+  Date: 29/5/2023
+  Time: 11:41
+  To change this template use File | Settings | File Templates.
+-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" xmlns="http://www.w3.org/1999/xhtml" version="2.0">
+    <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+    <html>
+    <head>
+        <title>Detalle del producto</title>
+    </head>
+    <body>
+    <h1>Detalle del producto</h1>
+    <p>Nombre: ${producto.nombre}</p>
+    <p>Marca: ${producto.marca}</p>
+    <p>Precio: ${producto.precioArs}</p>
+
+    <c:if test="${estaVencido}">
+        <p>¡Este producto está Vencido!</p>
+    </c:if>
+    <c:if test="${not estaVencido}">
+        <p>Producto valido.</p>
+    </c:if>
+    </body>
+    </html>
+
+</jsp:root>

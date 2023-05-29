@@ -1,0 +1,41 @@
+<!--
+  Created by IntelliJ IDEA.
+  User: jenni
+  Date: 29/5/2023
+  Time: 12:03
+  To change this template use File | Settings | File Templates.
+-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" xmlns="http://www.w3.org/1999/xhtml" version="2.0">
+
+    <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+    <html>
+    <head>
+        <title>Lista de productos</title>
+    </head>
+    <body>
+    <h1>Lista de productos</h1>
+    <table>
+        <tr>
+            <th>Nombre</th>
+            <th>Categoría</th>
+            <th>Empaquetable</th>
+        </tr>
+        <c:forEach items="${productos}" var="producto">
+            <tr>
+                <td>${producto.nombre}</td>
+                <td>${producto.categoria}</td>
+                <td>
+                    <c:if test="${producto.sePuedeEmpaquetar}">
+                        Sí
+                    </c:if>
+                    <c:if test="${not producto.sePuedeEmpaquetar}">
+                        No
+                    </c:if>
+                </td>
+            </tr>
+        </c:forEach>
+    </table>
+    </body>
+    </html>
+
+</jsp:root>

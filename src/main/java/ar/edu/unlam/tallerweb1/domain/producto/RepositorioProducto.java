@@ -6,8 +6,16 @@ import java.util.List;
 
 public interface RepositorioProducto {
 //todo ver que propiedades hacen a mi producto unico para buscarlo
-    Producto buscarProducto(Long id, Integer peso, Integer volumen, String nombre, String marca, Integer precioArs);
-    void guardar(Producto producto);
-    List<Producto> buscar(String nombre);
-    void modificar(Producto producto);
+    Producto buscarProducto(Integer peso, String nombre, String marca);
+    void guardarProducto(Producto producto);
+    List<Producto> buscarProductoPorNombre(String nombre);
+    void modificarProducto(Producto producto);
+
+
+
+    void eliminarProducto(Producto producto);
+
+    Producto obtenerProductoPorId(Long id);
+
+
 }
