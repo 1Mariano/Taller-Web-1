@@ -1,8 +1,8 @@
 package ar.edu.unlam.tallerweb1.domain.contenedor;
 
-import ar.edu.unlam.tallerweb1.domain.producto.IProducto;
+import ar.edu.unlam.tallerweb1.domain.enums.TipoContenedor;
+
 import ar.edu.unlam.tallerweb1.domain.producto.Producto;
-import ar.edu.unlam.tallerweb1.domain.vehiculos.IVehiculo;
 import ar.edu.unlam.tallerweb1.domain.vehiculos.Vehiculo;
 
 import javax.persistence.*;
@@ -11,7 +11,7 @@ import java.util.List;
 // ToDo ver relacion de bdd, ver get y set de id
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Contenedor  implements IContenedor{
+public /*abstract*/ class Contenedor  /*implements IContenedor*/{
 
 
 
@@ -19,93 +19,89 @@ public abstract class Contenedor  implements IContenedor{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Integer alto;
-    private Integer resistencia;
+    private Integer ancho;
+    private Integer largo;
+    private Integer pesoSoportado;
     @OneToMany
     private List<Producto> productos;
     @ManyToOne
     private Vehiculo vehiculo;
-    private Integer pesoContenedorCargado;
+    private TipoContenedor tipoContenedor;
 
-    public Contenedor(Long id, Integer alto, Integer resistencia) {
+    public Contenedor(Long id, Integer alto, Integer largo, Integer ancho, Integer pesoSoportado, TipoContenedor tipoContenedor, Integer volumenDisponible, Integer volumenOcupado) {
         this.id = id;
         this.alto = alto;
-        this.resistencia = resistencia;
+        this.pesoSoportado = pesoSoportado;
         this.productos = new ArrayList<Producto>();
+        this.tipoContenedor= tipoContenedor;
+        this.ancho =ancho;
+        this.largo = largo;
+
     }
 
-    public Contenedor() {
-
+    public Integer getAncho() {
+        return ancho;
     }
 
-
-    @Override
-    public Integer getVolumenContenedor() {
-        return (alto*getSuperficie());
+    public void setAncho(Integer ancho) {
+        this.ancho = ancho;
     }
 
-    @Override
-    public Integer volumenDisponibleContenedor() {
-        return  getVolumenContenedor() - volumenOcupadoContenedor();
+    public Integer getLargo() {
+        return largo;
     }
 
-    private Integer volumenOcupadoContenedor() {
-        int res = 0;
-        for (IProducto p : productos) {
-            res += p.getVolumen();
-        }
-        return res;
+    public void setLargo(Integer largo) {
+        this.largo = largo;
     }
 
-    @Override
-    public Integer getResistencia() {
-        return resistencia;
+    public TipoContenedor getTipoContenedor() {
+        return tipoContenedor;
     }
 
-    @Override
-    public Boolean meter(Producto producto) {
-        boolean resistenciaOk = resiste(producto);
-        boolean volumenOk = producto.tengoEspacio(this);
-        boolean compatibilidadOk = true;
-
-        for (Producto p : productos) {
-            boolean compatibleOk = producto.esCompatible(p);
-            compatibilidadOk &= compatibleOk;
-        }
-
-        boolean acepta = resistenciaOk && volumenOk && compatibilidadOk;
-        if (acepta) {
-            productos.add(producto);
-            producto.meter(this);
-            pesoContenedorCargado += producto.getPeso();
-        }
-        return acepta;
+    public void setTipoContenedor(TipoContenedor tipoContenedor) {
+        this.tipoContenedor = tipoContenedor;
     }
 
-    @Override
-    public Boolean resiste(Producto producto) {
-        return resistencia > producto.getPeso();
+    public Vehiculo getVehiculo() {
+        return vehiculo;
     }
 
-    @Override
-    public Boolean tengoEspacio(Vehiculo vehiculo) {
-        return vehiculo.volumenDisponibleVehiculo() > getVolumenContenedor();
-    }
-
-    @Override
-    public void guardar(Vehiculo vehiculo) {
+    public void setVehiculo(Vehiculo vehiculo) {
         this.vehiculo = vehiculo;
     }
 
-    @Override
-    public Integer pesoTotalContenedor() {
-        return  this.pesoContenedorCargado;
+    public Integer getPesoCargado() {
+        Integer pesoCargado = 0;
+        for (Producto producto : productos) {
+            pesoCargado += producto.getPeso();
+        }
+        return pesoCargado;
     }
 
-    @Override
+    public boolean pesoSoportado(Integer peso) {
+        if (tipoContenedor == TipoContenedor.CAJA) {
+            return true; // Cajas soportan cualquier peso
+        } else if (tipoContenedor == TipoContenedor.BOLSA) {
+            return Producto.peso <= 5; // Bolsas soportan hasta 5 kg de peso
+        }
+        return false; // Tipo de contenedor no reconocido
+    }
+
+    public void agregarProducto(Producto producto) {
+        productos.add(producto);
+    }
+
+    public void removerProducto(Producto producto) {
+        productos.remove(producto);
+    }
+
     public List<Producto> getProductos() {
         return productos;
     }
-    // ToDo resolver problema override
+}
+
+
 
 
 }

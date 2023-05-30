@@ -6,7 +6,7 @@ import ar.edu.unlam.tallerweb1.domain.producto.Producto;
 import ar.edu.unlam.tallerweb1.domain.vehiculos.Vehiculo;
 
 import java.util.List;
-
+/*
 public interface IContenedor {
     Integer getVolumenContenedor();
     Integer getSuperficie();
@@ -25,3 +25,4 @@ public interface IContenedor {
 
     Integer pesoTotalContenedor();
 }
+*/

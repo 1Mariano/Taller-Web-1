@@ -13,7 +13,7 @@ public /*abstract*/ class Producto /*implements IProducto*/{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Integer peso;
+    public static Integer peso;
     private Integer volumen;
     private String nombre;
     private String marca;
@@ -34,7 +34,7 @@ public /*abstract*/ class Producto /*implements IProducto*/{
     public Producto(Long id, Integer peso, Integer volumen, String nombre, String marca, Integer alto, Integer ancho, Integer largo, Integer precioArs, String descripcion, String img, LocalDate fechaVencimiento, CategoriaProducto categoria) {
         this.id = id;
         this.peso = peso;
-        this.volumen = volumen;
+        this.volumen = calcularVolumen(alto,ancho,largo);
         this.marca = marca;
         this.nombre = nombre;
         this.alto = alto;
@@ -46,6 +46,10 @@ public /*abstract*/ class Producto /*implements IProducto*/{
         this.img = img;
         this.categoria = categoria;
         this.fechaVencimiento = fechaVencimiento;
+    }
+
+    private static Integer calcularVolumen (Integer alto, Integer ancho, Integer largo) {
+        return alto * ancho * largo;
     }
 
     public Integer getAlto() {

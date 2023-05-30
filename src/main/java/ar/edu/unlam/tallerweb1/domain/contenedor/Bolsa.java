@@ -6,7 +6,7 @@ import ar.edu.unlam.tallerweb1.domain.producto.IProducto;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-@Entity
+/*@Entity
 public class Bolsa extends Contenedor implements Caducable {
 
     @Id
@@ -54,3 +54,4 @@ public class Bolsa extends Contenedor implements Caducable {
     }
 
 }
+*/
