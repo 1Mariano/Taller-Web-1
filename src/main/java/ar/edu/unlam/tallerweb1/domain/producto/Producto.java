@@ -1,7 +1,6 @@
 package ar.edu.unlam.tallerweb1.domain.producto;
 
 import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor;
-import ar.edu.unlam.tallerweb1.domain.contenedor.IContenedor;
 import ar.edu.unlam.tallerweb1.domain.enums.CategoriaProducto;
 
 import javax.persistence.*;
@@ -178,9 +177,9 @@ public /*abstract*/ class Producto /*implements IProducto*/{
     }
     public boolean estaVencido() {
         LocalDate fechaActual = LocalDate.now();
-        if (categoria == CategoriaProducto.ALIMENTOS_FRESCOS || categoria == CategoriaProducto.CONGELADOS || categoria == CategoriaProducto.HIGIENE || categoria == CategoriaProducto.MASCOTAS) {
+        if (categoria == CategoriaProducto.ALIMENTOS_FRESCOS || categoria == CategoriaProducto.ALIMENTOS_CONGELADOS || categoria == CategoriaProducto.HIGIENE || categoria == CategoriaProducto.MASCOTAS) {
             return fechaActual.isAfter(fechaVencimiento);
-        } else if (categoria == CategoriaProducto.NO_PERECEDEROS) {
+        } else if (categoria == CategoriaProducto.ALIMENTOS_NO_PERECEDEROS) {
             LocalDate fechaVencimientoLimite = fechaVencimiento.minusMonths(3);
             return fechaActual.isAfter(fechaVencimientoLimite);
         }

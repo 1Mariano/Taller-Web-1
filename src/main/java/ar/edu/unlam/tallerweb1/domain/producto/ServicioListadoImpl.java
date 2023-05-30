@@ -17,7 +17,7 @@ public class ServicioListadoImpl implements ServicioListado {
     private RepositorioProducto repositorioProducto;
 
     @Autowired
-    public ServicioListadoImpl(RepositorioProducto repositorioProducto){
+    public ServicioListadoImpl(RepositorioProducto repositorioProducto) {
         this.repositorioProducto = repositorioProducto;
     }
 
@@ -30,6 +30,7 @@ public class ServicioListadoImpl implements ServicioListado {
     public Usuario obtenerUsuarioPorId(Long id) {
         return repositorioProducto.buscarUsuarioPorId(id);
     }
+
     /*
     @Override
     public List<Mascota> listarProductosMascotas() {
@@ -41,9 +42,8 @@ public class ServicioListadoImpl implements ServicioListado {
     public List<Producto> listarProductosDrogueria() {
         List<Producto> objetos = this.repositorioProducto.listarTodosLosProductos();
         List<Producto> lista = new ArrayList<>();
-        for ( Producto objeto  : objetos) {
-            if (objeto.getCategoria().equals(CategoriaProducto.DROGUERIA))
-            {
+        for (Producto objeto : objetos) {
+            if (objeto.getCategoria().equals(CategoriaProducto.DROGUERIA)) {
                 lista.add(objeto);
             }
         }
@@ -54,14 +54,35 @@ public class ServicioListadoImpl implements ServicioListado {
     public List<Producto> listarProductosHigiene() {
         List<Producto> objetos = this.repositorioProducto.listarTodosLosProductos();
         List<Producto> lista = new ArrayList<>();
-        for ( Producto objeto  : objetos) {
-            if (objeto.getCategoria().equals(CategoriaProducto.HIGIENE))
-            {
+        for (Producto objeto : objetos) {
+            if (objeto.getCategoria().equals(CategoriaProducto.HIGIENE)) {
                 lista.add(objeto);
             }
         }
         return lista;
     }
 
+    @Override
+    public List<Producto> listarProductosMascota() {
+        List<Producto> objetos = this.repositorioProducto.listarTodosLosProductos();
+        List<Producto> lista = new ArrayList<>();
+        for (Producto objeto : objetos) {
+            if (objeto.getCategoria().equals(CategoriaProducto.MASCOTAS)) {
+                lista.add(objeto);
+            }
+        }
+        return lista;
+    }
 
+    @Override
+    public List<Producto> listarProductosAlimento() {
+        List<Producto> objetos = this.repositorioProducto.listarTodosLosProductos();
+        List<Producto> lista = new ArrayList<>();
+        for (Producto objeto : objetos) {
+            if (objeto.getCategoria().equals(CategoriaProducto.ALIMENTOS_FRESCOS) || objeto.getCategoria().equals(CategoriaProducto.ALIMENTOS_CONGELADOS) || objeto.getCategoria().equals(CategoriaProducto.ALIMENTOS_NO_PERECEDEROS)) {
+                lista.add(objeto);
+            }
+        }
+        return lista;
+    }
 }

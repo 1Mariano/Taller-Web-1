@@ -16,4 +16,8 @@ public interface ServicioListado {
     List<Producto> listarProductosDrogueria();
 
     List<Producto> listarProductosHigiene();
+
+    List<Producto> listarProductosMascota();
+
+    List<Producto> listarProductosAlimento();
 }

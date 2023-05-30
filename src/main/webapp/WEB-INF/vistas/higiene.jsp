@@ -43,17 +43,20 @@
   </div>
   <div>
     <ul class="m-0 list-unstyled d-flex gap-3 d-flex justify-content-center align-items-center">
+      <a class="rounded text-decoration-none text-light" href="home">
+        <li class="bg-dark py-1 px-2">Inicio</li>
+      </a>
       <a class="rounded text-decoration-none text-light" href="higiene">
         <li class="bg-dark py-1 px-2">Higiene</li>
       </a>
-      <a class="rounded text-decoration-none text-light" href="#">
-        <li class="bg-dark py-1 px-2">#</li>
+      <a class="rounded text-decoration-none text-light" href="mascota">
+        <li class="bg-dark py-1 px-2">Mascotas</li>
       </a>
       <a class="rounded text-decoration-none text-light" href="drogueria">
         <li class="bg-dark py-1 px-2">Drogueria</li>
       </a>
-      <a class="rounded text-decoration-none text-light" href="#">
-        <li class="bg-dark py-1 px-2">Otra info</li>
+      <a class="rounded text-decoration-none text-light" href="alimentos">
+        <li class="bg-dark py-1 px-2">Alimentos</li>
       </a>
     </ul>
 
@@ -63,7 +66,7 @@
 <main>
   <h3 class="m-4 text-center">Productos</h3>
   <!-- Example Code -->
-  <h3 class="m-4 text-center">Productos Drogueria</h3>
+  <h3 class="m-4 text-center">Productos Higiene</h3>
   <div class="d-flex flex-wrap gap-5 justify-content-center">
     <c:forEach var="item" items="${lista}">
       <div class="card" style="width: 18rem">

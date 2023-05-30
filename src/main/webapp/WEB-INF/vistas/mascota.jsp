@@ -26,7 +26,7 @@
 <body>
 <header class="bg-info-subtle py-5">
 
-    <div class="text-center  my-2" >
+    <div class="text-center  my-2">
         <p class="bg-primary d-inline py-3 px-4 rounded text-white">Bienvenido: <b>${usuario.email}</b></p>
         <form action="logout" method="post">
             <button class="bg-danger py-3 px-4 rounded text-white" Type="submit">Logout</button>
@@ -34,7 +34,8 @@
     </div>
     <div class="my-4">
         <div class="input-group mb-3 w-50 mx-auto">
-            <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2"/>
+            <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username"
+                   aria-describedby="button-addon2"/>
             <button class="btn btn-outline-secondary" type="button" id="button-addon2">
                 Button
             </button>
@@ -42,17 +43,20 @@
     </div>
     <div>
         <ul class="m-0 list-unstyled d-flex gap-3 d-flex justify-content-center align-items-center">
-            <a class="rounded text-decoration-none text-light" href="mascotas">
-                <li class="bg-dark py-1 px-2">Mascotas</li>
+            <a class="rounded text-decoration-none text-light" href="home">
+                <li class="bg-dark py-1 px-2">Inicio</li>
             </a>
             <a class="rounded text-decoration-none text-light" href="higiene">
                 <li class="bg-dark py-1 px-2">Higiene</li>
             </a>
+            <a class="rounded text-decoration-none text-light" href="mascota">
+                <li class="bg-dark py-1 px-2">Mascotas</li>
+            </a>
             <a class="rounded text-decoration-none text-light" href="drogueria">
                 <li class="bg-dark py-1 px-2">Drogueria</li>
             </a>
-            <a class="rounded text-decoration-none text-light" href="#">
-                <li class="bg-dark py-1 px-2">Otra info</li>
+            <a class="rounded text-decoration-none text-light" href="alimentos">
+                <li class="bg-dark py-1 px-2">Alimentos</li>
             </a>
         </ul>
 
@@ -60,36 +64,34 @@
 
 </header>
 <main>
-    <h3 class="m-4 text-center ">Productos de Mascotas</h3>
+    <h3 class="m-4 text-center">Productos</h3>
     <!-- Example Code -->
+    <h3 class="m-4 text-center">Productos Mascotas</h3>
     <div class="d-flex flex-wrap gap-5 justify-content-center">
-    <c:forEach var="item" items="${lista}">
-    <div class="d-flex flex-wrap gap-5 justify-content-center">
-        <div class="card" style="width: 18rem">
-            <svg
-                    class="bd-placeholder-img card-img-top"
-                    width="100%"
-                    height="180"
-                    xmlns="http://www.w3.org/2000/svg"
-                    role="img"
-                    aria-label="Placeholder: Image cap"
-                    preserveAspectRatio="xMidYMid slice"
-                    focusable="false"
-            >
-                <title>Placeholder</title>
-                <rect width="100%" height="100%" fill="#868e96"></rect>
-                <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
-            </svg>
-            <div class="card-body">
-                <h5 class="card-title"><c:out value="${item.nombreMascota}"/></h5>
-                <p class="card-text">
-                    <c:out value="${item.descripcionMascota}"/>
-                </p>
-                <a href="#" class="btn btn-primary"><c:out value="${item.id}"/></a>
+        <c:forEach var="item" items="${lista}">
+            <div class="card" style="width: 18rem">
+                <svg
+                        class="bd-placeholder-img card-img-top"
+                        width="100%"
+                        height="180"
+                        xmlns="http://www.w3.org/2000/svg"
+                        role="img"
+                        aria-label="Placeholder: Image cap"
+                        preserveAspectRatio="xMidYMid slice"
+                        focusable="false"
+                >
+                    <title>Placeholder</title>
+                    <rect width="100%" height="100%" fill="#868e96"></rect>
+                    <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
+                </svg>
+                <div class="card-body">
+                    <h5 class="card-title"><c:out value="${item.nombre}"/></h5>
+                    <p class="card-text">
+                        <c:out value="${item.descripcion}"/>
+                    </p>
+                    <a href="#" class="btn btn-primary"><c:out value="${item.categoria}"/></a>
+                </div>
             </div>
-        </div>
-
-    </div>
 
         </c:forEach>
     </div>
