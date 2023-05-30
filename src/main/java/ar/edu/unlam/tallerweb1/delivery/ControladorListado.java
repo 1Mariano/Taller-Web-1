@@ -46,19 +46,41 @@ public class ControladorListado{
         ModelMap modelo = new ModelMap();
         List<Producto> productosDrogueria = this.servicioListado.listarProductosDrogueria();
         modelo.put("lista", productosDrogueria);
-        return new ModelAndView("drogueria", modelo);
+        return new ModelAndView("/drogueria", modelo);
 
     }
 
+    @RequestMapping("/mascota")
+    public ModelAndView irAMascota(){
+        ModelMap modelo = new ModelMap();
+        List<Producto> productosMascota = this.servicioListado.listarProductosMascota();
+        modelo.put("lista", productosMascota);
+        return new ModelAndView("/mascota", modelo);
+
+    }
+    @RequestMapping("/alimentos")
+    public ModelAndView irAAlimentos(){
+        ModelMap modelo = new ModelMap();
+        List<Producto> productosAlimento = this.servicioListado.listarProductosAlimento();
+        modelo.put("lista", productosAlimento);
+        return new ModelAndView("/alimentos", modelo);
+
+    }
+
+
     @RequestMapping("/home")
-    public ModelAndView obtenerProductos(@RequestParam(value = "id") Long id){
+    public ModelAndView obtenerProductos(/*@RequestParam(value = "id") Long id*/){
         ModelMap modelo = new ModelMap();
         List<Producto> productos = this.servicioListado.obtenerProductos();
         modelo.put("lista", productos);
-        Usuario usuario = this.servicioListado.obtenerUsuarioPorId(id);
-        modelo.put("usuario", usuario);
+        /*Usuario usuario = this.servicioListado.obtenerUsuarioPorId(id);
+        modelo.put("usuario", usuario);*/
         return new ModelAndView("home", modelo);
     }
+
+
+
+
     /*@GetMapping("/productos")
     public String obtenerProductos(Model model) {
         // Lógica para obtener la lista de productos

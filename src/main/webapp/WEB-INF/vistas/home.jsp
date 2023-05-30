@@ -46,14 +46,14 @@
             <a class="rounded text-decoration-none text-light" href="higiene">
                 <li class="bg-dark py-1 px-2">Higiene</li>
             </a>
-            <a class="rounded text-decoration-none text-light" href="#">
-                <li class="bg-dark py-1 px-2">#</li>
+            <a class="rounded text-decoration-none text-light" href="mascota">
+                <li class="bg-dark py-1 px-2">Mascotas</li>
             </a>
             <a class="rounded text-decoration-none text-light" href="drogueria">
                 <li class="bg-dark py-1 px-2">Drogueria</li>
             </a>
-            <a class="rounded text-decoration-none text-light" href="#">
-                <li class="bg-dark py-1 px-2">Otra info</li>
+            <a class="rounded text-decoration-none text-light" href="alimentos">
+                <li class="bg-dark py-1 px-2">Alimentos</li>
             </a>
         </ul>
 
@@ -97,6 +97,127 @@
     <div class="d-flex flex-wrap gap-5 justify-content-center">
         <c:forEach var="item" items="${lista}">
             <c:if test="${item.categoria == 'DROGUERIA'}">
+                <div class="card" style="width: 18rem">
+                    <svg
+                            class="bd-placeholder-img card-img-top"
+                            width="100%"
+                            height="180"
+                            xmlns="http://www.w3.org/2000/svg"
+                            role="img"
+                            aria-label="Placeholder: Image cap"
+                            preserveAspectRatio="xMidYMid slice"
+                            focusable="false"
+                    >
+                        <title>Placeholder</title>
+                        <rect width="100%" height="100%" fill="#868e96"></rect>
+                        <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
+                    </svg>
+                    <div class="card-body">
+                        <h5 class="card-title"><c:out value="${item.nombre}"/></h5>
+                        <p class="card-text">
+                            <c:out value="${item.descripcion}"/>
+                        </p>
+                        <a href="#" class="btn btn-primary"><c:out value="${item.categoria}"/></a>
+                    </div>
+                </div>
+            </c:if>
+        </c:forEach>
+    </div>
+    <h3 class="m-4 text-center">Productos Mascotas</h3>
+    <div class="d-flex flex-wrap gap-5 justify-content-center">
+        <c:forEach var="item" items="${lista}">
+            <c:if test="${item.categoria == 'MASCOTAS'}">
+                <div class="card" style="width: 18rem">
+                    <svg
+                            class="bd-placeholder-img card-img-top"
+                            width="100%"
+                            height="180"
+                            xmlns="http://www.w3.org/2000/svg"
+                            role="img"
+                            aria-label="Placeholder: Image cap"
+                            preserveAspectRatio="xMidYMid slice"
+                            focusable="false"
+                    >
+                        <title>Placeholder</title>
+                        <rect width="100%" height="100%" fill="#868e96"></rect>
+                        <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
+                    </svg>
+                    <div class="card-body">
+                        <h5 class="card-title"><c:out value="${item.nombre}"/></h5>
+                        <p class="card-text">
+                            <c:out value="${item.descripcion}"/>
+                        </p>
+                        <a href="#" class="btn btn-primary"><c:out value="${item.categoria}"/></a>
+                    </div>
+                </div>
+            </c:if>
+        </c:forEach>
+    </div>
+    <h3 class="m-4 text-center">Producto Alimentos</h3>
+    <h2 class="m-4 text-center">Frescos</h2>
+    <div class="d-flex flex-wrap gap-5 justify-content-center">
+        <c:forEach var="item" items="${lista}">
+            <c:if test="${item.categoria == 'ALIMENTOS_FRESCOS'}">
+                <div class="card" style="width: 18rem">
+                    <svg
+                            class="bd-placeholder-img card-img-top"
+                            width="100%"
+                            height="180"
+                            xmlns="http://www.w3.org/2000/svg"
+                            role="img"
+                            aria-label="Placeholder: Image cap"
+                            preserveAspectRatio="xMidYMid slice"
+                            focusable="false"
+                    >
+                        <title>Placeholder</title>
+                        <rect width="100%" height="100%" fill="#868e96"></rect>
+                        <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
+                    </svg>
+                    <div class="card-body">
+                        <h5 class="card-title"><c:out value="${item.nombre}"/></h5>
+                        <p class="card-text">
+                            <c:out value="${item.descripcion}"/>
+                        </p>
+                        <a href="#" class="btn btn-primary"><c:out value="${item.categoria}"/></a>
+                    </div>
+                </div>
+            </c:if>
+        </c:forEach>
+    </div>
+    <h2 class="m-4 text-center">Congelados</h2>
+    <div class="d-flex flex-wrap gap-5 justify-content-center">
+        <c:forEach var="item" items="${lista}">
+            <c:if test="${item.categoria == 'ALIMENTOS_CONGELADOS'}">
+                <div class="card" style="width: 18rem">
+                    <svg
+                            class="bd-placeholder-img card-img-top"
+                            width="100%"
+                            height="180"
+                            xmlns="http://www.w3.org/2000/svg"
+                            role="img"
+                            aria-label="Placeholder: Image cap"
+                            preserveAspectRatio="xMidYMid slice"
+                            focusable="false"
+                    >
+                        <title>Placeholder</title>
+                        <rect width="100%" height="100%" fill="#868e96"></rect>
+                        <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
+                    </svg>
+                    <div class="card-body">
+                        <h5 class="card-title"><c:out value="${item.nombre}"/></h5>
+                        <p class="card-text">
+                            <c:out value="${item.descripcion}"/>
+                        </p>
+                        <a href="#" class="btn btn-primary"><c:out value="${item.categoria}"/></a>
+                    </div>
+                </div>
+            </c:if>
+        </c:forEach>
+    </div>
+    <h2 class="m-4 text-center">No-perecederos</h2>
+    <div class="d-flex flex-wrap gap-5 justify-content-center">
+        <c:forEach var="item" items="${lista}">
+            <c:if test="${item.categoria == 'ALIMENTOS_NO_PERECEDEROS'}">
                 <div class="card" style="width: 18rem">
                     <svg
                             class="bd-placeholder-img card-img-top"
