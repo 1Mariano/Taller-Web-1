@@ -18,24 +18,7 @@ import java.util.List;
 
 @Controller
 public class ControladorCarrito {
-    private List<Producto> productos = new ArrayList<>();
-    public void agregarProducto(Producto producto) {
-        productos.add(producto);
-    }
 
-    public List<Producto> getProductos() {
-        return productos;
-    }
-    public void eliminarProducto(Producto producto) {
-        productos.remove(producto);
-    }
-    public double calcularTotal() {
-        Double total = 0.0;
-        for (Producto producto : productos) {
-            total += producto.getPrecioArs();
-        }
-        return total;
-    }
     private final ServicioCarrito servicioCarrito;
     private Carrito carrito = new Carrito();
 
@@ -47,7 +30,8 @@ public class ControladorCarrito {
     @RequestMapping("/agregarProducto")
     public ModelAndView agregarProducto(@RequestParam("id") Long productoId){
         Producto producto = this.servicioCarrito.obtenerProductoPorId(productoId);
-        agregarProducto(producto);
+        this.carrito.agregarProducto(producto);
+        //agregarProducto(producto);
         //List<Producto> carritoLleno = this.getProductos();
         //this.carrito.agregarProducto(producto);
         //ModelMap model = new ModelMap();
@@ -59,13 +43,14 @@ public class ControladorCarrito {
     @RequestMapping("/eliminarProducto")
     public ModelAndView eliminarProducto(@RequestParam("id") Long productoId){
         Producto aBorrar = null;
-        for (Producto producto : productos) {
+        for (Producto producto : this.carrito.getProductos()) {
             if (producto.getId() == productoId){
                 aBorrar = producto;
             }
         }
         if (aBorrar != null){
-            this.eliminarProducto(aBorrar);
+            this.carrito.eliminarProducto(aBorrar);
+            //this.eliminarProducto(aBorrar);
         }
 
         return new ModelAndView("redirect:/carrito");
@@ -74,8 +59,10 @@ public class ControladorCarrito {
     @RequestMapping("/carrito")
     public ModelAndView mostrarCarrito(){
         ModelMap model = new ModelMap();
-        model.put("carrito", this.getProductos());
-        model.put("total", this.calcularTotal());
+        model.put("carrito", this.carrito.getProductos());
+        model.put("total", this.carrito.calcularTotal());
+        /*model.put("carrito", this.getProductos());
+        model.put("total", this.calcularTotal());*/
         return new ModelAndView("/carrito", model);
     }
 
