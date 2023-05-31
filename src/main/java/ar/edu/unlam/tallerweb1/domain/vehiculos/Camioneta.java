@@ -1,4 +1,4 @@
-package ar.edu.unlam.tallerweb1.domain.vehiculos;
+/*package ar.edu.unlam.tallerweb1.domain.vehiculos;
 
 import ar.edu.unlam.tallerweb1.domain.enums.TipoVehiculo;
 
@@ -33,4 +33,4 @@ public class Camioneta extends Vehiculo{
     public TipoVehiculo getTipo() {
         return TipoVehiculo.CAMIONETA;
     }
-}
+}*/

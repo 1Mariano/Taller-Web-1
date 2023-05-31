@@ -4,158 +4,164 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MiAplicación</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MiAplicación</title>
 
-  <script src="https://cdn.misdeliver.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <script src="https://cdn.misdeliver.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 
-  <!-- Bootstrap core CSS
-    <link href="../../css/bootstrap.min.css" rel="stylesheet">
-    Bootstrap theme
-    <link href="../../css/bootstrap-theme.min.css" rel="stylesheet">-->
+    <!-- Bootstrap core CSS
+      <link href="../../css/bootstrap.min.css" rel="stylesheet">
+      Bootstrap theme
+      <link href="../../css/bootstrap-theme.min.css" rel="stylesheet">-->
 
 </head>
 
 <body>
 <header class="bg-info-subtle py-5">
 
-  <div class="text-center  my-2">
-    <p class="bg-primary d-inline py-3 px-4 rounded text-white">Bienvenido: <b>${usuario.email}</b></p>
-    <form action="logout" method="post">
-      <button class="bg-danger py-3 px-4 rounded text-white" Type="submit">Logout</button>
-    </form>
-  </div>
-  <div class="my-4">
-    <div class="input-group mb-3 w-50 mx-auto">
-      <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username"
-             aria-describedby="button-addon2"/>
-      <button class="btn btn-outline-secondary" type="button" id="button-addon2">
-        Button
-      </button>
+    <div class="text-center  my-2">
+        <p class="bg-primary d-inline py-3 px-4 rounded text-white">Bienvenido: <b>${usuario.email}</b></p>
+        <form action="logout" method="post">
+            <button class="bg-danger py-3 px-4 rounded text-white" Type="submit">Logout</button>
+        </form>
     </div>
-  </div>
-  <div>
-    <ul class="m-0 list-unstyled d-flex gap-3 d-flex justify-content-center align-items-center">
-      <a class="rounded text-decoration-none text-light" href="home">
-        <li class="bg-dark py-1 px-2">Inicio</li>
-      </a>
-      <a class="rounded text-decoration-none text-light" href="higiene">
-        <li class="bg-dark py-1 px-2">Higiene</li>
-      </a>
-      <a class="rounded text-decoration-none text-light" href="mascota">
-        <li class="bg-dark py-1 px-2">Mascotas</li>
-      </a>
-      <a class="rounded text-decoration-none text-light" href="drogueria">
-        <li class="bg-dark py-1 px-2">Drogueria</li>
-      </a>
-      <a class="rounded text-decoration-none text-light" href="alimentos">
-        <li class="bg-dark py-1 px-2">Alimento</li>
-      </a>
-    </ul>
+    <div class="my-4">
+        <div class="input-group mb-3 w-50 mx-auto">
+            <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username"
+                   aria-describedby="button-addon2"/>
+            <button class="btn btn-outline-secondary" type="button" id="button-addon2">
+                Button
+            </button>
+        </div>
+    </div>
+    <div>
+        <ul class="m-0 list-unstyled d-flex gap-3 d-flex justify-content-center align-items-center">
+            <a class="rounded text-decoration-none text-light" href="home">
+                <li class="bg-dark py-1 px-2">Inicio</li>
+            </a>
+            <a class="rounded text-decoration-none text-light" href="higiene">
+                <li class="bg-dark py-1 px-2">Higiene</li>
+            </a>
+            <a class="rounded text-decoration-none text-light" href="mascota">
+                <li class="bg-dark py-1 px-2">Mascotas</li>
+            </a>
+            <a class="rounded text-decoration-none text-light" href="drogueria">
+                <li class="bg-dark py-1 px-2">Drogueria</li>
+            </a>
+            <a class="rounded text-decoration-none text-light" href="alimentos">
+                <li class="bg-dark py-1 px-2">Alimento</li>
+            </a>
+            <a class="rounded text-decoration-none text-light" href="carrito">
+                <li class="bg-warning py-1 px-2">Carrito</li>
+            </a>
+        </ul>
 
-  </div>
+    </div>
 
 </header>
 <main>
-  <h3 class="m-4 text-center">Productos</h3>
-  <!-- Example Code -->
-  <h3 class="m-4 text-center">Productos Alimento Frescos</h3>
-  <div class="d-flex flex-wrap gap-5 justify-content-center">
-    <c:forEach var="item" items="${lista}">
-      <c:if test="${item.categoria == 'ALIMENTOS_FRESCOS'}">
-        <div class="card" style="width: 18rem">
-          <svg
-                  class="bd-placeholder-img card-img-top"
-                  width="100%"
-                  height="180"
-                  xmlns="http://www.w3.org/2000/svg"
-                  role="img"
-                  aria-label="Placeholder: Image cap"
-                  preserveAspectRatio="xMidYMid slice"
-                  focusable="false"
-          >
-            <title>Placeholder</title>
-            <rect width="100%" height="100%" fill="#868e96"></rect>
-            <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
-          </svg>
-          <div class="card-body">
-            <h5 class="card-title"><c:out value="${item.nombre}"/></h5>
-            <p class="card-text">
-              <c:out value="${item.descripcion}"/>
-            </p>
-            <a href="#" class="btn btn-primary"><c:out value="${item.categoria}"/></a>
-          </div>
-        </div>
-      </c:if>
-    </c:forEach>
-  </div>
-  <<h3 class="m-4 text-center">Productos Alimento Congelados</h3>
-  <div class="d-flex flex-wrap gap-5 justify-content-center">
-    <c:forEach var="item" items="${lista}">
-      <c:if test="${item.categoria == 'ALIMENTOS_CONGELADOS'}">
-        <div class="card" style="width: 18rem">
-          <svg
-                  class="bd-placeholder-img card-img-top"
-                  width="100%"
-                  height="180"
-                  xmlns="http://www.w3.org/2000/svg"
-                  role="img"
-                  aria-label="Placeholder: Image cap"
-                  preserveAspectRatio="xMidYMid slice"
-                  focusable="false"
-          >
-            <title>Placeholder</title>
-            <rect width="100%" height="100%" fill="#868e96"></rect>
-            <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
-          </svg>
-          <div class="card-body">
-            <h5 class="card-title"><c:out value="${item.nombre}"/></h5>
-            <p class="card-text">
-              <c:out value="${item.descripcion}"/>
-            </p>
-            <a href="#" class="btn btn-primary"><c:out value="${item.categoria}"/></a>
-          </div>
-        </div>
-      </c:if>
-    </c:forEach>
-  </div>
-  <<h3 class="m-4 text-center">Productos Alimento No-perecederos</h3>
-  <div class="d-flex flex-wrap gap-5 justify-content-center">
-    <c:forEach var="item" items="${lista}">
-      <c:if test="${item.categoria == 'ALIMENTOS_NO_PERECEDEROS'}">
-        <div class="card" style="width: 18rem">
-          <svg
-                  class="bd-placeholder-img card-img-top"
-                  width="100%"
-                  height="180"
-                  xmlns="http://www.w3.org/2000/svg"
-                  role="img"
-                  aria-label="Placeholder: Image cap"
-                  preserveAspectRatio="xMidYMid slice"
-                  focusable="false"
-          >
-            <title>Placeholder</title>
-            <rect width="100%" height="100%" fill="#868e96"></rect>
-            <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
-          </svg>
-          <div class="card-body">
-            <h5 class="card-title"><c:out value="${item.nombre}"/></h5>
-            <p class="card-text">
-              <c:out value="${item.descripcion}"/>
-            </p>
-            <a href="#" class="btn btn-primary"><c:out value="${item.categoria}"/></a>
-          </div>
-        </div>
-      </c:if>
-    </c:forEach>
-  </div>
+    <h3 class="m-4 text-center">Productos</h3>
+    <!-- Example Code -->
+    <h3 class="m-4 text-center">Productos Alimento Frescos</h3>
+    <div class="d-flex flex-wrap gap-5 justify-content-center">
+        <c:forEach var="item" items="${lista}">
+            <c:if test="${item.categoria == 'ALIMENTOS_FRESCOS'}">
+                <div class="card" style="width: 18rem">
+                    <svg
+                            class="bd-placeholder-img card-img-top"
+                            width="100%"
+                            height="180"
+                            xmlns="http://www.w3.org/2000/svg"
+                            role="img"
+                            aria-label="Placeholder: Image cap"
+                            preserveAspectRatio="xMidYMid slice"
+                            focusable="false"
+                    >
+                        <title>Placeholder</title>
+                        <rect width="100%" height="100%" fill="#868e96"></rect>
+                        <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
+                    </svg>
+                    <div class="card-body">
+                        <h5 class="card-title"><c:out value="${item.nombre}"/></h5>
+                        <p class="card-text">
+                            <c:out value="${item.descripcion}"/>
+                        </p>
+                        <p>$${item.precioArs}</p>
+                        <a href="agregarProducto?id=${item.id}" class="btn btn-primary">Agregar a carrito</a>
+                    </div>
+                </div>
+            </c:if>
+        </c:forEach>
+    </div>
+    <<h3 class="m-4 text-center">Productos Alimento Congelados</h3>
+    <div class="d-flex flex-wrap gap-5 justify-content-center">
+        <c:forEach var="item" items="${lista}">
+            <c:if test="${item.categoria == 'ALIMENTOS_CONGELADOS'}">
+                <div class="card" style="width: 18rem">
+                    <svg
+                            class="bd-placeholder-img card-img-top"
+                            width="100%"
+                            height="180"
+                            xmlns="http://www.w3.org/2000/svg"
+                            role="img"
+                            aria-label="Placeholder: Image cap"
+                            preserveAspectRatio="xMidYMid slice"
+                            focusable="false"
+                    >
+                        <title>Placeholder</title>
+                        <rect width="100%" height="100%" fill="#868e96"></rect>
+                        <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
+                    </svg>
+                    <div class="card-body">
+                        <h5 class="card-title"><c:out value="${item.nombre}"/></h5>
+                        <p class="card-text">
+                            <c:out value="${item.descripcion}"/>
+                        </p>
+                        <p>$${item.precioArs}</p>
+                        <a href="agregarProducto?id=${item.id}" class="btn btn-primary">Agregar a carrito</a>
+                    </div>
+                </div>
+            </c:if>
+        </c:forEach>
+    </div>
+    <<h3 class="m-4 text-center">Productos Alimento No-perecederos</h3>
+    <div class="d-flex flex-wrap gap-5 justify-content-center">
+        <c:forEach var="item" items="${lista}">
+            <c:if test="${item.categoria == 'ALIMENTOS_NO_PERECEDEROS'}">
+                <div class="card" style="width: 18rem">
+                    <svg
+                            class="bd-placeholder-img card-img-top"
+                            width="100%"
+                            height="180"
+                            xmlns="http://www.w3.org/2000/svg"
+                            role="img"
+                            aria-label="Placeholder: Image cap"
+                            preserveAspectRatio="xMidYMid slice"
+                            focusable="false"
+                    >
+                        <title>Placeholder</title>
+                        <rect width="100%" height="100%" fill="#868e96"></rect>
+                        <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
+                    </svg>
+                    <div class="card-body">
+                        <h5 class="card-title"><c:out value="${item.nombre}"/></h5>
+                        <p class="card-text">
+                            <c:out value="${item.descripcion}"/>
+                        </p>
+                        <p>$${item.precioArs}</p>
+                        <a href="agregarProducto?id=${item.id}" class="btn btn-primary">Agregar a carrito</a>
+                    </div>
+                </div>
+            </c:if>
+        </c:forEach>
+    </div>
 
 
 </main>

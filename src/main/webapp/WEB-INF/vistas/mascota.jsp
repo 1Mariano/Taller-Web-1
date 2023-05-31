@@ -58,6 +58,9 @@
             <a class="rounded text-decoration-none text-light" href="alimentos">
                 <li class="bg-dark py-1 px-2">Alimentos</li>
             </a>
+            <a class="rounded text-decoration-none text-light" href="carrito">
+                <li class="bg-warning py-1 px-2">Carrito</li>
+            </a>
         </ul>
 
     </div>
@@ -89,7 +92,8 @@
                     <p class="card-text">
                         <c:out value="${item.descripcion}"/>
                     </p>
-                    <a href="#" class="btn btn-primary"><c:out value="${item.categoria}"/></a>
+                    <p>$${item.precioArs}</p>
+                    <a href="agregarProducto?id=${item.id}" class="btn btn-primary">Agregar a carrito</a>
                 </div>
             </div>
 
