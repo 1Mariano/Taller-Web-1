@@ -15,6 +15,9 @@ public interface RepositorioProducto {
 
     Usuario buscarUsuarioPorId(Long id);
 
+    Producto buscarProductoPorId(Long productoId);
+
+
     //List<Producto> listarDrogueria();
     /*
     List<Mascota> listarMascotas();
