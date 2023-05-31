@@ -11,7 +11,7 @@ import java.util.List;
 // ToDo ver relacion de bdd, ver get y set de id
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public /*abstract*/ class Contenedor  /*implements IContenedor*/{
+public class Contenedor{
 
 
 
@@ -36,6 +36,10 @@ public /*abstract*/ class Contenedor  /*implements IContenedor*/{
         this.tipoContenedor= tipoContenedor;
         this.ancho =ancho;
         this.largo = largo;
+
+    }
+
+    public Contenedor() {
 
     }
 
@@ -83,7 +87,7 @@ public /*abstract*/ class Contenedor  /*implements IContenedor*/{
         if (tipoContenedor == TipoContenedor.CAJA) {
             return true; // Cajas soportan cualquier peso
         } else if (tipoContenedor == TipoContenedor.BOLSA) {
-            return Producto.peso <= 5; // Bolsas soportan hasta 5 kg de peso
+            return Producto.peso <= 5000; // Bolsas soportan hasta 5 kg de peso
         }
         return false; // Tipo de contenedor no reconocido
     }
