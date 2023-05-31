@@ -39,6 +39,13 @@ public class RepositorioProductoImpl implements RepositorioProducto {
                 .uniqueResult();
     }
 
+    @Override
+    public Producto buscarProductoPorId(Long productoId) {
+        final Session session = sessionFactory.getCurrentSession();
+        return (Producto) session.createCriteria(Producto.class)
+                .add(Restrictions.eq("id", productoId))
+                .uniqueResult();
+    }
 
 
     @Override
@@ -64,19 +71,5 @@ public class RepositorioProductoImpl implements RepositorioProducto {
         return sessionFactory.getCurrentSession().createCriteria(Producto.class)
                 .list();
     }
-    /*
-    @Override
-    public List<Mascota> listarMascotas() {
-        return sessionFactory.getCurrentSession().createCriteria(Mascota.class)
-                .list();
-    }
 
-    @Override
-    public List<Higiene> listarHigiene() {
-        return sessionFactory.getCurrentSession().createCriteria(Higiene.class)
-                .list();
-    }
-
-
-    */
 }

@@ -87,7 +87,8 @@
                         <p class="card-text">
                             <c:out value="${item.descripcion}"/>
                         </p>
-                        <a href="#" class="btn btn-primary"><c:out value="${item.categoria}"/></a>
+
+                        <a href="agregarProducto?id=${item.id}" class="btn btn-primary"><c:out value="${item.id}"/></a>
                     </div>
                 </div>
             </c:if>
