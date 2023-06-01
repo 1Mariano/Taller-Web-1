@@ -1,6 +1,6 @@
 package ar.edu.unlam.tallerweb1.domain.vehiculos;
 
-import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor;
+//import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor;
 import ar.edu.unlam.tallerweb1.domain.contenedor.IContenedor;
 import ar.edu.unlam.tallerweb1.domain.enums.TipoVehiculo;
 
@@ -25,7 +25,7 @@ public /*abstract*/ class Vehiculo /*implements IVehiculo*/ {
     private TipoVehiculo tipoVehiculo;
     //ToDo lista de contenedores y pedido
     //@OneToMany
-    private List<Contenedor> contenedores;
+    //private List<Contenedor> contenedores;
 
     public Vehiculo(Long id, String patente, String modelo, Integer ancho, Integer alto, Integer largo, Integer pesoMaximoSoportado, Integer distanciaMaxima, TipoVehiculo tipoVehiculo) {
         this.id = id;
@@ -38,7 +38,7 @@ public /*abstract*/ class Vehiculo /*implements IVehiculo*/ {
         this.pesoMaximoSoportado = pesoMaximoSoportado;
         this.distanciaMaxima = distanciaMaxima;
         this.tipoVehiculo = tipoVehiculo;
-        this.contenedores = new ArrayList<Contenedor>();
+        //this.contenedores = new ArrayList<Contenedor>();
     }
 
     public Vehiculo() {
@@ -81,7 +81,7 @@ public /*abstract*/ class Vehiculo /*implements IVehiculo*/ {
     }
 
     // @Override
-    public List<Contenedor> getContenedores() {
+    /*public List<Contenedor> getContenedores() {
         return contenedores;
     }
 
@@ -96,10 +96,10 @@ public /*abstract*/ class Vehiculo /*implements IVehiculo*/ {
             res += c.getVolumenContenedor();
         }
         return res;
-    }
+    }*/
 
     //ToDo métodos guardar y soporta
-/*
+    /*
     //@Override
     public Boolean guardar(Contenedor contenedor) {
         Boolean resistenciaOk = soporta(contenedor);

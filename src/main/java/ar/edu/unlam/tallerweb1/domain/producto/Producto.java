@@ -1,6 +1,6 @@
 package ar.edu.unlam.tallerweb1.domain.producto;
 
-import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor;
+/*import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor;*/
 import ar.edu.unlam.tallerweb1.domain.enums.CategoriaProducto;
 
 import javax.persistence.*;
@@ -115,11 +115,11 @@ public /*abstract*/ class Producto /*implements IProducto*/{
     }
 
     //@Override
-    public Boolean tengoEspacio(Contenedor contenedor) {
+   /* public Boolean tengoEspacio(Contenedor contenedor) {
         return contenedor.volumenDisponibleContenedor() > volumen;
     }
     // @Override
-    /*public void meter(Contenedor contenedor) {
+    public void meter(Contenedor contenedor) {
         this.contenedor = contenedor;
     }*/
 

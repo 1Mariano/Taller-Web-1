@@ -65,39 +65,39 @@
 
 </header>
 <main>
-    <h3 class="m-4 text-center">Productos</h3>
-    <!-- Example Code -->
-    <h3 class="m-4 text-center">Productos Drogueria</h3>
+    <h3 class="m-4 text-center">Mi carrito</h3>
     <div class="d-flex flex-wrap gap-5 justify-content-center">
-      <div class="container">
-        <table class="table">
-            <thead class="thead-dark">
-            <tr>
-                <th>Nombre</th>
-                <th>Descripcion</th>
-                <th >Precio</th>
-                <th >Eliminar</th>
-            </tr>
-            </thead>
-            <tbody>
-            <c:forEach var="producto" items="${carrito}">
-                <tr>
-                    <td><c:out value="${producto.nombre}"/></td>
-                    <td><c:out value="${producto.descripcion}"/></td>
-                    <td>$<c:out value="${producto.precioArs}"/></td>
-                    <td>
-                        <a href="eliminarProducto?id=${producto.id}">Eliminar</a>
-                    </td>
+        <div class="container">
+            <table class="table">
+                <thead class="thead-dark">
+                <tr class="table-warning">
+                    <th>Nombre</th>
+                    <th>Marca</th>
+                    <th>Descripción</th>
+                    <th>Eliminar</th>
+                    <th class="text-end">Precio</th>
                 </tr>
-            </c:forEach>
-            </tbody>
-            <tfoot class="text-center">
-            <tr>
-                <td colspan="4">Total: $${total}</td>
-            </tr>
-            </tfoot>
-        </table>
-      </div>
+                </thead>
+                <tbody>
+                <c:forEach var="producto" items="${carrito}">
+                    <tr>
+                        <td><c:out value="${producto.nombre}"/></td>
+                        <td><c:out value="${producto.marca}"/></td>
+                        <td><c:out value="${producto.descripcion}"/></td>
+                        <td>
+                            <a href="eliminarProducto?id=${producto.id}">Eliminar</a>
+                        </td>
+                        <td class="text-end">$<c:out value="${producto.precioArs}"/></td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+                <tfoot class="text-end">
+                <tr>
+                    <td colspan="8">Total: $${total}</td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
 
     </div>
 </main>

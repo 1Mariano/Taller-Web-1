@@ -53,7 +53,7 @@
                 <li class="bg-dark py-1 px-2">Mascotas</li>
             </a>
             <a class="rounded text-decoration-none text-light" href="drogueria">
-                <li class="bg-dark py-1 px-2">Drogueria</li>
+                <li class="bg-dark py-1 px-2">Droguería</li>
             </a>
             <a class="rounded text-decoration-none text-light" href="alimentos">
                 <li class="bg-dark py-1 px-2">Alimento</li>
@@ -67,96 +67,72 @@
 
 </header>
 <main>
-    <h3 class="m-4 text-center">Productos</h3>
+    <h3 class="m-4 text-center">Productos de alimentación</h3>
     <!-- Example Code -->
-    <h3 class="m-4 text-center">Productos Alimento Frescos</h3>
+    <h3 class="m-4 text-center">Productos frescos</h3>
     <div class="d-flex flex-wrap gap-5 justify-content-center">
         <c:forEach var="item" items="${lista}">
             <c:if test="${item.categoria == 'ALIMENTOS_FRESCOS'}">
-                <div class="card" style="width: 18rem">
-                    <svg
-                            class="bd-placeholder-img card-img-top"
-                            width="100%"
-                            height="180"
-                            xmlns="http://www.w3.org/2000/svg"
-                            role="img"
-                            aria-label="Placeholder: Image cap"
-                            preserveAspectRatio="xMidYMid slice"
-                            focusable="false"
-                    >
-                        <title>Placeholder</title>
-                        <rect width="100%" height="100%" fill="#868e96"></rect>
-                        <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
-                    </svg>
+                <div class="card" style="width: 20rem">
+                    <div class="d-flex justify-content-center align-items-center" style="height: 280px;">
+                        <img src="${pageContext.request.contextPath}/static/img/${item.img}" alt=""
+                             style="width: 280px"/>
+                    </div>
                     <div class="card-body">
                         <h5 class="card-title"><c:out value="${item.nombre}"/></h5>
-                        <p class="card-text">
+                        <p class="card-text overflow-hidden" style="height: 50px;">
                             <c:out value="${item.descripcion}"/>
                         </p>
                         <p>$${item.precioArs}</p>
-                        <a href="agregarProducto?id=${item.id}" class="btn btn-primary">Agregar a carrito</a>
+                        <div class="mt-auto">
+                            <a href="agregarProducto?id=${item.id}" class="btn btn-primary">Agregar a carrito</a>
+                        </div>
                     </div>
                 </div>
             </c:if>
         </c:forEach>
     </div>
-    <<h3 class="m-4 text-center">Productos Alimento Congelados</h3>
+    <<h3 class="m-4 text-center">Productos congelados</h3>
     <div class="d-flex flex-wrap gap-5 justify-content-center">
         <c:forEach var="item" items="${lista}">
             <c:if test="${item.categoria == 'ALIMENTOS_CONGELADOS'}">
-                <div class="card" style="width: 18rem">
-                    <svg
-                            class="bd-placeholder-img card-img-top"
-                            width="100%"
-                            height="180"
-                            xmlns="http://www.w3.org/2000/svg"
-                            role="img"
-                            aria-label="Placeholder: Image cap"
-                            preserveAspectRatio="xMidYMid slice"
-                            focusable="false"
-                    >
-                        <title>Placeholder</title>
-                        <rect width="100%" height="100%" fill="#868e96"></rect>
-                        <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
-                    </svg>
+                <div class="card" style="width: 20rem">
+                    <div class="d-flex justify-content-center align-items-center" style="height: 280px;">
+                        <img src="${pageContext.request.contextPath}/static/img/${item.img}" alt=""
+                             style="width: 280px"/>
+                    </div>
                     <div class="card-body">
                         <h5 class="card-title"><c:out value="${item.nombre}"/></h5>
-                        <p class="card-text">
+                        <p class="card-text overflow-hidden" style="height: 50px;">
                             <c:out value="${item.descripcion}"/>
                         </p>
                         <p>$${item.precioArs}</p>
-                        <a href="agregarProducto?id=${item.id}" class="btn btn-primary">Agregar a carrito</a>
+                        <div class="mt-auto">
+                            <a href="agregarProducto?id=${item.id}" class="btn btn-primary">Agregar a carrito</a>
+                        </div>
                     </div>
                 </div>
             </c:if>
         </c:forEach>
     </div>
-    <<h3 class="m-4 text-center">Productos Alimento No-perecederos</h3>
+    <<h3 class="m-4 text-center">Productos de almacén</h3>
     <div class="d-flex flex-wrap gap-5 justify-content-center">
         <c:forEach var="item" items="${lista}">
             <c:if test="${item.categoria == 'ALIMENTOS_NO_PERECEDEROS'}">
-                <div class="card" style="width: 18rem">
-                    <svg
-                            class="bd-placeholder-img card-img-top"
-                            width="100%"
-                            height="180"
-                            xmlns="http://www.w3.org/2000/svg"
-                            role="img"
-                            aria-label="Placeholder: Image cap"
-                            preserveAspectRatio="xMidYMid slice"
-                            focusable="false"
-                    >
-                        <title>Placeholder</title>
-                        <rect width="100%" height="100%" fill="#868e96"></rect>
-                        <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
-                    </svg>
+                <div class="card" style="width: 20rem">
+                    <div class="d-flex justify-content-center align-items-center" style="height: 280px;">
+                        <img src="${pageContext.request.contextPath}/static/img/${item.img}" alt=""
+                             style="width: 280px"/>
+                    </div>
                     <div class="card-body">
                         <h5 class="card-title"><c:out value="${item.nombre}"/></h5>
-                        <p class="card-text">
+                        <p class="card-text overflow-hidden" style="height: 50px;">
                             <c:out value="${item.descripcion}"/>
                         </p>
                         <p>$${item.precioArs}</p>
-                        <a href="agregarProducto?id=${item.id}" class="btn btn-primary">Agregar a carrito</a>
+                        <div class="mt-auto">
+                            <a href="agregarProducto?id=${item.id}" class="btn btn-primary">Agregar a carrito</a>
+                        </div>
                     </div>
                 </div>
             </c:if>
