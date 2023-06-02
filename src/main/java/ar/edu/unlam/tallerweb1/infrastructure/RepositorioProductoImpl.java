@@ -1,10 +1,12 @@
 package ar.edu.unlam.tallerweb1.infrastructure;
 
+import ar.edu.unlam.tallerweb1.domain.carrito.Carrito;
 import ar.edu.unlam.tallerweb1.domain.producto.*;
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -46,6 +48,36 @@ public class RepositorioProductoImpl implements RepositorioProducto {
                 .add(Restrictions.eq("id", productoId))
                 .uniqueResult();
     }
+
+    @Override
+    public void agregarProductoAlCarrito(Long productoId, Long usarioId) {
+        final Session session = sessionFactory.getCurrentSession();
+        Producto producto = session.get(Producto.class, productoId);
+        Usuario usuario = session.get(Usuario.class, usarioId);
+        Carrito carrito = new Carrito();
+        carrito.setProducto(producto);
+        carrito.setUsuario(usuario);
+        session.save(carrito);
+        //sessionFactory.getCurrentSession().save(carrito);
+    }
+
+    @Override
+    public void eliminarProductoDelCarrito(Carrito carrito) {
+        sessionFactory.getCurrentSession().delete(carrito);
+    }
+
+
+    @Override
+    public List<Carrito> obtenerTodosLosProductosDelCarritoDelUsuario(Long id) {
+        final Session session = sessionFactory.getCurrentSession();
+        return session.createCriteria(Carrito.class)
+                .createAlias("producto", "p")
+                .createAlias("usuario", "u")
+                .add(Restrictions.eq("u.id", id))
+                .list();
+    }
+
+
 
 
     @Override

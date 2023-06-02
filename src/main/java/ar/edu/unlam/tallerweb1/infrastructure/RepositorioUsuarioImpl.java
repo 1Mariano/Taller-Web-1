@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.infrastructure;
 
+import ar.edu.unlam.tallerweb1.domain.producto.Producto;
 import ar.edu.unlam.tallerweb1.domain.usuarios.RepositorioUsuario;
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 import org.hibernate.Session;
@@ -82,6 +83,11 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 		return (Usuario) sessionFactory.getCurrentSession().createCriteria(Usuario.class)
 				.add(Restrictions.eq("email", email))
 				.uniqueResult();
+	}
+
+	@Override
+	public void agregarProductoAlUsuario(Producto producto) {
+		sessionFactory.getCurrentSession().save(producto);
 	}
 
 }
