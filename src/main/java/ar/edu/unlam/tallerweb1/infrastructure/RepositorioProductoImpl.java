@@ -1,10 +1,12 @@
 package ar.edu.unlam.tallerweb1.infrastructure;
 
+import ar.edu.unlam.tallerweb1.domain.carrito.Carrito;
 import ar.edu.unlam.tallerweb1.domain.producto.*;
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -45,6 +47,23 @@ public class RepositorioProductoImpl implements RepositorioProducto {
         return (Producto) session.createCriteria(Producto.class)
                 .add(Restrictions.eq("id", productoId))
                 .uniqueResult();
+    }
+
+    @Override
+    public void agregarProductoAlCarrito(Producto producto) {
+        sessionFactory.getCurrentSession().save(producto);
+    }
+
+
+
+    @Override
+    public List<Carrito> obtenerTodosLosProductosDelCarritoDelUsuario(Long id) {
+        final Session session = sessionFactory.getCurrentSession();
+        return session.createCriteria(Carrito.class)
+                .createAlias("producto", "p")
+                .createAlias("usuario", "u")
+                .add(Restrictions.eq("u.id", id))
+                .list();
     }
 
 

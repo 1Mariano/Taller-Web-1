@@ -1,18 +1,19 @@
 package ar.edu.unlam.tallerweb1.domain.vehiculos;
 
 //import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor;
-import ar.edu.unlam.tallerweb1.domain.contenedor.IContenedor;
 import ar.edu.unlam.tallerweb1.domain.enums.TipoVehiculo;
 
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-//@Entity
-public /*abstract*/ class Vehiculo /*implements IVehiculo*/ {
+@Entity
+public  class Vehiculo  {
 
-    /*@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)*/
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String patente;
     private String modelo;
@@ -23,6 +24,7 @@ public /*abstract*/ class Vehiculo /*implements IVehiculo*/ {
     private Integer pesoMaximoSoportado;
     private Integer distanciaMaxima;
     private TipoVehiculo tipoVehiculo;
+
     //ToDo lista de contenedores y pedido
     //@OneToMany
     //private List<Contenedor> contenedores;
@@ -78,6 +80,14 @@ public /*abstract*/ class Vehiculo /*implements IVehiculo*/ {
     //@Override
     public Integer getVolumenVehiculo() {
         return this.volumen;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     // @Override

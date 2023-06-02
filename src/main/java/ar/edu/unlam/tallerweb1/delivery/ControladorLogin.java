@@ -39,13 +39,14 @@ public class ControladorLogin {
 
 	@Autowired
 	private HttpServletRequest request;
-	@Autowired
-	private HttpSession sesion;
+	/*@Autowired
+	private HttpSession sesion;*/
 
 
 	// Este metodo escucha la URL localhost:8080/NOMBRE_APP/login si la misma es invocada por metodo http GET
 	@RequestMapping("/login")
 	public ModelAndView irALogin() {
+
 
 		ModelMap modelo = new ModelMap();
 		// Se agrega al modelo un objeto con key 'datosLogin' para que el mismo sea asociado
@@ -53,14 +54,19 @@ public class ControladorLogin {
 		modelo.put("datosLogin", new DatosLogin());
 		// Se va a la vista login (el nombre completo de la lista se resuelve utilizando el view resolver definido en el archivo spring-servlet.xml)
 		// y se envian los datos a la misma  dentro del modelo
+		if (request.getSession().getAttribute("idUsuario") != null){
+			return new ModelAndView("redirect:/home");
+		}
+
 		return new ModelAndView("login", modelo);
 	}
 	@RequestMapping(path = "/logout")
 	public ModelAndView irALoginLogout() {
 
 		request.getSession().invalidate();
-		return new ModelAndView("redirect:/login");
+		return new ModelAndView("redirect:/home");
 	}
+
 
 	//registro usuario
 
@@ -96,6 +102,10 @@ public class ControladorLogin {
 			Usuario usuarioBuscado = this.servicioLogin.consultarUsuarioPorEmail(datosLogin.getEmail());
 			//model.put("usuario", usuarioBuscado);
 			model.put("id", usuarioBuscado.getId());
+
+			HttpSession sesion = request.getSession();
+			sesion.setAttribute("idUsuario", usuarioBuscado.getId());
+
 			return new ModelAndView("redirect:/home", model);
 		}
 
@@ -118,6 +128,6 @@ public class ControladorLogin {
 		@RequestMapping(path = "/", method = RequestMethod.GET)
 		public ModelAndView inicio() {
 
-			return new ModelAndView("redirect:/login");
+			return new ModelAndView("redirect:/home");
 		}
 }

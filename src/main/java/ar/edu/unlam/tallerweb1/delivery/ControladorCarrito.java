@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,26 +25,34 @@ public class ControladorCarrito {
     private Carrito carrito = new Carrito();
 
     @Autowired
+    private HttpServletRequest request;
+    @Autowired
+    private HttpSession sesion;
+    @Autowired
     public ControladorCarrito(ServicioCarrito servicioCarrito){
         this.servicioCarrito = servicioCarrito;
     }
 
     @RequestMapping("/agregarProducto")
     public ModelAndView agregarProducto(@RequestParam("id") Long productoId){
+
+        if (request.getSession().getAttribute("idUsuario") == null){
+            return new ModelAndView("redirect:/login");
+        }
+        Long idUsuario = (Long) request.getSession().getAttribute("idUsuario");
         Producto producto = this.servicioCarrito.obtenerProductoPorId(productoId);
-        this.carrito.agregarProducto(producto);
-        //agregarProducto(producto);
-        //List<Producto> carritoLleno = this.getProductos();
-        //this.carrito.agregarProducto(producto);
-        //ModelMap model = new ModelMap();
-        //model.put("carrito", this.getProductos());
-        //return new ModelAndView("redirect:/carrito",model);
+        if(producto != null){
+            this.servicioCarrito.agregarProductoAlCarrito(producto, idUsuario);
+        }
+
         return new ModelAndView("redirect:/carrito");
     }
 
+
+
     @RequestMapping("/eliminarProducto")
     public ModelAndView eliminarProducto(@RequestParam("id") Long productoId){
-        Producto aBorrar = null;
+        /*Producto aBorrar = null;
         for (Producto producto : this.carrito.getProductos()) {
             if (producto.getId() == productoId){
                 aBorrar = producto;
@@ -51,19 +61,30 @@ public class ControladorCarrito {
         if (aBorrar != null){
             this.carrito.eliminarProducto(aBorrar);
             //this.eliminarProducto(aBorrar);
-        }
+        }*/
 
         return new ModelAndView("redirect:/carrito");
     }
 
     @RequestMapping("/carrito")
     public ModelAndView mostrarCarrito(){
+        if (request.getSession().getAttribute("idUsuario") == null){
+            return new ModelAndView("redirect:/login");
+        }
         ModelMap model = new ModelMap();
-        model.put("carrito", this.carrito.getProductos());
-        model.put("total", this.carrito.calcularTotal());
-        /*model.put("carrito", this.getProductos());
-        model.put("total", this.calcularTotal());*/
+        Long idUsuario = (Long) request.getSession().getAttribute("idUsuario");
+        List<Producto> carrito= this.servicioCarrito.obtenerTodosLosProductosDelCarrito(idUsuario);
+        model.put("carrito", carrito);
+        model.put("total", calcularTotal(carrito));
         return new ModelAndView("/carrito", model);
+    }
+
+    private Double calcularTotal(List<Producto> carrito) {
+        Double total = 0.0;
+        for (Producto producto : carrito) {
+            total += producto.getPrecioArs();
+        }
+        return total;
     }
 
     /*@RequestMapping("/agregarProducto")
