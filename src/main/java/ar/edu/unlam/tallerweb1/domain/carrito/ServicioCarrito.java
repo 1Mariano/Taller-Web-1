@@ -7,7 +7,13 @@ import java.util.List;
 public interface ServicioCarrito{
     Producto obtenerProductoPorId(Long productoId);
 
-    void agregarProductoAlCarrito(Producto producto, Long usuarioId);
+
 
     List<Producto> obtenerTodosLosProductosDelCarrito(Long id);
+
+    void agregarProductoAlCarrito(Producto producto, Long usuarioId);
+
+    void BorrarProductoDelCarrito(Producto producto, Long idUsuario);
+
+
 }

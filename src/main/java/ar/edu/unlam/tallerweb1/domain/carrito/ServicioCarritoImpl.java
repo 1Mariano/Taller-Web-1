@@ -35,15 +35,26 @@ public class ServicioCarritoImpl implements ServicioCarrito{
     @Override
     public void agregarProductoAlCarrito(Producto producto, Long usuarioId) {
         Usuario usuario = repositorioUsuario.buscarUsuarioPorId(usuarioId);
-        /*if (usuario != null){
-            //producto.setUsuario(usuario);
-            usuario.getProductos().add(producto);
-            //producto.setUsuarios(usuario.set);
+        if (usuario != null){
 
-            this.repositorioProducto.agregarProductoAlCarrito(producto);
-            //this.repositorioUsuario.agregarProductoAlUsuario(producto);
-        }*/
+            this.repositorioProducto.agregarProductoAlCarrito(producto.getId(), usuario.getId());
+        }
     }
+
+
+
+    @Override
+    public void BorrarProductoDelCarrito(Producto producto, Long idUsuario) {
+        List<Carrito> array = this.repositorioProducto.obtenerTodosLosProductosDelCarritoDelUsuario(idUsuario);
+        for (Carrito carrito : array){
+            if (carrito.getUsuario().getId() == idUsuario && carrito.getProducto().getId() == producto.getId()){
+                this.repositorioProducto.eliminarProductoDelCarrito(carrito);
+                return;
+            }
+        }
+
+    }
+
 
     @Override
     public List<Producto> obtenerTodosLosProductosDelCarrito(Long id) {

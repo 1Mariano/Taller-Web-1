@@ -50,10 +50,21 @@ public class RepositorioProductoImpl implements RepositorioProducto {
     }
 
     @Override
-    public void agregarProductoAlCarrito(Producto producto) {
-        sessionFactory.getCurrentSession().save(producto);
+    public void agregarProductoAlCarrito(Long productoId, Long usarioId) {
+        final Session session = sessionFactory.getCurrentSession();
+        Producto producto = session.get(Producto.class, productoId);
+        Usuario usuario = session.get(Usuario.class, usarioId);
+        Carrito carrito = new Carrito();
+        carrito.setProducto(producto);
+        carrito.setUsuario(usuario);
+        session.save(carrito);
+        //sessionFactory.getCurrentSession().save(carrito);
     }
 
+    @Override
+    public void eliminarProductoDelCarrito(Carrito carrito) {
+        sessionFactory.getCurrentSession().delete(carrito);
+    }
 
 
     @Override
@@ -65,6 +76,8 @@ public class RepositorioProductoImpl implements RepositorioProducto {
                 .add(Restrictions.eq("u.id", id))
                 .list();
     }
+
+
 
 
     @Override

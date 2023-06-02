@@ -18,9 +18,11 @@ public interface RepositorioProducto {
 
     Producto buscarProductoPorId(Long productoId);
 
-    void agregarProductoAlCarrito(Producto producto);
+    void agregarProductoAlCarrito(Long productoId, Long usuarioId);
 
     List<Carrito> obtenerTodosLosProductosDelCarritoDelUsuario(Long id);
+
+    void eliminarProductoDelCarrito(Carrito carrito);
 
 
     //List<Producto> listarDrogueria();

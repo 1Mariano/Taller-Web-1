@@ -45,6 +45,7 @@ public class ControladorCarrito {
             this.servicioCarrito.agregarProductoAlCarrito(producto, idUsuario);
         }
 
+
         return new ModelAndView("redirect:/carrito");
     }
 
@@ -52,16 +53,12 @@ public class ControladorCarrito {
 
     @RequestMapping("/eliminarProducto")
     public ModelAndView eliminarProducto(@RequestParam("id") Long productoId){
-        /*Producto aBorrar = null;
-        for (Producto producto : this.carrito.getProductos()) {
-            if (producto.getId() == productoId){
-                aBorrar = producto;
-            }
+        Long idUsuario = (Long) request.getSession().getAttribute("idUsuario");
+        Producto producto = this.servicioCarrito.obtenerProductoPorId(productoId);
+        if(producto != null){
+            this.servicioCarrito.BorrarProductoDelCarrito(producto, idUsuario);
         }
-        if (aBorrar != null){
-            this.carrito.eliminarProducto(aBorrar);
-            //this.eliminarProducto(aBorrar);
-        }*/
+
 
         return new ModelAndView("redirect:/carrito");
     }
