@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.domain.usuarios;
 
+import ar.edu.unlam.tallerweb1.domain.producto.Producto;
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 import ar.edu.unlam.tallerweb1.exceptions.ClavesLongitudException;
 import ar.edu.unlam.tallerweb1.exceptions.UsuarioYaExistenteException;
@@ -16,4 +17,6 @@ public interface RepositorioUsuario {
 	void modificar(Usuario usuario);
 
 	Usuario buscarUsuarioPorEmail(String email);
+
+	void agregarProductoAlUsuario(Producto producto);
 }

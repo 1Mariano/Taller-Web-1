@@ -1,9 +1,11 @@
 package ar.edu.unlam.tallerweb1.domain.usuarios;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import ar.edu.unlam.tallerweb1.domain.carrito.Carrito;
+import ar.edu.unlam.tallerweb1.domain.producto.Producto;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 // Clase que modela el concepto de Usuario, la anotacion @Entity le avisa a hibernate que esta clase es persistible
 // el paquete ar.edu.unlam.tallerweb1.modelo esta indicado en el archivo hibernateCOntext.xml para que hibernate
@@ -16,8 +18,10 @@ public class Usuario {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-
-
+/*
+	@OneToMany(mappedBy = "usuario")
+	private List<Carrito> carritos;
+*/
 
 
 	// para el resto de los atributo no se usan anotaciones entonces se usa el default de hibernate: la columna se llama igual que
@@ -34,6 +38,7 @@ public class Usuario {
 		this.password = password;
 		this.rol = rol;
 		this.activo = activo;
+		//this.productos = new ArrayList<Producto>();
 	}
 
 	public Usuario() {
@@ -41,7 +46,7 @@ public class Usuario {
 
 
 
-    public Long getId() {
+	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {

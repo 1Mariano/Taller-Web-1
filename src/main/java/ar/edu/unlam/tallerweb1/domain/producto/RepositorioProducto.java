@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.domain.producto;
 
+import ar.edu.unlam.tallerweb1.domain.carrito.Carrito;
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 
 import java.util.List;
@@ -16,6 +17,12 @@ public interface RepositorioProducto {
     Usuario buscarUsuarioPorId(Long id);
 
     Producto buscarProductoPorId(Long productoId);
+
+    void agregarProductoAlCarrito(Long productoId, Long usuarioId);
+
+    List<Carrito> obtenerTodosLosProductosDelCarritoDelUsuario(Long id);
+
+    void eliminarProductoDelCarrito(Carrito carrito);
 
 
     //List<Producto> listarDrogueria();

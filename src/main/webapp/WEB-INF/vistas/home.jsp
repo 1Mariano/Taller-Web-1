@@ -27,7 +27,7 @@
 <header class="bg-info-subtle py-5">
 
     <div class="text-center  my-2">
-        <p class="bg-primary d-inline py-3 px-4 rounded text-white">Bienvenido: <b>${usuario.email}</b></p>
+        <p class="bg-primary d-inline py-3 px-4 rounded text-white">Bienvenido: <b>${usuario}</b></p>
         <form action="logout" method="post">
             <button class="bg-danger py-3 px-4 rounded text-white" Type="submit">Logout</button>
         </form>
