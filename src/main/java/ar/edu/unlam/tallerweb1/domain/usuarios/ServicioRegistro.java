@@ -1,13 +1,11 @@
 package ar.edu.unlam.tallerweb1.domain.usuarios;
 
-import ar.edu.unlam.tallerweb1.exceptions.ClavesLongitudException;
-import ar.edu.unlam.tallerweb1.exceptions.UsuarioNoEncontradoException;
-import ar.edu.unlam.tallerweb1.exceptions.UsuarioYaExistenteException;
+import ar.edu.unlam.tallerweb1.exceptions.*;
 
 public interface ServicioRegistro {
     Usuario consultarUsuario(String email) throws UsuarioNoEncontradoException;
 
-    Usuario guardarUsuario(Usuario usuario) throws ClavesLongitudException, UsuarioYaExistenteException;
+    void guardarUsuario(Usuario usuario) throws ClavesLongitudException, UsuarioYaExistenteException, ClavesNoCoincidenException, DniYaRegistradoException;
 
     Usuario consultarUsuarioExistente(String email);
 }

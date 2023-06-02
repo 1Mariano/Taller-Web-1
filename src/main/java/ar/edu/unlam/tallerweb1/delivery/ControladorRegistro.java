@@ -4,7 +4,9 @@ import ar.edu.unlam.tallerweb1.domain.usuarios.ServicioLogin;
 import ar.edu.unlam.tallerweb1.domain.usuarios.ServicioRegistro;
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 import ar.edu.unlam.tallerweb1.exceptions.ClavesLongitudException;
+import ar.edu.unlam.tallerweb1.exceptions.DniYaRegistradoException;
 import ar.edu.unlam.tallerweb1.exceptions.UsuarioYaExistenteException;
+import ar.edu.unlam.tallerweb1.exceptions.ClavesNoCoincidenException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -21,7 +23,7 @@ public class ControladorRegistro {
     private final ServicioRegistro servicioRegistro;
 
     @Autowired
-    public ControladorRegistro(ServicioRegistro servicioRegistro){
+    public ControladorRegistro(ServicioRegistro servicioRegistro) {
 
         this.servicioRegistro = servicioRegistro;
     }
@@ -35,8 +37,25 @@ public class ControladorRegistro {
         modelo.put("usuario", new DatosRegistro());
         // Se va a la vista login (el nombre completo de la lista se resuelve utilizando el view resolver definido en el archivo spring-servlet.xml)
         // y se envian los datos a la misma  dentro del modelo
-        return new ModelAndView("registro-usuario", modelo);
+        return new ModelAndView("/registro-usuario", modelo);
     }
+    /*
+    @RequestMapping(value = "/registro-usuario", method = RequestMethod.POST)
+    public ModelAndView registrarUsuario(@ModelAttribute("usuario") Usuario usuario) throws ClavesLongitudException, UsuarioYaExistenteException, ClavesNoCoincidenException {
+        ModelMap modelo = new ModelMap();
+        if (servicioRegistro.consultarUsuarioExistente(usuario.getEmail()) != null) {
+            modelo.put("errorEmail", "El email ya está registrado");
+            return new ModelAndView("/registro-usuario", modelo);
+        }
+        if (!usuario.getPassword().equals(usuario.getRepiteContraseña())) {
+            modelo.put("errorContraseña", "Las contraseñas no coinciden");
+            return new ModelAndView("/registro-usuario", modelo);
+        }
+        servicioRegistro.guardarUsuario(usuario);
+        return new ModelAndView("redirect:/registro-exitoso");
+    }
+*/
+
     @RequestMapping(path = "/validar-registro", method = RequestMethod.POST)
     public ModelAndView validarLogin(@ModelAttribute("usuario") DatosRegistro datosRegistro, HttpServletRequest request) {
 
@@ -48,22 +67,35 @@ public class ControladorRegistro {
             // si el usuario existe agrega un mensaje de error en el modelo.
             model.put("error", "Usuario ya existente");
         } else {*/
-            //Usuario usuarioARegistrar = new Usuario();
+        //Usuario usuarioARegistrar = new Usuario();
         ModelMap modelo = new ModelMap();
         try {
             Usuario usuarioARegistrarConfirmado = new Usuario();
             usuarioARegistrarConfirmado.setEmail(datosRegistro.getEmail());
             usuarioARegistrarConfirmado.setPassword(datosRegistro.getClave());
+            usuarioARegistrarConfirmado.setRepitePassword(datosRegistro.getRepiteClave());
+            usuarioARegistrarConfirmado.setNombre(datosRegistro.getNombre());
+            usuarioARegistrarConfirmado.setApellido(datosRegistro.getApellido());
+            usuarioARegistrarConfirmado.setDni(datosRegistro.getDni());
+            usuarioARegistrarConfirmado.setCalle(datosRegistro.getCalle());
+            usuarioARegistrarConfirmado.setNumero(datosRegistro.getNumero());
+            usuarioARegistrarConfirmado.setPisoODepartamento(datosRegistro.getPisoODepartamento());
+            usuarioARegistrarConfirmado.setCodigoPostal(datosRegistro.getCodigoPostal());
+            usuarioARegistrarConfirmado.setLocalidad(datosRegistro.getLocalidad());
             usuarioARegistrarConfirmado.setRol("admin");
             usuarioARegistrarConfirmado.setActivo(true);
             this.servicioRegistro.guardarUsuario(usuarioARegistrarConfirmado);
             //request.getSession().setAttribute("ROL", usuarioARegistrarConfirmado.getRol());
-        } catch (ClavesLongitudException e){
-            return registroFallido(modelo, "La claves debe tener al menos 8 caracteres");
-        } catch (UsuarioYaExistenteException e){
+        } catch (ClavesLongitudException e) {
+            return registroFallido(modelo, "La clave debe tener al menos 8 caracteres");
+        } catch (UsuarioYaExistenteException e) {
             return registroFallido(modelo, "El usuario ya se encuentra registrado");
+        } catch (ClavesNoCoincidenException e) {
+            return registroFallido(modelo, "Las claves no coinciden");
+        } catch (DniYaRegistradoException e) {
+            return registroFallido(modelo, "Ya existe un usuario con ese DNI");
         }
-        return registroExitoso();
+        return registroExitoso(modelo, "Registro exitoso");
 
 
             /*Usuario usuarioARegistrar = servicioRegistro.consultarUsuarioExistente(datosRegistro.getEmail());
@@ -89,12 +121,16 @@ public class ControladorRegistro {
         //}
         //return new ModelAndView("registro-usuario", model);
     }
-    private ModelAndView registroExitoso(){
-        return new ModelAndView("redirect:/login");
+
+    private ModelAndView registroExitoso(ModelMap modelo, String mensaje) {
+       // return new ModelAndView("redirect:/registro-exitoso");
+        modelo.put("exito", mensaje);
+        return new ModelAndView("/registro-usuario", modelo);
     }
-    private ModelAndView registroFallido(ModelMap modelo, String mensaje){
+
+    private ModelAndView registroFallido(ModelMap modelo, String mensaje) {
         modelo.put("error", mensaje);
-        return new ModelAndView("registro-usuario", modelo);
+        return new ModelAndView("/registro-usuario", modelo);
     }
 
 /*
@@ -109,7 +145,6 @@ public class ControladorRegistro {
         return new ModelAndView("redirect:/login");
     }
 */
-
 
 
 }
