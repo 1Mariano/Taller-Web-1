@@ -1,5 +1,7 @@
 package ar.edu.unlam.tallerweb1.domain.pedidos;
 
+import ar.edu.unlam.tallerweb1.domain.enums.EstadoPago;
+import ar.edu.unlam.tallerweb1.domain.enums.EstadoPedido;
 import ar.edu.unlam.tallerweb1.domain.producto.Producto;
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 
@@ -9,86 +11,110 @@ import java.util.List;
 
 @Entity
 public class Pedido {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private LocalDate fechaPedido;
+    private String calle;
+    private Integer numero;
+    private String pisoODepartamento;
+    private String codigoPostal;
+    private String localidad;
+    private Double costoTotal;
+    private EstadoPedido estado;
+    private EstadoPago estadoPago;
 
-    private LocalDate fechaDePedido;
-    /*TODO cambiar o pensar tipo estado y entrega*/
-    private String estado;
-    private String direccionDeEntrega;
-    private String franjaHoraria;
-    @OneToMany
-    private List<Producto> productos;
-    private Double precioTotalPedido;
-
-    public Pedido(Long id, LocalDate fechaDePedido, String estado, String direccionDeEntrega, String franjaHoraria, List<Producto> productos, Double precioTotalPedido) {
+    public Pedido(Long id, LocalDate fechaPedido, String calle, Integer numero, String pisoODepartamento, String codigoPostal, String localidad, Double costoTotal, EstadoPedido estado, EstadoPago estadoPago) {
         this.id = id;
-        this.fechaDePedido = fechaDePedido;
+        this.fechaPedido = fechaPedido;
+        this.calle = calle;
+        this.numero = numero;
+        this.pisoODepartamento = pisoODepartamento;
+        this.codigoPostal = codigoPostal;
+        this.localidad = localidad;
+        this.costoTotal = costoTotal;
         this.estado = estado;
-        this.direccionDeEntrega = direccionDeEntrega;
-        this.franjaHoraria = franjaHoraria;
-        this.productos = productos;
-        this.precioTotalPedido = precioTotalPedido;
+        this.estadoPago = estadoPago;
     }
 
-    public Pedido() {
-
-    }
-
-    public LocalDate getFechaDePedido() {
-        return fechaDePedido;
-    }
-
-    public void setFechaDePedido(LocalDate fechaDePedido) {
-        this.fechaDePedido = fechaDePedido;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
-    public String getDireccionDeEntrega() {
-        return direccionDeEntrega;
-    }
-
-    public void setDireccionDeEntrega(String direccionDeEntrega) {
-        this.direccionDeEntrega = direccionDeEntrega;
-    }
-
-    public String getFranjaHoraria() {
-        return franjaHoraria;
-    }
-
-    public void setFranjaHoraria(String franjaHoraria) {
-        this.franjaHoraria = franjaHoraria;
-    }
-
-    public List<Producto> getProductos() {
-        return productos;
-    }
-
-    public void setProductos(List<Producto> productos) {
-        this.productos = productos;
-    }
-
-    public Double getPrecioTotalPedido() {
-        return precioTotalPedido;
-    }
-
-    public void setPrecioTotalPedido(Double precioTotalPedido) {
-        this.precioTotalPedido = precioTotalPedido;
+    public Long getId() {
+        return id;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public Long getId() {
-        return id;
+    public LocalDate getFechaPedido() {
+        return fechaPedido;
+    }
+
+    public void setFechaPedido(LocalDate fechaPedido) {
+        this.fechaPedido = fechaPedido;
+    }
+
+    public String getCalle() {
+        return calle;
+    }
+
+    public void setCalle(String calle) {
+        this.calle = calle;
+    }
+
+    public Integer getNumero() {
+        return numero;
+    }
+
+    public void setNumero(Integer numero) {
+        this.numero = numero;
+    }
+
+    public String getPisoODepartamento() {
+        return pisoODepartamento;
+    }
+
+    public void setPisoODepartamento(String pisoODepartamento) {
+        this.pisoODepartamento = pisoODepartamento;
+    }
+
+    public String getCodigoPostal() {
+        return codigoPostal;
+    }
+
+    public void setCodigoPostal(String codigoPostal) {
+        this.codigoPostal = codigoPostal;
+    }
+
+    public String getLocalidad() {
+        return localidad;
+    }
+
+    public void setLocalidad(String localidad) {
+        this.localidad = localidad;
+    }
+
+    public Double getCostoTotal() {
+        return costoTotal;
+    }
+
+    public void setCostoTotal(Double costoTotal) {
+        this.costoTotal = costoTotal;
+    }
+
+    public EstadoPedido getEstado() {
+        return estado;
+    }
+
+    public void setEstado(EstadoPedido estado) {
+        this.estado = estado;
+    }
+
+    public EstadoPago getEstadoPago() {
+        return estadoPago;
+    }
+
+    public void setEstadoPago(EstadoPago estadoPago) {
+        this.estadoPago = estadoPago;
     }
 }
