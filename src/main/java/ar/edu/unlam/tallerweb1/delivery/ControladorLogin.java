@@ -99,7 +99,8 @@ public class ControladorLogin {
 		//return new ModelAndView("login", model);
 		Usuario usuarioBuscado = this.servicioLogin.consultarUsuarioPorEmail(datosLogin.getEmail());
 		//model.put("usuario", usuarioBuscado);
-		model.put("id", usuarioBuscado.getId());
+		//model.put("id", usuarioBuscado.getId());
+		request.getSession().setAttribute("idUsuario", usuarioBuscado.getId());
 
 		this.sesion = request.getSession();
 		if (request.getParameter("recordarDatos") != null) {

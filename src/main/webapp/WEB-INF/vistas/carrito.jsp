@@ -24,6 +24,13 @@
         font-size: larger;
         height: 100vh;
     }
+    div.input-group input {
+        font-size: large;
+    }
+
+    .btn {
+        font-size: large;
+    }
 
     .bg-gradient1 {
         background: linear-gradient(to bottom, #BCC0ED, #EEC4EC);
@@ -71,6 +78,7 @@
         </ul>
     </div>
 </header>
+
 <main class="container">
     <h3 class="m-5 text-center fw-bold text-secondary-emphasis">Mi carrito</h3>
     <div class="d-flex flex-wrap gap-5 justify-content-center">
