@@ -68,7 +68,7 @@
 
         <div class="text-center mb-3 d-flex align-items-center gap-3">
             <c:if test="${sessionScope.idUsuario != null}">
-                <p class="bg-primary p-2 rounded text-white m-0">Bienvenido: <b>${usuario}</b></p>
+                <p class="bg-primary p-2 rounded text-white m-0">Bienvenido: <b>${correo}</b></p>
                 <form action="logout" method="post">
                     <button class="btn btn-danger bg-gradient p-2 rounded text-white border-0" Type="submit">Logout
                     </button>

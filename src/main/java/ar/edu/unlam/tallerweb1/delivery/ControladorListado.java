@@ -39,6 +39,7 @@ public class ControladorListado{
         ModelMap modelo = new ModelMap();
         List<Producto> productosHigiene = this.servicioListado.listarProductosHigiene();
         modelo.put("lista", productosHigiene);
+        guardarCorreo(modelo);
         return new ModelAndView("/higiene", modelo);
 
     }
@@ -48,6 +49,7 @@ public class ControladorListado{
         ModelMap modelo = new ModelMap();
         List<Producto> productosDrogueria = this.servicioListado.listarProductosDrogueria();
         modelo.put("lista", productosDrogueria);
+        guardarCorreo(modelo);
         return new ModelAndView("/drogueria", modelo);
 
     }
@@ -57,6 +59,7 @@ public class ControladorListado{
         ModelMap modelo = new ModelMap();
         List<Producto> productosMascota = this.servicioListado.listarProductosMascota();
         modelo.put("lista", productosMascota);
+        guardarCorreo(modelo);
         return new ModelAndView("/mascota", modelo);
 
     }
@@ -65,6 +68,7 @@ public class ControladorListado{
         ModelMap modelo = new ModelMap();
         List<Producto> productosAlimento = this.servicioListado.listarProductosAlimento();
         modelo.put("lista", productosAlimento);
+        guardarCorreo(modelo);
         return new ModelAndView("/alimentos", modelo);
 
     }
@@ -76,28 +80,20 @@ public class ControladorListado{
         List<Producto> productos = this.servicioListado.obtenerProductos();
         modelo.put("lista", productos);
         // TOdo Mostrar Nombre de usuario y no ID
-        Long id = (Long) request.getSession().getAttribute("idUsuario");
-        modelo.put("usuario", id);
+        guardarCorreo(modelo);
+
         /*Usuario usuario = this.servicioListado.obtenerUsuarioPorId(id);
         modelo.put("usuario", usuario);*/
         return new ModelAndView("home", modelo);
     }
 
+    private void guardarCorreo(ModelMap modelo) {
+        if(request.getSession().getAttribute("idUsuario") != null){
+            String correo = (String) request.getSession().getAttribute("correo");
+            //Long id = (Long) request.getSession().getAttribute("idUsuario");
+            modelo.put("correo", correo);
+        }
+    }
 
-
-
-
-
-    /*@GetMapping("/productos")
-    public String obtenerProductos(Model model) {
-        // Lógica para obtener la lista de productos
-        List<Producto> productos = ServicioProducto.obtenerProductos();
-
-        // Agregar la lista de productos al modelo
-        model.addAttribute("productos", productos);
-
-        // Devolver la vista correspondiente para mostrar los productos
-        return "listaProductos";
-    }*/
 
 }

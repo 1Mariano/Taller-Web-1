@@ -73,6 +73,7 @@ public class ControladorCarrito {
         List<Producto> carrito= this.servicioCarrito.obtenerTodosLosProductosDelCarrito(idUsuario);
         model.put("carrito", carrito);
         model.put("total", calcularTotal(carrito));
+        model.put("tamano", carrito.size());
         return new ModelAndView("/carrito", model);
     }
 

@@ -101,7 +101,7 @@ public class ControladorLogin {
 		//model.put("usuario", usuarioBuscado);
 		//model.put("id", usuarioBuscado.getId());
 		request.getSession().setAttribute("idUsuario", usuarioBuscado.getId());
-
+		request.getSession().setAttribute("correo", usuarioBuscado.getEmail());
 		this.sesion = request.getSession();
 		if (request.getParameter("recordarDatos") != null) {
 			this.sesion.setAttribute("recordarEmail", datosLogin.getEmail());
