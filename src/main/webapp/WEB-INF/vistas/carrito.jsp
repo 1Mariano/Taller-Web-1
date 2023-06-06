@@ -35,7 +35,9 @@
                 </tr>
                 </tfoot>
             </table>
+            <c:if test="${tamano != 0}">
             <button id="btn-comprar" class="btn btn-lg btn-primary btn-block" Type="submit" href="compra"/>Comprar</button>
+            </c:if>
         </div>
     </div>
 </main>
