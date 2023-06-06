@@ -10,6 +10,7 @@ import javax.persistence.Id;
 // busque entities en el
 @Entity
 public class Usuario {
+
 	// La anotacion id indica que este atributo es el utilizado como clave primaria de la entity, se indica que el valor es autogenerado.
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -71,9 +72,11 @@ public class Usuario {
 	public void setActivo(Boolean activo) {
 		this.activo = activo;
 	}
+
 	public boolean activo() {
 		return activo;
     }
+
     public void activar() {
 		activo = true;
     }

@@ -104,8 +104,8 @@
                 </tr>
                 </tfoot>
             </table>
+            <button id="btn-comprar" class="btn btn-lg btn-primary btn-block" Type="submit" href="compra"/>Comprar</button>
         </div>
-
     </div>
 </main>
 <script src="../../static/js/script.js"></script>

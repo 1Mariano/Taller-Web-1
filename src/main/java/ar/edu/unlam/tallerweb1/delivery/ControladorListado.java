@@ -10,13 +10,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
 public class ControladorListado{
 
     private final ServicioListado servicioListado;
-
+    @Autowired
+    private HttpServletRequest request;
     @Autowired
     public ControladorListado(ServicioListado servicioListado){
 
@@ -73,10 +75,15 @@ public class ControladorListado{
         ModelMap modelo = new ModelMap();
         List<Producto> productos = this.servicioListado.obtenerProductos();
         modelo.put("lista", productos);
+        // TOdo Mostrar Nombre de usuario y no ID
+        Long id = (Long) request.getSession().getAttribute("idUsuario");
+        modelo.put("usuario", id);
         /*Usuario usuario = this.servicioListado.obtenerUsuarioPorId(id);
         modelo.put("usuario", usuario);*/
         return new ModelAndView("home", modelo);
     }
+
+
 
 
 

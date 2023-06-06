@@ -53,14 +53,17 @@ public class ControladorLogin {
 		modelo.put("datosLogin", new DatosLogin());
 		// Se va a la vista login (el nombre completo de la lista se resuelve utilizando el view resolver definido en el archivo spring-servlet.xml)
 		// y se envian los datos a la misma  dentro del modelo
+		if (request.getSession().getAttribute("idUsuario") != null){
+			return new ModelAndView("redirect:/home");
+		}
+
 		return new ModelAndView("login", modelo);
 	}
-
 	@RequestMapping(path = "/logout")
 	public ModelAndView irALoginLogout() {
 
 		request.getSession().invalidate();
-		return new ModelAndView("redirect:/login");
+		return new ModelAndView("redirect:/home");
 	}
 
 	//registro usuario

@@ -1,0 +1,7 @@
+package ar.edu.unlam.tallerweb1.domain.pedidos;
+
+public interface RepositorioPedido {
+
+    void agregarPedido();
+    Pedido buscarPedidoPorUsuarioDni();
+}

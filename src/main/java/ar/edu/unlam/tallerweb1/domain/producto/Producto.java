@@ -1,18 +1,25 @@
 package ar.edu.unlam.tallerweb1.domain.producto;
 
 /*import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor;*/
+import ar.edu.unlam.tallerweb1.domain.carrito.Carrito;
 import ar.edu.unlam.tallerweb1.domain.enums.CategoriaProducto;
+import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 //TODO BORRAR LOS COMENTARIOS UNA VEZ QUE ESTE VERIFICADO EL FUNCIONAMIENTO DEL CODIGO
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public /*abstract*/ class Producto /*implements IProducto*/{
+public class Producto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    /*@OneToMany(mappedBy = "producto")
+    private List<Carrito> carritos;*/
+
     private Integer peso;
     private Integer volumen;
     private String nombre;
@@ -39,7 +46,6 @@ public /*abstract*/ class Producto /*implements IProducto*/{
         this.nombre = nombre;
         this.alto = alto;
         this.ancho = ancho;
-
         this.largo = largo;
         this.precioArs = precioArs;
         this.descripcion = descripcion;
@@ -47,6 +53,14 @@ public /*abstract*/ class Producto /*implements IProducto*/{
         this.categoria = categoria;
         this.fechaVencimiento = fechaVencimiento;
     }
+
+
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+
 
     public Integer getAlto() {
         return alto;
