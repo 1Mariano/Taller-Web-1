@@ -1,11 +1,9 @@
 package ar.edu.unlam.tallerweb1.domain.usuarios;
 
-import ar.edu.unlam.tallerweb1.domain.carrito.Carrito;
-import ar.edu.unlam.tallerweb1.domain.producto.Producto;
-
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 // Clase que modela el concepto de Usuario, la anotacion @Entity le avisa a hibernate que esta clase es persistible
 // el paquete ar.edu.unlam.tallerweb1.modelo esta indicado en el archivo hibernateCOntext.xml para que hibernate
@@ -17,20 +15,21 @@ public class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
-/*
-	@OneToMany(mappedBy = "usuario")
-	private List<Carrito> carritos;
-*/
-
-
 	// para el resto de los atributo no se usan anotaciones entonces se usa el default de hibernate: la columna se llama igual que
 	// el atributo, la misma admite nulos, y el tipo de dato se deduce del tipo de dato de java.
 	private String email;
 	private String password;
+	private String repitePassword;
+	private String nombre;
+	private String apellido;
+	private Long dni;
+	private String calle;
+	private Integer numero;
+	private String pisoODepartamento;
+	private String codigoPostal;
+	private String localidad;
 	private String rol;
 	private Boolean activo = false;
-
 
 	public Usuario(Long id, String email, String password, String rol, Boolean activo) {
 		this.id = id;
@@ -38,15 +37,12 @@ public class Usuario {
 		this.password = password;
 		this.rol = rol;
 		this.activo = activo;
-		//this.productos = new ArrayList<Producto>();
 	}
 
 	public Usuario() {
 	}
 
-
-
-	public Long getId() {
+    public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
@@ -84,4 +80,80 @@ public class Usuario {
     public void activar() {
 		activo = true;
     }
+
+	public String getRepitePassword() {
+		return repitePassword;
+	}
+
+	public void setRepitePassword(String repitePassword) {
+		this.repitePassword = repitePassword;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getApellido() {
+		return apellido;
+	}
+
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
+	}
+
+	public Long getDni() {
+		return dni;
+	}
+
+	public void setDni(Long dni) {
+		this.dni = dni;
+	}
+
+	public String getCalle() {
+		return calle;
+	}
+
+	public void setCalle(String calle) {
+		this.calle = calle;
+	}
+
+	public Integer getNumero() {
+		return numero;
+	}
+
+	public void setNumero(Integer numero) {
+		this.numero = numero;
+	}
+
+	public String getPisoODepartamento() {
+		return pisoODepartamento;
+	}
+
+	public void setPisoODepartamento(String pisoODepartamento) {
+		this.pisoODepartamento = pisoODepartamento;
+	}
+
+	public String getCodigoPostal() {
+		return codigoPostal;
+	}
+
+	public void setCodigoPostal(String codigoPostal) {
+		this.codigoPostal = codigoPostal;
+	}
+
+	public String getLocalidad() {
+		return localidad;
+	}
+
+	public void setLocalidad(String localidad) {
+		this.localidad = localidad;
+	}
+
+	public String getRepiteContraseña() {
+		return null;
+	}
 }

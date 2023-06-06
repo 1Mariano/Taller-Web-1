@@ -67,9 +67,9 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 
 
 	@Override
-	public Usuario buscar(String email) {
+	public Usuario buscarUsuarioPorDni(Long dni) {
 		return (Usuario) sessionFactory.getCurrentSession().createCriteria(Usuario.class)
-				.add(Restrictions.eq("email", email))
+				.add(Restrictions.eq("dni", dni))
 				.uniqueResult();
 	}
 

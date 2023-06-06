@@ -39,14 +39,13 @@ public class ControladorLogin {
 
 	@Autowired
 	private HttpServletRequest request;
-	/*@Autowired
-	private HttpSession sesion;*/
+	@Autowired
+	private HttpSession sesion;
 
 
 	// Este metodo escucha la URL localhost:8080/NOMBRE_APP/login si la misma es invocada por metodo http GET
 	@RequestMapping("/login")
 	public ModelAndView irALogin() {
-
 
 		ModelMap modelo = new ModelMap();
 		// Se agrega al modelo un objeto con key 'datosLogin' para que el mismo sea asociado
@@ -66,7 +65,6 @@ public class ControladorLogin {
 		request.getSession().invalidate();
 		return new ModelAndView("redirect:/home");
 	}
-
 
 	//registro usuario
 
@@ -89,7 +87,7 @@ public class ControladorLogin {
 			return logueoFallido(model, "Usuario o Contraseña incorrectos");
 		}
 
-			/*if (usuarioBuscado != null) {
+            /*if (usuarioBuscado != null) {
 				request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
 				model.put("usuario", usuarioBuscado);
 				model.put("id", usuarioBuscado.getId());
@@ -98,16 +96,22 @@ public class ControladorLogin {
 				// si el usuario no existe agrega un mensaje de error en el modelo.
 				model.put("error", "Usuario o clave incorrecta");
 			}*/
-			//return new ModelAndView("login", model);
-			Usuario usuarioBuscado = this.servicioLogin.consultarUsuarioPorEmail(datosLogin.getEmail());
-			//model.put("usuario", usuarioBuscado);
-			model.put("id", usuarioBuscado.getId());
+		//return new ModelAndView("login", model);
+		Usuario usuarioBuscado = this.servicioLogin.consultarUsuarioPorEmail(datosLogin.getEmail());
+		//model.put("usuario", usuarioBuscado);
+		model.put("id", usuarioBuscado.getId());
 
-			HttpSession sesion = request.getSession();
-			sesion.setAttribute("idUsuario", usuarioBuscado.getId());
-
-			return new ModelAndView("redirect:/home", model);
+		this.sesion = request.getSession();
+		if (request.getParameter("recordarDatos") != null) {
+			this.sesion.setAttribute("recordarEmail", datosLogin.getEmail());
+			this.sesion.setAttribute("recordarPassword", datosLogin.getPassword());
+		} else {
+			this.sesion.removeAttribute("recordarEmail");
+			this.sesion.removeAttribute("recordarPassword");
 		}
+
+		return new ModelAndView("redirect:/home", model);
+	}
 
 	private ModelAndView logueoFallido(ModelMap model, String usuarioOContraseñaIncorrectos) {
 		model.put("error", usuarioOContraseñaIncorrectos);
@@ -115,7 +119,7 @@ public class ControladorLogin {
 	}
 
 	// Escucha la URL /home por GET, y redirige a una vista.
-	/*@RequestMapping(path = "/home", method = RequestMethod.GET)
+    /*@RequestMapping(path = "/home", method = RequestMethod.GET)
 	public ModelAndView irAHome(@RequestParam (value = "id") Long id) {
 		Usuario usuario = this.servicioLogin.obtenerUsuarioPorId(id);
 		ModelMap model = new ModelMap();
@@ -124,10 +128,10 @@ public class ControladorLogin {
 		return new ModelAndView("home", model);
 	}*/
 
-		// Escucha la url /, y redirige a la URL /login, es lo mismo que si se invoca la url /login directamente.
-		@RequestMapping(path = "/", method = RequestMethod.GET)
-		public ModelAndView inicio() {
+	// Escucha la url /, y redirige a la URL /login, es lo mismo que si se invoca la url /login directamente.
+	@RequestMapping(path = "/", method = RequestMethod.GET)
+	public ModelAndView inicio() {
 
-			return new ModelAndView("redirect:/home");
-		}
+		return new ModelAndView("redirect:/home");
+	}
 }

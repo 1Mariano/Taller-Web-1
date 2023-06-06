@@ -10,12 +10,10 @@ public interface RepositorioUsuario {
 	
 	Usuario buscarUsuario(String email, String password);
 	Usuario buscarUsuarioExistente(String email);
-
 	Usuario buscarUsuarioPorId(Long id);
 	void guardarUsuario(Usuario usuario);
-    Usuario buscar(String email);
+    Usuario buscarUsuarioPorDni(Long dni);
 	void modificar(Usuario usuario);
-
 	Usuario buscarUsuarioPorEmail(String email);
 
 	void agregarProductoAlUsuario(Producto producto);
