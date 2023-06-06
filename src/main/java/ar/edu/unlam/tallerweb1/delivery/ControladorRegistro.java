@@ -89,11 +89,11 @@ public class ControladorRegistro {
         } catch (ClavesLongitudException e) {
             return registroFallido(modelo, "La clave debe tener al menos 8 caracteres");
         } catch (UsuarioYaExistenteException e) {
-            return registroFallido(modelo, "El usuario ya se encuentra registrado");
+            return registroFallidoPorEmail(modelo, "El usuario ya se encuentra registrado");
         } catch (ClavesNoCoincidenException e) {
             return registroFallido(modelo, "Las claves no coinciden");
         } catch (DniYaRegistradoException e) {
-            return registroFallido(modelo, "Ya existe un usuario con ese DNI");
+            return registroFallidoPorDni(modelo, "Ya existe un usuario con ese DNI");
         }
         return registroExitoso(modelo, "Registro exitoso");
 
@@ -130,6 +130,16 @@ public class ControladorRegistro {
 
     private ModelAndView registroFallido(ModelMap modelo, String mensaje) {
         modelo.put("error", mensaje);
+        return new ModelAndView("/registro-usuario", modelo);
+    }
+
+    private ModelAndView registroFallidoPorEmail(ModelMap modelo, String mensaje) {
+        modelo.put("errorEmail", mensaje);
+        return new ModelAndView("/registro-usuario", modelo);
+    }
+
+    private ModelAndView registroFallidoPorDni(ModelMap modelo, String mensaje) {
+        modelo.put("errorDni", mensaje);
         return new ModelAndView("/registro-usuario", modelo);
     }
 
