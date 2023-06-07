@@ -71,6 +71,7 @@ public class ControladorCarrito {
         ModelMap model = new ModelMap();
         Long idUsuario = (Long) request.getSession().getAttribute("idUsuario");
         List<Producto> carrito= this.servicioCarrito.obtenerTodosLosProductosDelCarrito(idUsuario);
+        request.getSession().setAttribute("carritoCompleto", carrito);
         model.put("carrito", carrito);
         model.put("total", calcularTotal(carrito));
         model.put("tamano", carrito.size());
