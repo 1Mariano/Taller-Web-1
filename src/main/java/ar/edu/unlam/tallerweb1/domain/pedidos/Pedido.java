@@ -1,7 +1,9 @@
 package ar.edu.unlam.tallerweb1.domain.pedidos;
 
+import ar.edu.unlam.tallerweb1.domain.carrito.Carrito;
 import ar.edu.unlam.tallerweb1.domain.enums.EstadoPago;
 import ar.edu.unlam.tallerweb1.domain.enums.EstadoPedido;
+import ar.edu.unlam.tallerweb1.domain.envio.Envio;
 import ar.edu.unlam.tallerweb1.domain.producto.Producto;
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 
@@ -16,26 +18,24 @@ public class Pedido {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDate fechaPedido;
-    private String calle;
-    private Integer numero;
-    private String pisoODepartamento;
-    private String codigoPostal;
-    private String localidad;
     private Double costoTotal;
     private EstadoPedido estado;
     private EstadoPago estadoPago;
+    @OneToOne
+    private Carrito carrito;
+    @OneToOne
+    private Envio envio;
 
-    public Pedido(Long id, LocalDate fechaPedido, String calle, Integer numero, String pisoODepartamento, String codigoPostal, String localidad, Double costoTotal, EstadoPedido estado, EstadoPago estadoPago) {
+    public Pedido(Long id, LocalDate fechaPedido, Double costoTotal, EstadoPedido estado, EstadoPago estadoPago) {
         this.id = id;
         this.fechaPedido = fechaPedido;
-        this.calle = calle;
-        this.numero = numero;
-        this.pisoODepartamento = pisoODepartamento;
-        this.codigoPostal = codigoPostal;
-        this.localidad = localidad;
         this.costoTotal = costoTotal;
         this.estado = estado;
         this.estadoPago = estadoPago;
+    }
+
+    public Pedido() {
+
     }
 
     public Long getId() {
@@ -52,46 +52,6 @@ public class Pedido {
 
     public void setFechaPedido(LocalDate fechaPedido) {
         this.fechaPedido = fechaPedido;
-    }
-
-    public String getCalle() {
-        return calle;
-    }
-
-    public void setCalle(String calle) {
-        this.calle = calle;
-    }
-
-    public Integer getNumero() {
-        return numero;
-    }
-
-    public void setNumero(Integer numero) {
-        this.numero = numero;
-    }
-
-    public String getPisoODepartamento() {
-        return pisoODepartamento;
-    }
-
-    public void setPisoODepartamento(String pisoODepartamento) {
-        this.pisoODepartamento = pisoODepartamento;
-    }
-
-    public String getCodigoPostal() {
-        return codigoPostal;
-    }
-
-    public void setCodigoPostal(String codigoPostal) {
-        this.codigoPostal = codigoPostal;
-    }
-
-    public String getLocalidad() {
-        return localidad;
-    }
-
-    public void setLocalidad(String localidad) {
-        this.localidad = localidad;
     }
 
     public Double getCostoTotal() {
@@ -114,7 +74,8 @@ public class Pedido {
         return estadoPago;
     }
 
-    public void setEstadoPago(EstadoPago estadoPago) {
-        this.estadoPago = estadoPago;
+    public void setEstadoPago() {
+
+        this.estadoPago = EstadoPago.NO_PAGADO;
     }
 }

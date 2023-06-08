@@ -90,21 +90,34 @@
             $('#error').show();
         }
 
-        // Obtener el valor del email y contraseña de la sesión
-        var recordarEmail = '${sessionScope.recordarEmail}';
-        var recordarPassword = '${sessionScope.recordarPassword}';
+        // Obtener el valor de las cookies
+        var emailCookie = getCookie("email");
+        var passwordCookie = getCookie("password");
 
-        // Verificar si los valores existen en la sesión
-        if (recordarEmail && recordarPassword) {
-            // Marcar el checkbox de recordar datos
+        // Asignar los valores a los campos del formulario
+        if (emailCookie && passwordCookie) {
+            $("#email").val(emailCookie);
+            $("#password").val(passwordCookie);
             $("#recordarDatos").prop("checked", true);
-
-            // Asignar los valores a los inputs
-            $("#email").val(recordarEmail);
-            $("#password").val(recordarPassword);
         }
 
     })
+
+    // Función para obtener el valor de una cookie por su nombre
+    function getCookie(name) {
+        var cookieName = name + "=";
+        var cookieArray = document.cookie.split(";");
+        for (var i = 0; i < cookieArray.length; i++) {
+            var cookie = cookieArray[i];
+            while (cookie.charAt(0) === " ") {
+                cookie = cookie.substring(1);
+            }
+            if (cookie.indexOf(cookieName) === 0) {
+                return cookie.substring(cookieName.length, cookie.length);
+            }
+        }
+        return "";
+    }
 
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
