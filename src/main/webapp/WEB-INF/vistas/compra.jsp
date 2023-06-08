@@ -9,80 +9,77 @@
         <i class="fa-solid fa-notes-medical fa-2xl" style="color: #212529;"></i>
         <h3 class="my-4 mx-3 fw-semibold">Productos para Procesar Compra</h3>
     </div>
-    <div class="d-flex flex-wrap gap-1 row-gap-5 justify-content-left">
-        <c:forEach var="item" items="${productos}">
-            <div class="card" style="width: 20rem">
-                <div class="d-flex justify-content-center align-items-center" style="height: 280px;">
-                    <img src="${pageContext.request.contextPath}/static/img/${item.img}" alt=""
-                         style="width: 280px"/>
-                </div>
-                <hr>
-                <div class="card-body">
-                    <h5 class="card-title"><c:out value="${item.nombre}"/></h5>
-                    <p class="card-text overflow-hidden" style="height: 50px;">
-                        <c:out value="${item.descripcion}"/>
-                    </p>
-                    <p class="precio fs-3 fw-bold">$${item.precioArs}</p>
-                </div>
+    <div class="d-flex  gap-4  justify-content-center">
+        <ol class="list-group list-group-numbered">
+            <c:forEach var="item" items="${productos}">
+                <li class="list-group-item">
+                    <div class="d-flex gap-3">
+                        <img src="${pageContext.request.contextPath}/static/img/${item.img}" alt=""
+                             style="width: 80px"/>
+                        <h5 class="card-title">
+                                <c:out value="${item.nombre}"/>
+                            <p class="precio fs-3 fw-bold">$${item.precioArs}</p>
+                    </div>
+                </li>
+            </c:forEach>
+        </ol>
+        <div>
+            <div class="text-nowrap mb-3">
+                <h5 class="fw-semibold">Datos de envío</h5>
             </div>
+            <form:form action="validar-datos-envio" method="POST" modelAttribute="datosEnvio">
+                <div class="d-flex mb-2">
+                    <div class="flex-fill me-3">
+                        <label for="calle" class="form-label">Calle</label>
+                        <div class="">
+                            <form:input path="calle" type="text" id="calle" class="form-control w-180"/>
+                        </div>
+                    </div>
+                    <div class="flex-fill w-25 me-3">
+                        <label for="numero" class="form-label">Número</label>
+                        <div class="">
+                            <form:input path="numero" type="text" id="numero" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="flex-fill w-25">
+                        <label for="pisoODepartamento" class="form-label text-nowrap">Piso/Depto.</label>
+                        <div class="">
+                            <form:input path="pisoODepartamento" type="text" id="pisoODepartamento"
+                                        class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex">
+                    <div class="flex-fill me-3">
+                        <label for="localidad" class="form-label">Localidad</label>
+                        <div class="">
+                            <form:input path="localidad" type="text" id="localidad" class="form-control w-180"/>
+                        </div>
+                    </div>
+                    <div class="flex-fill w-25 me-3">
+                        <label for="codigoPostal" class="form-label text-nowrap">Código postal</label>
+                        <div class="">
+                            <form:input path="codigoPostal" type="text" id="codigoPostal" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="flex-fill w-25">
+                        <div class=""></div>
+                        <div class=""></div>
+                    </div>
+                </div>
 
-        </c:forEach>
-    </div>
-    <div>
-        <div class="text-nowrap mb-3">
-            <h5 class="fw-semibold">Datos de envío</h5>
+                <c:if test="${not empty error}">
+                    <h5><span>${error}</span></h5>
+                    <br>
+                </c:if>
+                ${msg}
+
+                <button class="btn btn-lg btn-primary btn-block my-2" type="submit">Calcular envío
+                </button>
+            </form:form>
         </div>
-        <form:form action="validar-datos-envio" method="POST" modelAttribute="datosEnvio">
-            <div class="d-flex mb-2">
-                <div class="flex-fill me-3">
-                    <label for="calle" class="form-label">Calle</label>
-                    <div class="">
-                        <form:input path="calle" type="text" id="calle" class="form-control w-180"/>
-                    </div>
-                </div>
-                <div class="flex-fill w-25 me-3">
-                    <label for="numero" class="form-label">Número</label>
-                    <div class="">
-                        <form:input path="numero" type="text" id="numero" class="form-control"/>
-                    </div>
-                </div>
-                <div class="flex-fill w-25">
-                    <label for="pisoODepartamento" class="form-label text-nowrap">Piso/Depto.</label>
-                    <div class="">
-                        <form:input path="pisoODepartamento" type="text" id="pisoODepartamento"
-                                    class="form-control"/>
-                    </div>
-                </div>
-            </div>
-            <div class="d-flex">
-                <div class="flex-fill me-3">
-                    <label for="localidad" class="form-label">Localidad</label>
-                    <div class="">
-                        <form:input path="localidad" type="text" id="localidad" class="form-control w-180"/>
-                    </div>
-                </div>
-                <div class="flex-fill w-25 me-3">
-                    <label for="codigoPostal" class="form-label text-nowrap">Código postal</label>
-                    <div class="">
-                        <form:input path="codigoPostal" type="text" id="codigoPostal" class="form-control"/>
-                    </div>
-                </div>
-                <div class="flex-fill w-25">
-                    <div class=""></div>
-                    <div class=""></div>
-                </div>
-            </div>
-
-            <c:if test="${not empty error}">
-                <h5><span>${error}</span></h5>
-                <br>
-            </c:if>
-            ${msg}
-
-            <button class="btn btn-lg btn-primary btn-block my-2" type="submit">Calcular envío
-            </button>
-        </form:form>
     </div>
+
 </main>
 <script src="../../static/js/script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"

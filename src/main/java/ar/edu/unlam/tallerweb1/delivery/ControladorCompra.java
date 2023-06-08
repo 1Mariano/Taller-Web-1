@@ -59,13 +59,13 @@ public class ControladorCompra {
             return registroDeEnvioFallido(modelo, "El campo debe tener al menos 2 caracteres");
         }
 
-        return new ModelAndView("/compra-exitosa");
+        return new ModelAndView("redirect:/compra-exitosa");
     }
 
     private ModelAndView registroDeEnvioFallido(ModelMap modelo, String mensaje) {
         modelo.put("error", mensaje);
         modelo.put("productos", request.getSession().getAttribute("arrayProductos"));
-        return new ModelAndView("/compra", modelo);
+        return new ModelAndView("compra", modelo);
     }
 
 }
