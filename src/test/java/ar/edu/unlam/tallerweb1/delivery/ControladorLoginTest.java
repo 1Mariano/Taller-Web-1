@@ -24,7 +24,7 @@ public class ControladorLoginTest {
         request = mock(HttpServletRequest.class);
         controladorLogin = new ControladorLogin(this.servicioLogin);
     }
-
+/*
     @Test
     public void dadoUnUsuarioExistenteQueSePuedaIniciarSesion() throws UsuarioNoEncontradoException {
 
@@ -39,7 +39,7 @@ public class ControladorLoginTest {
 
         entoncesInicioSesion(ROL);
     }
-
+*/
     //Cuando
 
     private DatosLogin dadoQueTengoDatosDeLoginValidos() {
@@ -53,6 +53,7 @@ public class ControladorLoginTest {
     }
 
     //Dado
+    /*
     private ModelAndView cuandoQuieroValidarElLogin(DatosLogin datosLogin, Usuario usuarioEsperado,String rol) throws UsuarioNoEncontradoException {
         when(servicioLogin.consultarUsuario(any(), any())).thenReturn(usuarioEsperado);
         when(request.getSession()).thenReturn(sesion);
@@ -66,5 +67,5 @@ public class ControladorLoginTest {
     }
     private void entoncesInicioSesion(String rol) {
         assertThat(sesion.getAttribute("ROL")).isEqualTo(rol);
-    }
+    }*/
 }

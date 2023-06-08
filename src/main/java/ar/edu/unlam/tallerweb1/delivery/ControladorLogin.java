@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -74,7 +75,8 @@ public class ControladorLogin {
 	// tag form:form
 
 	@RequestMapping(path = "/validar-login", method = RequestMethod.POST)
-	public ModelAndView validarLogin(@ModelAttribute("datosLogin") DatosLogin datosLogin, HttpServletRequest request){
+	public ModelAndView validarLogin(@ModelAttribute("datosLogin") DatosLogin datosLogin,
+									 HttpServletRequest request, HttpServletResponse response) {
 		ModelMap model = new ModelMap();
 
 		// invoca el metodo consultarUsuario del servicio y hace un redirect a la URL /home, esto es, en lugar de enviar a una vista
@@ -102,13 +104,27 @@ public class ControladorLogin {
 		//model.put("id", usuarioBuscado.getId());
 		request.getSession().setAttribute("idUsuario", usuarioBuscado.getId());
 		request.getSession().setAttribute("correo", usuarioBuscado.getEmail());
-		this.sesion = request.getSession();
+
+		// Guardar las cookies si el checkbox está seleccionado
 		if (request.getParameter("recordarDatos") != null) {
-			this.sesion.setAttribute("recordarEmail", datosLogin.getEmail());
-			this.sesion.setAttribute("recordarPassword", datosLogin.getPassword());
+			Cookie emailCookie = new Cookie("email", datosLogin.getEmail());
+			Cookie passwordCookie = new Cookie("password", datosLogin.getPassword());
+			emailCookie.setMaxAge(3600); // Establece la expiración de la cookie en 1 hora (puedes ajustarla según tus necesidades)
+			passwordCookie.setMaxAge(3600);
+			response.addCookie(emailCookie);
+			response.addCookie(passwordCookie);
 		} else {
-			this.sesion.removeAttribute("recordarEmail");
-			this.sesion.removeAttribute("recordarPassword");
+			// Eliminar las cookies si el checkbox no está seleccionado
+			Cookie[] cookies = request.getCookies();
+			if (cookies != null) {
+				for (Cookie cookie : cookies) {
+					if (cookie.getName().equals("email") || cookie.getName().equals("password")) {
+						cookie.setValue("");
+						cookie.setMaxAge(0); // Establece la expiración de la cookie en 0 para eliminarla
+						response.addCookie(cookie);
+					}
+				}
+			}
 		}
 
 		return new ModelAndView("redirect:/home", model);

@@ -1,7 +1,9 @@
 package ar.edu.unlam.tallerweb1.domain.pedidos;
 
+import ar.edu.unlam.tallerweb1.domain.carrito.Carrito;
 import ar.edu.unlam.tallerweb1.domain.enums.EstadoPago;
 import ar.edu.unlam.tallerweb1.domain.enums.EstadoPedido;
+import ar.edu.unlam.tallerweb1.domain.envio.Envio;
 import ar.edu.unlam.tallerweb1.domain.producto.Producto;
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 
@@ -24,6 +26,10 @@ public class Pedido {
     private Double costoTotal;
     private EstadoPedido estado;
     private EstadoPago estadoPago;
+    @OneToOne
+    private Carrito carrito;
+    @OneToOne
+    private Envio envio;
 
     public Pedido(Long id, LocalDate fechaPedido, String calle, Integer numero, String pisoODepartamento, String codigoPostal, String localidad, Double costoTotal, EstadoPedido estado, EstadoPago estadoPago) {
         this.id = id;
@@ -36,6 +42,10 @@ public class Pedido {
         this.costoTotal = costoTotal;
         this.estado = estado;
         this.estadoPago = estadoPago;
+    }
+
+    public Pedido() {
+
     }
 
     public Long getId() {
@@ -114,7 +124,8 @@ public class Pedido {
         return estadoPago;
     }
 
-    public void setEstadoPago(EstadoPago estadoPago) {
-        this.estadoPago = estadoPago;
+    public void setEstadoPago() {
+
+        this.estadoPago = EstadoPago.NO_PAGADO;
     }
 }
