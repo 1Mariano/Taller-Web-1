@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.infrastructure;
 
+import ar.edu.unlam.tallerweb1.domain.envio.Envio;
 import ar.edu.unlam.tallerweb1.domain.envio.RepositorioEnvio;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +11,13 @@ public class RepositorioEnvioImpl implements RepositorioEnvio {
     private SessionFactory sessionFactory;
 
     @Autowired
-    public RepositorioEnvioImpl(SessionFactory sessionFactory){
+    public RepositorioEnvioImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
 
+    @Override
+    public void guardarEnvio(Envio envioNuevo) {
+        sessionFactory.getCurrentSession().save(envioNuevo);
+    }
 }

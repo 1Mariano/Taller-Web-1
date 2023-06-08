@@ -21,16 +21,24 @@ public class Envio {
     private Integer peso;
     private Integer volumen;
     private EstadoEnvio estadoEnvio;
+    private String calle;
+    private Integer numero;
+    private String pisoODepartamento;
+    private String codigoPostal;
+    private String localidad;
 
-    public Envio(Long id, Double costoEnvio, Double distanciaEnKilometros, Pedido pedido, Vehiculo vehiculo, Integer peso, Integer volumen, EstadoEnvio estadoEnvio) {
+    public Envio(Long id, Double costoEnvio, Double distanciaEnKilometros, Integer peso, Integer volumen, EstadoEnvio estadoEnvio, String calle, Integer numero, String pisoODepartamento, String codigoPostal, String localidad) {
         this.id = id;
         this.costoEnvio = costoEnvio;
         this.distanciaEnKilometros = distanciaEnKilometros;
-        this.pedido = pedido;
-        this.vehiculo = vehiculo;
         this.peso = peso;
         this.volumen = volumen;
         this.estadoEnvio = estadoEnvio;
+        this.calle = calle;
+        this.numero = numero;
+        this.pisoODepartamento = pisoODepartamento;
+        this.codigoPostal = codigoPostal;
+        this.localidad = localidad;
     }
 
     public Envio() {
@@ -99,5 +107,45 @@ public class Envio {
 
     public void setEstadoEnvio(EstadoEnvio estadoEnvio) {
         this.estadoEnvio = estadoEnvio;
+    }
+
+    public String getCalle() {
+        return calle;
+    }
+
+    public void setCalle(String calle) {
+        this.calle = calle;
+    }
+
+    public Integer getNumero() {
+        return numero;
+    }
+
+    public void setNumero(Integer numero) {
+        this.numero = numero;
+    }
+
+    public String getPisoODepartamento() {
+        return pisoODepartamento;
+    }
+
+    public void setPisoODepartamento(String pisoODepartamento) {
+        this.pisoODepartamento = pisoODepartamento;
+    }
+
+    public String getCodigoPostal() {
+        return codigoPostal;
+    }
+
+    public void setCodigoPostal(String codigoPostal) {
+        this.codigoPostal = codigoPostal;
+    }
+
+    public String getLocalidad() {
+        return localidad;
+    }
+
+    public void setLocalidad(String localidad) {
+        this.localidad = localidad;
     }
 }

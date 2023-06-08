@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 @Service("ServicioEnvio")
 @Transactional
-public abstract class ServicioEnvioImpl implements ServicioEnvio {
+public class ServicioEnvioImpl implements ServicioEnvio {
 
     private RepositorioEnvio servicioEnvio;
 
@@ -15,6 +15,21 @@ public abstract class ServicioEnvioImpl implements ServicioEnvio {
     public ServicioEnvioImpl(RepositorioEnvio servicioEnvio){
 
         this.servicioEnvio = servicioEnvio;
+    }
+
+    @Override
+    public Double espacioDisponible() {
+        return null;
+    }
+
+    @Override
+    public Double espacioOcupado() {
+        return null;
+    }
+
+    @Override
+    public Double distanciaEnvio() {
+        return null;
     }
     /*@Override
     public Double dimensionesDisponibles() {
