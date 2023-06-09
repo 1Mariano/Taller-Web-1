@@ -21,10 +21,13 @@ public class Pedido {
     private Double costoTotal;
     private EstadoPedido estado;
     private EstadoPago estadoPago;
-    @OneToOne
+
+    @ManyToOne
+    private Usuario usuario;
+    /*@OneToOne
     private Carrito carrito;
     @OneToOne
-    private Envio envio;
+    private Envio envio;*/
 
     public Pedido(Long id, LocalDate fechaPedido, Double costoTotal, EstadoPedido estado, EstadoPago estadoPago) {
         this.id = id;

@@ -142,7 +142,7 @@ public class Producto {
     }
 
     public void setVolumen(Integer volumen) {
-        this.volumen = volumen;
+        this.volumen = this.alto * this.ancho * this.largo;
     }
 
     public void setNombre(String nombre) {

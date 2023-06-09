@@ -3,6 +3,7 @@ package ar.edu.unlam.tallerweb1.delivery;
 import ar.edu.unlam.tallerweb1.domain.envio.Envio;
 import ar.edu.unlam.tallerweb1.domain.pedidos.ServicioCompra;
 import ar.edu.unlam.tallerweb1.domain.producto.Producto;
+import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 import ar.edu.unlam.tallerweb1.exceptions.CampoInvalidoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -59,8 +60,23 @@ public class ControladorCompra {
             return registroDeEnvioFallido(modelo, "El campo debe tener al menos 2 caracteres");
         }
 
-        return new ModelAndView("redirect:/compra-exitosa");
+        List<Producto> productos = (List<Producto>) request.getSession().getAttribute("arrayProductos");
+        Long usuario =(Long) this.request.getSession().getAttribute("idUsuario");
+        //TODO creacion de contenedores ver y separar responsabilidades
+        this.servicioCompra.empaquetarProductos(productos);
+
+
+
+
+        return new ModelAndView("redirect:/pago");
     }
+
+    @RequestMapping("/pago")
+    public ModelAndView pago(){
+
+        return new ModelAndView("/pago");
+    }
+
 
     private ModelAndView registroDeEnvioFallido(ModelMap modelo, String mensaje) {
         modelo.put("error", mensaje);
