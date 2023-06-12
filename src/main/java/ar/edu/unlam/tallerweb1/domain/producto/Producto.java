@@ -118,7 +118,7 @@ public class Producto {
 
     //@Override
     public Integer getVolumen() {
-        return this.volumen;
+        return this.alto * this.ancho * this.largo;
     }
     public CategoriaProducto getCategoria() {
         return categoria;
@@ -142,7 +142,7 @@ public class Producto {
     }
 
     public void setVolumen(Integer volumen) {
-        this.volumen = this.alto * this.ancho * this.largo;
+        this.volumen = volumen;
     }
 
     public void setNombre(String nombre) {

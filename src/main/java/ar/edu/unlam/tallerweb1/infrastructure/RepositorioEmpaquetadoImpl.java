@@ -1,7 +1,9 @@
 package ar.edu.unlam.tallerweb1.infrastructure;
 
 import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor;
+import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor_Producto;
 import ar.edu.unlam.tallerweb1.domain.contenedor.RepositorioEmpaquetado;
+import ar.edu.unlam.tallerweb1.domain.envio.Envio;
 import ar.edu.unlam.tallerweb1.domain.producto.Producto;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -29,6 +31,21 @@ public class RepositorioEmpaquetadoImpl implements RepositorioEmpaquetado {
         final Session session = sessionFactory.getCurrentSession();
         return session.createCriteria(Contenedor.class)
                 .list();
+    }
+
+
+    @Override
+    public void guardarEmpaque(Contenedor_Producto prod) {
+        final Session session = sessionFactory.getCurrentSession();
+        Producto producto = session.get(Producto.class, prod.getProducto().getId());
+        Envio envio = session.get(Envio.class, prod.getEnvio().getId());
+        Contenedor contenedor = session.get(Contenedor.class, prod.getContenedor().getId());
+        //sessionFactory.getCurrentSession().save(prod);
+        Contenedor_Producto c = new Contenedor_Producto();
+        c.setContenedor(contenedor);
+        c.setEnvio(envio);
+        c.setProducto(producto);
+        session.save(c);
     }
 
 

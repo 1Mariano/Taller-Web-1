@@ -48,8 +48,9 @@ public class ControladorCompra {
     public ModelAndView validarDatosEnvio(@ModelAttribute("datosEnvio") DatosEnvio datosEnvio,
                                      HttpServletRequest request, HttpServletResponse response) {
         ModelMap modelo = new ModelMap();
+        Envio envioNuevo = new Envio();
         try {
-            Envio envioNuevo = new Envio();
+
             envioNuevo.setCalle(datosEnvio.getCalle());
             envioNuevo.setNumero(datosEnvio.getNumero());
             envioNuevo.setPisoODepartamento(datosEnvio.getPisoODepartamento());
@@ -63,7 +64,7 @@ public class ControladorCompra {
         List<Producto> productos = (List<Producto>) request.getSession().getAttribute("arrayProductos");
         Long usuario =(Long) this.request.getSession().getAttribute("idUsuario");
         //TODO creacion de contenedores ver y separar responsabilidades
-        this.servicioCompra.empaquetarProductos(productos);
+        this.servicioCompra.empaquetarProductos(productos, envioNuevo);
 
 
 

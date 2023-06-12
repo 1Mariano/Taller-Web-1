@@ -19,6 +19,7 @@ public class Contenedor {
     private Double largo;
     private Double ancho;
     private Double pesoSoportado;
+    private Double volumen;
 
     @ManyToOne
     private Vehiculo vehiculo;
@@ -37,6 +38,26 @@ public class Contenedor {
 
     public Contenedor() {
 
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Double getVolumen() {
+        return this.alto*this.ancho*this.largo;
+    }
+
+    public void setVolumen(Double volumen) {
+        this.volumen = volumen;
+    }
+
+    public Vehiculo getVehiculo() {
+        return vehiculo;
+    }
+
+    public void setVehiculo(Vehiculo vehiculo) {
+        this.vehiculo = vehiculo;
     }
 
     public Double getAlto() {

@@ -66,30 +66,29 @@ public class ServicioCompraImpl implements ServicioCompra {
     }
 
     @Override
-    public void empaquetarProductos(List<Producto> productos) {
+    public void empaquetarProductos(List<Producto> productos, Envio envio) {
 
         creacionContenedores();
         List<Contenedor> contenedores = this.repositorioEmpaquetado.obtenerContenedores();
-        List<Contenedor> contenedores1 = new ArrayList<Contenedor>();
 
-        if (contenedores.isEmpty()) {
-            //crearContenedor();
-
-        }
-        for (Producto p : productos) {
-            crearContenedor(p);
-            //this.repositorioEmpaquetado.agregarAlContenedor(empaques);
-        }
-
-        /*for ( Producto p : productos) {
-            if (p.getVolumen() < 3750 && (p.getPeso()/1000) < 7 ){
-                //Contenedor bolsa = new Contenedor();
-                List<Contenedor> bolsa = new ArrayList<Contenedor>();
-                bolsa.add(p.add);
+        // Todo arreglar esta logica
+        for (Producto p: productos) {
+            for (Contenedor c : contenedores) {
+                if (p.getVolumen() < c.getVolumen() && c.getTipoContenedor().equals(TipoContenedor.BOLSA)){
+                    Contenedor_Producto bolsa = new Contenedor_Producto();
+                    bolsa.setProducto(p);
+                    bolsa.setContenedor(c);
+                    bolsa.setEnvio(envio);
+                    this.repositorioEmpaquetado.guardarEmpaque(bolsa);
+                } /*else if (c.getTipoContenedor().equals(TipoContenedor.CAJA) && p.getVolumen() < c.getVolumen()){
+                    Contenedor_Producto caja = new Contenedor_Producto();
+                    caja.setProducto(p);
+                    caja.setContenedor(c);
+                    caja.setEnvio(envio);
+                    this.repositorioEmpaquetado.guardarEmpaque(caja);
+                }*/
             }
-
-            //this.repositorioEmpaquetado.empaquetarProducto(p.getId(), );
-        }*/
+        }
 
 
         //Contenedor(Long id, Double alto, Double largo, Double ancho, Double pesoSoportado, TipoContenedor tipoContenedor)
@@ -97,23 +96,7 @@ public class ServicioCompraImpl implements ServicioCompra {
 
     }
 
-    private static void crearContenedor(Producto p) {
-        if (p.getVolumen() < 3750 && (p.getPeso() / 1000) < 7) {
-            Contenedor contenedor = new Contenedor();
-            contenedor.setTipoContenedor(TipoContenedor.BOLSA);
-            contenedor.setAlto(25.0);
-            contenedor.setAncho(10.0);
-            contenedor.setLargo(15.0);
-            contenedor.setPesoSoportado(7.0);
-        } else {
-            Contenedor contenedor = new Contenedor();
-            contenedor.setTipoContenedor(TipoContenedor.CAJA);
-            contenedor.setAlto(50.0);
-            contenedor.setAncho(20.0);
-            contenedor.setLargo(45.0);
-            contenedor.setPesoSoportado(30.0);
-        }
-    }
+
 
 
     private void creacionContenedores() {

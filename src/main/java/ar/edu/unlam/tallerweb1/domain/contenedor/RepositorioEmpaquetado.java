@@ -9,4 +9,8 @@ public interface RepositorioEmpaquetado {
 
 
     List<Contenedor> obtenerContenedores();
+
+
+
+    void guardarEmpaque(Contenedor_Producto prod);
 }

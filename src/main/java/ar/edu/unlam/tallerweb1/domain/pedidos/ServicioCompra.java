@@ -18,5 +18,5 @@ public interface ServicioCompra {
     void guardarDatosEnvio(Envio envioNuevo) throws CampoInvalidoException;
 
 
-    void empaquetarProductos(List<Producto> productos);
+    void empaquetarProductos(List<Producto> productos, Envio envio);
 }
