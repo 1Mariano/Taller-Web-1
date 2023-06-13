@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.nio.DoubleBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,31 +71,44 @@ public class ServicioCompraImpl implements ServicioCompra {
 
         creacionContenedores();
         List<Contenedor> contenedores = this.repositorioEmpaquetado.obtenerContenedores();
-
+        List<Contenedor> contenedoresAjustables = contenedores;
         // Todo arreglar esta logica
-        for (Producto p: productos) {
-            for (Contenedor c : contenedores) {
-                if (p.getVolumen() < c.getVolumen() && c.getTipoContenedor().equals(TipoContenedor.BOLSA)){
+        for (Producto p : productos) {
+            for (Contenedor c : contenedoresAjustables) {
+
+                if (p.getVolumen() < c.getVolumen() && c.getTipoContenedor().equals(TipoContenedor.BOLSA)) {
+                    //c.setVolumen(c.getVolumen() - p.getVolumen());
+
+
+
                     Contenedor_Producto bolsa = new Contenedor_Producto();
                     bolsa.setProducto(p);
                     bolsa.setContenedor(c);
                     bolsa.setEnvio(envio);
+
                     this.repositorioEmpaquetado.guardarEmpaque(bolsa);
-                } /*else if (c.getTipoContenedor().equals(TipoContenedor.CAJA) && p.getVolumen() < c.getVolumen()){
+                    break;
+                } else if (c.getVolumen() > 3750 && p.getVolumen() > 3750) {
+                    //c.setVolumen(c.getVolumen() - p.getVolumen());
+
+
                     Contenedor_Producto caja = new Contenedor_Producto();
                     caja.setProducto(p);
                     caja.setContenedor(c);
                     caja.setEnvio(envio);
                     this.repositorioEmpaquetado.guardarEmpaque(caja);
-                }*/
+                    break;
+                }
+                }
+
             }
+
+            //Contenedor(Long id, Double alto, Double largo, Double ancho, Double pesoSoportado, TipoContenedor tipoContenedor)
+            // 22 alto, 40 largo, 30 ancho
+
+
         }
 
-
-        //Contenedor(Long id, Double alto, Double largo, Double ancho, Double pesoSoportado, TipoContenedor tipoContenedor)
-        // 22 alto, 40 largo, 30 ancho
-
-    }
 
 
 
@@ -105,6 +119,7 @@ public class ServicioCompraImpl implements ServicioCompra {
         caja.setAncho(20.0);
         caja.setLargo(45.0);
         caja.setPesoSoportado(30.0);
+        caja.setVolumen(50.0 * 20.0 * 45.0);
         caja.setTipoContenedor(TipoContenedor.CAJA);
 
         Contenedor bolsa = new Contenedor();
@@ -112,6 +127,7 @@ public class ServicioCompraImpl implements ServicioCompra {
         bolsa.setAncho(10.0);
         bolsa.setLargo(15.0);
         bolsa.setPesoSoportado(7.0);
+        bolsa.setVolumen(25.0 * 10.0 * 15.0);
         bolsa.setTipoContenedor(TipoContenedor.BOLSA);
 
         this.repositorioEmpaquetado.crearContenedor(caja);

@@ -65,6 +65,9 @@ public class ControladorCompra {
         Long usuario =(Long) this.request.getSession().getAttribute("idUsuario");
         //TODO creacion de contenedores ver y separar responsabilidades
         this.servicioCompra.empaquetarProductos(productos, envioNuevo);
+        /*ModelMap model = new ModelMap();
+        model.put("numeroPedido", envioNuevo);*/
+        request.getSession().setAttribute("numeroPedido", envioNuevo);
 
 
 
@@ -74,8 +77,9 @@ public class ControladorCompra {
 
     @RequestMapping("/pago")
     public ModelAndView pago(){
-
-        return new ModelAndView("/pago");
+        ModelMap model = new ModelMap();
+        model.put("numeroPedido", request.getSession().getAttribute("numeroPedido"));
+        return new ModelAndView("/pago", model);
     }
 
 

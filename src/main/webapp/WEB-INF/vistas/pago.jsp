@@ -5,7 +5,7 @@
 
 <main class="container">
     <!-- Example Code -->
-    <h1>aca va el pago</h1>
+    <h1>Su numero de Compra es: ${numeroPedido.id}</h1>
 
 </main>
 <script src="../../static/js/script.js"></script>
