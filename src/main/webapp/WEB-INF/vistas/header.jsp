@@ -75,8 +75,8 @@
                 </form>
             </c:if>
             <c:if test="${sessionScope.idUsuario == null}">
-                <button class="btn btn-primary bg-gradient p-2 rounded text-white border-0"><a
-                        class="text-white text-decoration-none m-0" href="login">Loguearse</a></button>
+                <a
+                        class="text-white text-decoration-none m-0" href="login"><button class="btn btn-primary bg-gradient p-2 rounded text-white border-0">Loguearse</button></a>
             </c:if>
         </div>
 

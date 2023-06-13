@@ -118,7 +118,7 @@ public class Producto {
 
     //@Override
     public Integer getVolumen() {
-        return this.volumen;
+        return this.alto * this.ancho * this.largo;
     }
     public CategoriaProducto getCategoria() {
         return categoria;

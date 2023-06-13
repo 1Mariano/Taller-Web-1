@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.domain.carrito;
 
+import ar.edu.unlam.tallerweb1.domain.pedidos.Pedido;
 import ar.edu.unlam.tallerweb1.domain.producto.Producto;
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 
