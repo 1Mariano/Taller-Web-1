@@ -15,4 +15,6 @@ public interface RepositorioEmpaquetado {
     void guardarEmpaque(Contenedor_Producto prod);
 
     void modificarContenedor(Contenedor contenedor);
+
+    void eliminarContenedorVacio(Contenedor contenedorAEliminar);
 }
