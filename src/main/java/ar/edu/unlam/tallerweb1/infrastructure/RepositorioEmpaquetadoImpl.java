@@ -54,4 +54,9 @@ public class RepositorioEmpaquetadoImpl implements RepositorioEmpaquetado {
     public void modificarContenedor(Contenedor contenedor) {
         sessionFactory.getCurrentSession().update(contenedor);
     }
+
+    @Override
+    public void eliminarContenedorVacio(Contenedor contenedorAEliminar) {
+        sessionFactory.getCurrentSession().delete(contenedorAEliminar);
+    }
 }

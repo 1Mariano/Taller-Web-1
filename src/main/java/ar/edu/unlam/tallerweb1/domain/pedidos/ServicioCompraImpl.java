@@ -63,6 +63,8 @@ public class ServicioCompraImpl implements ServicioCompra {
 
     @Override
     public void empaquetarProductos(List<Producto> productosDelPedido, Envio envio) {
+        creacionBolsa();
+        crecacionCaja();
         List<Contenedor> contenedores = this.repositorioEmpaquetado.obtenerContenedores();
         List<Contenedor> nuevosContenedores = new ArrayList<>();
 
@@ -74,6 +76,9 @@ public class ServicioCompraImpl implements ServicioCompra {
 
             Double volumenOcupado = 0.0;
             Double pesoCargado = 0.0;
+
+            Double volumenTotalOcupado = 0.0;
+            Double pesoTotalCargado= 0.0;
 
             for (Contenedor contenedor : contenedores) {
 
@@ -114,12 +119,12 @@ public class ServicioCompraImpl implements ServicioCompra {
 
                             Double volumenProducto = productoAEmpaquetar.getVolumen();
                             Double pesoProducto = productoAEmpaquetar.getPeso();
-                            volumenOcupado += volumenProducto;
-                            pesoCargado += pesoProducto;
-                            cajaNueva.setVolumenOcupado(volumenOcupado);
-                            cajaNueva.setPesoCargado(pesoCargado);
-                            cajaNueva.setVolumenDisponible(cajaNueva.getVolumenDisponible() - cajaNueva.getVolumenOcupado());
-                            cajaNueva.setPesoDisponible(cajaNueva.getPesoDisponible() - cajaNueva.getPesoCargado());
+
+                            cajaNueva.setVolumenDisponible(cajaNueva.getVolumenDisponible() - volumenProducto);
+                            cajaNueva.setPesoDisponible(cajaNueva.getPesoDisponible() - pesoProducto);
+
+                            cajaNueva.setVolumenOcupado(volumenTotalOcupado + volumenProducto);
+                            cajaNueva.setPesoCargado(pesoTotalCargado + pesoProducto);
 
                             cajaNueva.getListaProductos().add(productoAEmpaquetar);
                             productoEmpaquetado = true;
@@ -148,7 +153,13 @@ public class ServicioCompraImpl implements ServicioCompra {
                     }
 
                 } else {
+                    for (Producto productosEmpaquetados : contenedor.getListaProductos()) {
+                        volumenTotalOcupado += productosEmpaquetados.getVolumen();
+                        pesoTotalCargado += productosEmpaquetados.getPeso();
+                    }
+
                     for (Producto productoYaEmpaquetado : contenedor.getListaProductos()) {
+
 
                         boolean tieneProductoHigiene = productoYaEmpaquetado.getCategoria().equals(CategoriaProducto.HIGIENE);
                         if (tieneProductoHigiene && (productoAEmpaquetar.getCategoria().equals(CategoriaProducto.ALIMENTOS_CONGELADOS) ||
@@ -174,12 +185,12 @@ public class ServicioCompraImpl implements ServicioCompra {
 
                                 Double volumenProducto = productoAEmpaquetar.getVolumen();
                                 Double pesoProducto = productoAEmpaquetar.getPeso();
-                                volumenOcupado += volumenProducto;
-                                pesoCargado += pesoProducto;
-                                bolsaNueva.setVolumenOcupado(volumenOcupado);
-                                bolsaNueva.setPesoCargado(pesoCargado);
-                                bolsaNueva.setVolumenDisponible(bolsaNueva.getVolumenDisponible() - bolsaNueva.getVolumenOcupado());
-                                bolsaNueva.setPesoDisponible(bolsaNueva.getPesoDisponible() - bolsaNueva.getPesoCargado());
+
+                                bolsaNueva.setVolumenDisponible(bolsaNueva.getVolumenDisponible() - volumenProducto);
+                                bolsaNueva.setPesoDisponible(bolsaNueva.getPesoDisponible() - pesoProducto);
+
+                                bolsaNueva.setVolumenOcupado(volumenTotalOcupado + volumenProducto);
+                                bolsaNueva.setPesoCargado(pesoTotalCargado + pesoProducto);
 
                                 bolsaNueva.getListaProductos().add(productoAEmpaquetar);
                                 productoEmpaquetado = true;
@@ -206,12 +217,12 @@ public class ServicioCompraImpl implements ServicioCompra {
 
                                     Double volumenProducto = productoAEmpaquetar.getVolumen();
                                     Double pesoProducto = productoAEmpaquetar.getPeso();
-                                    volumenOcupado += volumenProducto;
-                                    pesoCargado += pesoProducto;
-                                    cajaNueva.setVolumenOcupado(volumenOcupado);
-                                    cajaNueva.setPesoCargado(pesoCargado);
-                                    cajaNueva.setVolumenDisponible(cajaNueva.getVolumenDisponible() - cajaNueva.getVolumenOcupado());
-                                    cajaNueva.setPesoDisponible(cajaNueva.getPesoDisponible() - cajaNueva.getPesoCargado());
+
+                                    cajaNueva.setVolumenDisponible(cajaNueva.getVolumenDisponible() - volumenProducto);
+                                    cajaNueva.setPesoDisponible(cajaNueva.getPesoDisponible() - pesoProducto);
+
+                                    cajaNueva.setVolumenOcupado(volumenTotalOcupado + volumenProducto);
+                                    cajaNueva.setPesoCargado(pesoTotalCargado + pesoProducto);
 
                                     cajaNueva.getListaProductos().add(productoAEmpaquetar);
                                     productoEmpaquetado = true;
@@ -228,17 +239,18 @@ public class ServicioCompraImpl implements ServicioCompra {
 
                                     Double volumenProducto = productoAEmpaquetar.getVolumen();
                                     Double pesoProducto = productoAEmpaquetar.getPeso();
-                                    volumenOcupado += volumenProducto;
-                                    pesoCargado += pesoProducto;
-                                    contenedor.setVolumenOcupado(volumenOcupado);
-                                    contenedor.setPesoCargado(pesoCargado);
-                                    contenedor.setVolumenDisponible(contenedor.getVolumenDisponible() - contenedor.getVolumenOcupado());
-                                    contenedor.setPesoDisponible(contenedor.getPesoDisponible() - contenedor.getPesoCargado());
+
+                                    contenedor.setVolumenDisponible(contenedor.getVolumenDisponible() - volumenProducto);
+                                    contenedor.setPesoDisponible(contenedor.getPesoDisponible() - pesoProducto);
+
+                                    //PRUEBA
+                                    contenedor.setVolumenOcupado(volumenTotalOcupado + volumenProducto);
+                                    contenedor.setPesoCargado(pesoTotalCargado + pesoProducto);
 
                                     contenedor.getListaProductos().add(productoAEmpaquetar);
                                     productoEmpaquetado = true;
 
-                                   this.repositorioEmpaquetado.modificarContenedor(contenedor);
+                                    this.repositorioEmpaquetado.modificarContenedor(contenedor);
                                     break;
                                 } else if ((productoAEmpaquetar.getVolumen() < 3750 && productoAEmpaquetar.getPeso() < 7) &&
                                         !(productoAEmpaquetar.getVolumen() < contenedor.getVolumenDisponible() && productoAEmpaquetar.getPeso() < contenedor.getPesoDisponible())) {
@@ -260,12 +272,12 @@ public class ServicioCompraImpl implements ServicioCompra {
 
                                     Double volumenProducto = productoAEmpaquetar.getVolumen();
                                     Double pesoProducto = productoAEmpaquetar.getPeso();
-                                    volumenOcupado += volumenProducto;
-                                    pesoCargado += pesoProducto;
-                                    bolsaNueva.setVolumenOcupado(volumenOcupado);
-                                    bolsaNueva.setPesoCargado(pesoCargado);
-                                    bolsaNueva.setVolumenDisponible(bolsaNueva.getVolumenDisponible() - bolsaNueva.getVolumenOcupado());
-                                    bolsaNueva.setPesoDisponible(bolsaNueva.getPesoDisponible() - bolsaNueva.getPesoCargado());
+
+                                    bolsaNueva.setVolumenOcupado(volumenTotalOcupado + volumenProducto);
+                                    bolsaNueva.setPesoCargado(pesoTotalCargado + pesoProducto);
+
+                                    bolsaNueva.setVolumenOcupado(bolsaNueva.getVolumenMaximo() - bolsaNueva.getVolumenDisponible() - productoYaEmpaquetado.getVolumen() + volumenProducto);
+                                    bolsaNueva.setPesoCargado(bolsaNueva.getPesoSoportado() - bolsaNueva.getPesoDisponible() - productoYaEmpaquetado.getPeso() + pesoProducto);
 
                                     bolsaNueva.getListaProductos().add(productoAEmpaquetar);
                                     productoEmpaquetado = true;
@@ -291,12 +303,12 @@ public class ServicioCompraImpl implements ServicioCompra {
 
                                     Double volumenProducto = productoAEmpaquetar.getVolumen();
                                     Double pesoProducto = productoAEmpaquetar.getPeso();
-                                    volumenOcupado += volumenProducto;
-                                    pesoCargado += pesoProducto;
-                                    cajaNueva.setVolumenOcupado(volumenOcupado);
-                                    cajaNueva.setPesoCargado(pesoCargado);
-                                    cajaNueva.setVolumenDisponible(cajaNueva.getVolumenDisponible() - cajaNueva.getVolumenOcupado());
-                                    cajaNueva.setPesoDisponible(cajaNueva.getPesoDisponible() - cajaNueva.getPesoCargado());
+
+                                    cajaNueva.setVolumenDisponible(cajaNueva.getVolumenDisponible() - volumenProducto);
+                                    cajaNueva.setPesoDisponible(cajaNueva.getPesoDisponible() - pesoProducto);
+
+                                    cajaNueva.setVolumenOcupado(volumenTotalOcupado + volumenProducto);
+                                    cajaNueva.setPesoCargado(pesoTotalCargado + pesoProducto);
 
                                     cajaNueva.getListaProductos().add(productoAEmpaquetar);
                                     productoEmpaquetado = true;
@@ -309,12 +321,12 @@ public class ServicioCompraImpl implements ServicioCompra {
 
                                     Double volumenProducto = productoAEmpaquetar.getVolumen();
                                     Double pesoProducto = productoAEmpaquetar.getPeso();
-                                    volumenOcupado += volumenProducto;
-                                    pesoCargado += pesoProducto;
-                                    contenedor.setVolumenOcupado(volumenOcupado);
-                                    contenedor.setPesoCargado(pesoCargado);
-                                    contenedor.setVolumenDisponible(contenedor.getVolumenDisponible() - contenedor.getVolumenOcupado());
-                                    contenedor.setPesoDisponible(contenedor.getPesoDisponible() - contenedor.getPesoCargado());
+
+                                    contenedor.setVolumenDisponible(contenedor.getVolumenDisponible() - volumenProducto);
+                                    contenedor.setPesoDisponible(contenedor.getPesoDisponible() - pesoProducto);
+
+                                    contenedor.setVolumenOcupado(volumenTotalOcupado + volumenProducto);
+                                    contenedor.setPesoCargado(pesoTotalCargado + pesoProducto);
 
                                     contenedor.getListaProductos().add(productoAEmpaquetar);
                                     productoEmpaquetado = true;
@@ -340,12 +352,12 @@ public class ServicioCompraImpl implements ServicioCompra {
 
                                     Double volumenProducto = productoAEmpaquetar.getVolumen();
                                     Double pesoProducto = productoAEmpaquetar.getPeso();
-                                    volumenOcupado += volumenProducto;
-                                    pesoCargado += pesoProducto;
-                                    cajaNueva.setVolumenOcupado(volumenOcupado);
-                                    cajaNueva.setPesoCargado(pesoCargado);
-                                    cajaNueva.setVolumenDisponible(cajaNueva.getVolumenDisponible() - cajaNueva.getVolumenOcupado());
-                                    cajaNueva.setPesoDisponible(cajaNueva.getPesoDisponible() - cajaNueva.getPesoCargado());
+
+                                    cajaNueva.setVolumenDisponible(cajaNueva.getVolumenDisponible() - volumenProducto);
+                                    cajaNueva.setPesoDisponible(cajaNueva.getPesoDisponible() - pesoProducto);
+
+                                    cajaNueva.setVolumenOcupado(volumenTotalOcupado + volumenProducto);
+                                    cajaNueva.setPesoCargado(pesoTotalCargado + pesoProducto);
 
                                     cajaNueva.getListaProductos().add(productoAEmpaquetar);
                                     productoEmpaquetado = true;
@@ -360,6 +372,11 @@ public class ServicioCompraImpl implements ServicioCompra {
                         continue productosLoop;  // Saltar al siguiente producto en productosDelPedido
                     }
                 }
+            }
+        }
+        for (Contenedor contenedorAEliminar: contenedores) {
+            if (contenedorAEliminar.getListaProductos().isEmpty()) {
+                this.repositorioEmpaquetado.eliminarContenedorVacio(contenedorAEliminar);
             }
         }
     }
