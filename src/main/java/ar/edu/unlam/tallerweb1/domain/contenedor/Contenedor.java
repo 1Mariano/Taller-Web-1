@@ -14,16 +14,19 @@ public class Contenedor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private Double alto;
     private Double largo;
     private Double ancho;
     private Double pesoSoportado;
-    private Double volumen;
-
+    private Double volumenMaximo;
+    private Double pesoCargado;
+    private Double volumenOcupado;
+    private Double volumenDisponible;
+    private Double pesoDisponible;
     @ManyToOne
     private Vehiculo vehiculo;
-
+    @OneToMany
+    private List<Producto> listaProductos;
 
     private TipoContenedor tipoContenedor;
 
@@ -44,12 +47,12 @@ public class Contenedor {
         this.id = id;
     }
 
-    public Double getVolumen() {
-        return this.alto*this.ancho*this.largo;
+    public Double getVolumenMaximo() {
+        return volumenMaximo;
     }
 
-    public void setVolumen(Double volumen) {
-        this.volumen = volumen;
+    public void setVolumenMaximo(Double alto, Double ancho, Double largo) {
+        this.volumenMaximo = this.alto * this.ancho * this.largo;;
     }
 
     public Vehiculo getVehiculo() {
@@ -92,9 +95,6 @@ public class Contenedor {
         this.pesoSoportado = pesoSoportado;
     }
 
-
-
-
     public TipoContenedor getTipoContenedor() {
         return tipoContenedor;
     }
@@ -109,5 +109,45 @@ public class Contenedor {
 
     public Long getId() {
         return id;
+    }
+
+    public List<Producto> getListaProductos() {
+        return listaProductos;
+    }
+
+    public void setListaProductos(List<Producto> listaProductos) {
+        this.listaProductos = listaProductos;
+    }
+
+    public Double getPesoCargado() {
+        return pesoCargado;
+    }
+
+    public void setPesoCargado(Double pesoCargado) {
+        this.pesoCargado = pesoCargado;
+    }
+
+    public Double getVolumenOcupado() {
+        return volumenOcupado;
+    }
+
+    public void setVolumenOcupado(Double volumenOcupado) {
+        this.volumenOcupado = volumenOcupado;
+    }
+
+    public Double getVolumenDisponible() {
+        return volumenDisponible;
+    }
+
+    public void setVolumenDisponible(Double volumenDisponible) {
+        this.volumenDisponible = volumenDisponible;
+    }
+
+    public Double getPesoDisponible() {
+        return pesoDisponible;
+    }
+
+    public void setPesoDisponible(Double pesoDisponible) {
+        this.pesoDisponible = pesoDisponible;
     }
 }

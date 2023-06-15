@@ -1,9 +1,7 @@
 package ar.edu.unlam.tallerweb1.domain.pedidos;
 
 import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor;
-import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor_Producto;
 import ar.edu.unlam.tallerweb1.domain.contenedor.RepositorioEmpaquetado;
-import ar.edu.unlam.tallerweb1.domain.contenedor.ServicioEmpaquetado;
 import ar.edu.unlam.tallerweb1.domain.enums.CategoriaProducto;
 import ar.edu.unlam.tallerweb1.domain.enums.EstadoPago;
 import ar.edu.unlam.tallerweb1.domain.enums.EstadoPedido;
@@ -11,13 +9,11 @@ import ar.edu.unlam.tallerweb1.domain.enums.TipoContenedor;
 import ar.edu.unlam.tallerweb1.domain.envio.Envio;
 import ar.edu.unlam.tallerweb1.domain.envio.RepositorioEnvio;
 import ar.edu.unlam.tallerweb1.domain.producto.Producto;
-import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 import ar.edu.unlam.tallerweb1.exceptions.CampoInvalidoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.nio.DoubleBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +23,6 @@ public class ServicioCompraImpl implements ServicioCompra {
 
     private RepositorioEnvio repositorioEnvio;
     private RepositorioEmpaquetado repositorioEmpaquetado;
-
 
     @Autowired
     public ServicioCompraImpl(RepositorioEnvio repositorioEnvio, RepositorioEmpaquetado repositorioEmpaquetado) {
@@ -67,72 +62,342 @@ public class ServicioCompraImpl implements ServicioCompra {
     }
 
     @Override
-    public void empaquetarProductos(List<Producto> productos, Envio envio) {
-
-        creacionContenedores();
+    public void empaquetarProductos(List<Producto> productosDelPedido, Envio envio) {
         List<Contenedor> contenedores = this.repositorioEmpaquetado.obtenerContenedores();
-        List<Contenedor> contenedoresAjustables = contenedores;
-        // Todo arreglar esta logica
-        for (Producto p : productos) {
-            for (Contenedor c : contenedoresAjustables) {
+        List<Contenedor> nuevosContenedores = new ArrayList<>();
 
-                if (p.getVolumen() < c.getVolumen() && c.getTipoContenedor().equals(TipoContenedor.BOLSA)) {
-                    //c.setVolumen(c.getVolumen() - p.getVolumen());
+        productosLoop:
+        for (Producto productoAEmpaquetar : productosDelPedido) {
+            boolean productoEmpaquetado = false;
 
+            contenedores.addAll(nuevosContenedores);
 
+            Double volumenOcupado = 0.0;
+            Double pesoCargado = 0.0;
 
-                    Contenedor_Producto bolsa = new Contenedor_Producto();
-                    bolsa.setProducto(p);
-                    bolsa.setContenedor(c);
-                    bolsa.setEnvio(envio);
+            for (Contenedor contenedor : contenedores) {
 
-                    this.repositorioEmpaquetado.guardarEmpaque(bolsa);
-                    break;
-                } else if (c.getVolumen() > 3750 && p.getVolumen() > 3750) {
-                    //c.setVolumen(c.getVolumen() - p.getVolumen());
+                if (contenedor.getListaProductos().isEmpty()) {
+                    if (contenedor.getTipoContenedor().equals(TipoContenedor.BOLSA)) {
+                        if (productoAEmpaquetar.getVolumen() < 3750 && productoAEmpaquetar.getPeso() < 7) {
 
+                            Double volumenProducto = productoAEmpaquetar.getVolumen();
+                            Double pesoProducto = productoAEmpaquetar.getPeso();
+                            volumenOcupado += volumenProducto;
+                            pesoCargado += pesoProducto;
+                            contenedor.setVolumenOcupado(volumenOcupado);
+                            contenedor.setPesoCargado(pesoCargado);
+                            contenedor.setVolumenDisponible(contenedor.getVolumenDisponible() - contenedor.getVolumenOcupado());
+                            contenedor.setPesoDisponible(contenedor.getPesoDisponible() - contenedor.getPesoCargado());
 
-                    Contenedor_Producto caja = new Contenedor_Producto();
-                    caja.setProducto(p);
-                    caja.setContenedor(c);
-                    caja.setEnvio(envio);
-                    this.repositorioEmpaquetado.guardarEmpaque(caja);
-                    break;
+                            contenedor.getListaProductos().add(productoAEmpaquetar);
+                            productoEmpaquetado = true;
+
+                            this.repositorioEmpaquetado.modificarContenedor(contenedor);
+                            break;
+                        } else {
+                            Contenedor cajaNueva = new Contenedor();
+                            List<Producto> nuevaListaDeProductos = new ArrayList<>();
+                            cajaNueva.setListaProductos(nuevaListaDeProductos);
+                            cajaNueva.setAlto(50.0);
+                            Double alto = cajaNueva.getAlto();
+                            cajaNueva.setAncho(20.0);
+                            Double ancho = cajaNueva.getAncho();
+                            cajaNueva.setLargo(45.0);
+                            Double largo = cajaNueva.getLargo();
+                            cajaNueva.setPesoSoportado(30.0);
+                            cajaNueva.setVolumenMaximo(alto, ancho, largo);
+                            cajaNueva.setVolumenDisponible(cajaNueva.getVolumenMaximo());
+                            cajaNueva.setPesoDisponible(cajaNueva.getPesoSoportado());
+                            cajaNueva.setTipoContenedor(TipoContenedor.CAJA);
+                            nuevosContenedores.add(cajaNueva);
+
+                            Double volumenProducto = productoAEmpaquetar.getVolumen();
+                            Double pesoProducto = productoAEmpaquetar.getPeso();
+                            volumenOcupado += volumenProducto;
+                            pesoCargado += pesoProducto;
+                            cajaNueva.setVolumenOcupado(volumenOcupado);
+                            cajaNueva.setPesoCargado(pesoCargado);
+                            cajaNueva.setVolumenDisponible(cajaNueva.getVolumenDisponible() - cajaNueva.getVolumenOcupado());
+                            cajaNueva.setPesoDisponible(cajaNueva.getPesoDisponible() - cajaNueva.getPesoCargado());
+
+                            cajaNueva.getListaProductos().add(productoAEmpaquetar);
+                            productoEmpaquetado = true;
+
+                            this.repositorioEmpaquetado.crearContenedor(cajaNueva);
+                            break;
+                        }
+                    } else {
+                        if ((productoAEmpaquetar.getVolumen() > 3750 && productoAEmpaquetar.getVolumen() < 45000) && (productoAEmpaquetar.getPeso() > 7 && productoAEmpaquetar.getPeso() < 30)) {
+
+                            Double volumenProducto = productoAEmpaquetar.getVolumen();
+                            Double pesoProducto = productoAEmpaquetar.getPeso();
+                            volumenOcupado += volumenProducto;
+                            pesoCargado += pesoProducto;
+                            contenedor.setVolumenOcupado(volumenOcupado);
+                            contenedor.setPesoCargado(pesoCargado);
+                            contenedor.setVolumenDisponible(contenedor.getVolumenDisponible() - contenedor.getVolumenOcupado());
+                            contenedor.setPesoDisponible(contenedor.getPesoDisponible() - contenedor.getPesoCargado());
+
+                            contenedor.getListaProductos().add(productoAEmpaquetar);
+                            productoEmpaquetado = true;
+
+                            this.repositorioEmpaquetado.modificarContenedor(contenedor);
+                            break;
+                        }
+                    }
+
+                } else {
+                    for (Producto productoYaEmpaquetado : contenedor.getListaProductos()) {
+
+                        boolean tieneProductoHigiene = productoYaEmpaquetado.getCategoria().equals(CategoriaProducto.HIGIENE);
+                        if (tieneProductoHigiene && (productoAEmpaquetar.getCategoria().equals(CategoriaProducto.ALIMENTOS_CONGELADOS) ||
+                                productoAEmpaquetar.getCategoria().equals(CategoriaProducto.ALIMENTOS_FRESCOS) ||
+                                productoAEmpaquetar.getCategoria().equals(CategoriaProducto.ALIMENTOS_NO_PERECEDEROS))) {
+
+                            if ((productoAEmpaquetar.getVolumen() < 3750 && productoAEmpaquetar.getPeso() < 7)) {
+                                Contenedor bolsaNueva = new Contenedor();
+                                List<Producto> nuevaListaDeProductos = new ArrayList<>();
+                                bolsaNueva.setListaProductos(nuevaListaDeProductos);
+                                bolsaNueva.setAlto(25.0);
+                                Double alto = bolsaNueva.getAlto();
+                                bolsaNueva.setAncho(10.0);
+                                Double ancho = bolsaNueva.getAncho();
+                                bolsaNueva.setLargo(15.0);
+                                Double largo = bolsaNueva.getLargo();
+                                bolsaNueva.setPesoSoportado(7.0);
+                                bolsaNueva.setVolumenMaximo(alto, ancho, largo);
+                                bolsaNueva.setVolumenDisponible(bolsaNueva.getVolumenMaximo());
+                                bolsaNueva.setPesoDisponible(bolsaNueva.getPesoSoportado());
+                                bolsaNueva.setTipoContenedor(TipoContenedor.BOLSA);
+                                nuevosContenedores.add(bolsaNueva);
+
+                                Double volumenProducto = productoAEmpaquetar.getVolumen();
+                                Double pesoProducto = productoAEmpaquetar.getPeso();
+                                volumenOcupado += volumenProducto;
+                                pesoCargado += pesoProducto;
+                                bolsaNueva.setVolumenOcupado(volumenOcupado);
+                                bolsaNueva.setPesoCargado(pesoCargado);
+                                bolsaNueva.setVolumenDisponible(bolsaNueva.getVolumenDisponible() - bolsaNueva.getVolumenOcupado());
+                                bolsaNueva.setPesoDisponible(bolsaNueva.getPesoDisponible() - bolsaNueva.getPesoCargado());
+
+                                bolsaNueva.getListaProductos().add(productoAEmpaquetar);
+                                productoEmpaquetado = true;
+
+                                this.repositorioEmpaquetado.crearContenedor(bolsaNueva);
+                                break;
+                            } else {
+                                if ((productoAEmpaquetar.getVolumen() > 3750 && productoAEmpaquetar.getVolumen() < 45000) && (productoAEmpaquetar.getPeso() > 7 && productoAEmpaquetar.getPeso() < 30)) {
+                                    Contenedor cajaNueva = new Contenedor();
+                                    List<Producto> nuevaListaDeProductos = new ArrayList<>();
+                                    cajaNueva.setListaProductos(nuevaListaDeProductos);
+                                    cajaNueva.setAlto(50.0);
+                                    Double alto = cajaNueva.getAlto();
+                                    cajaNueva.setAncho(20.0);
+                                    Double ancho = cajaNueva.getAncho();
+                                    cajaNueva.setLargo(45.0);
+                                    Double largo = cajaNueva.getLargo();
+                                    cajaNueva.setPesoSoportado(30.0);
+                                    cajaNueva.setVolumenMaximo(alto, ancho, largo);
+                                    cajaNueva.setVolumenDisponible(cajaNueva.getVolumenMaximo());
+                                    cajaNueva.setPesoDisponible(cajaNueva.getPesoSoportado());
+                                    cajaNueva.setTipoContenedor(TipoContenedor.CAJA);
+                                    nuevosContenedores.add(cajaNueva);
+
+                                    Double volumenProducto = productoAEmpaquetar.getVolumen();
+                                    Double pesoProducto = productoAEmpaquetar.getPeso();
+                                    volumenOcupado += volumenProducto;
+                                    pesoCargado += pesoProducto;
+                                    cajaNueva.setVolumenOcupado(volumenOcupado);
+                                    cajaNueva.setPesoCargado(pesoCargado);
+                                    cajaNueva.setVolumenDisponible(cajaNueva.getVolumenDisponible() - cajaNueva.getVolumenOcupado());
+                                    cajaNueva.setPesoDisponible(cajaNueva.getPesoDisponible() - cajaNueva.getPesoCargado());
+
+                                    cajaNueva.getListaProductos().add(productoAEmpaquetar);
+                                    productoEmpaquetado = true;
+
+                                    this.repositorioEmpaquetado.crearContenedor(cajaNueva);
+                                    break;
+                                }
+                            }
+
+                        } else {
+                            if (contenedor.getTipoContenedor().equals(TipoContenedor.BOLSA)) {
+                                if ((productoAEmpaquetar.getVolumen() < 3750 && productoAEmpaquetar.getPeso() < 7) &&
+                                        (productoAEmpaquetar.getVolumen() < contenedor.getVolumenDisponible() && productoAEmpaquetar.getPeso() < contenedor.getPesoDisponible())) {
+
+                                    Double volumenProducto = productoAEmpaquetar.getVolumen();
+                                    Double pesoProducto = productoAEmpaquetar.getPeso();
+                                    volumenOcupado += volumenProducto;
+                                    pesoCargado += pesoProducto;
+                                    contenedor.setVolumenOcupado(volumenOcupado);
+                                    contenedor.setPesoCargado(pesoCargado);
+                                    contenedor.setVolumenDisponible(contenedor.getVolumenDisponible() - contenedor.getVolumenOcupado());
+                                    contenedor.setPesoDisponible(contenedor.getPesoDisponible() - contenedor.getPesoCargado());
+
+                                    contenedor.getListaProductos().add(productoAEmpaquetar);
+                                    productoEmpaquetado = true;
+
+                                   this.repositorioEmpaquetado.modificarContenedor(contenedor);
+                                    break;
+                                } else if ((productoAEmpaquetar.getVolumen() < 3750 && productoAEmpaquetar.getPeso() < 7) &&
+                                        !(productoAEmpaquetar.getVolumen() < contenedor.getVolumenDisponible() && productoAEmpaquetar.getPeso() < contenedor.getPesoDisponible())) {
+                                    Contenedor bolsaNueva = new Contenedor();
+                                    List<Producto> nuevaListaDeProductos = new ArrayList<>();
+                                    bolsaNueva.setListaProductos(nuevaListaDeProductos);
+                                    bolsaNueva.setAlto(25.0);
+                                    Double alto = bolsaNueva.getAlto();
+                                    bolsaNueva.setAncho(10.0);
+                                    Double ancho = bolsaNueva.getAncho();
+                                    bolsaNueva.setLargo(15.0);
+                                    Double largo = bolsaNueva.getLargo();
+                                    bolsaNueva.setPesoSoportado(7.0);
+                                    bolsaNueva.setVolumenMaximo(alto, ancho, largo);
+                                    bolsaNueva.setVolumenDisponible(bolsaNueva.getVolumenMaximo());
+                                    bolsaNueva.setPesoDisponible(bolsaNueva.getPesoSoportado());
+                                    bolsaNueva.setTipoContenedor(TipoContenedor.BOLSA);
+                                    nuevosContenedores.add(bolsaNueva);
+
+                                    Double volumenProducto = productoAEmpaquetar.getVolumen();
+                                    Double pesoProducto = productoAEmpaquetar.getPeso();
+                                    volumenOcupado += volumenProducto;
+                                    pesoCargado += pesoProducto;
+                                    bolsaNueva.setVolumenOcupado(volumenOcupado);
+                                    bolsaNueva.setPesoCargado(pesoCargado);
+                                    bolsaNueva.setVolumenDisponible(bolsaNueva.getVolumenDisponible() - bolsaNueva.getVolumenOcupado());
+                                    bolsaNueva.setPesoDisponible(bolsaNueva.getPesoDisponible() - bolsaNueva.getPesoCargado());
+
+                                    bolsaNueva.getListaProductos().add(productoAEmpaquetar);
+                                    productoEmpaquetado = true;
+
+                                    this.repositorioEmpaquetado.crearContenedor(bolsaNueva);
+                                    break;
+                                } else {
+                                    Contenedor cajaNueva = new Contenedor();
+                                    List<Producto> nuevaListaDeProductos = new ArrayList<>();
+                                    cajaNueva.setListaProductos(nuevaListaDeProductos);
+                                    cajaNueva.setAlto(50.0);
+                                    Double alto = cajaNueva.getAlto();
+                                    cajaNueva.setAncho(20.0);
+                                    Double ancho = cajaNueva.getAncho();
+                                    cajaNueva.setLargo(45.0);
+                                    Double largo = cajaNueva.getLargo();
+                                    cajaNueva.setPesoSoportado(30.0);
+                                    cajaNueva.setVolumenMaximo(alto, ancho, largo);
+                                    cajaNueva.setVolumenDisponible(cajaNueva.getVolumenMaximo());
+                                    cajaNueva.setPesoDisponible(cajaNueva.getPesoSoportado());
+                                    cajaNueva.setTipoContenedor(TipoContenedor.CAJA);
+                                    nuevosContenedores.add(cajaNueva);
+
+                                    Double volumenProducto = productoAEmpaquetar.getVolumen();
+                                    Double pesoProducto = productoAEmpaquetar.getPeso();
+                                    volumenOcupado += volumenProducto;
+                                    pesoCargado += pesoProducto;
+                                    cajaNueva.setVolumenOcupado(volumenOcupado);
+                                    cajaNueva.setPesoCargado(pesoCargado);
+                                    cajaNueva.setVolumenDisponible(cajaNueva.getVolumenDisponible() - cajaNueva.getVolumenOcupado());
+                                    cajaNueva.setPesoDisponible(cajaNueva.getPesoDisponible() - cajaNueva.getPesoCargado());
+
+                                    cajaNueva.getListaProductos().add(productoAEmpaquetar);
+                                    productoEmpaquetado = true;
+
+                                    this.repositorioEmpaquetado.crearContenedor(cajaNueva);
+                                    break;
+                                }
+                            } else {
+                                if ((productoAEmpaquetar.getVolumen() > 3750 && productoAEmpaquetar.getVolumen() < 45000) && (productoAEmpaquetar.getPeso() > 7 && productoAEmpaquetar.getPeso() < 30)) {
+
+                                    Double volumenProducto = productoAEmpaquetar.getVolumen();
+                                    Double pesoProducto = productoAEmpaquetar.getPeso();
+                                    volumenOcupado += volumenProducto;
+                                    pesoCargado += pesoProducto;
+                                    contenedor.setVolumenOcupado(volumenOcupado);
+                                    contenedor.setPesoCargado(pesoCargado);
+                                    contenedor.setVolumenDisponible(contenedor.getVolumenDisponible() - contenedor.getVolumenOcupado());
+                                    contenedor.setPesoDisponible(contenedor.getPesoDisponible() - contenedor.getPesoCargado());
+
+                                    contenedor.getListaProductos().add(productoAEmpaquetar);
+                                    productoEmpaquetado = true;
+
+                                    this.repositorioEmpaquetado.modificarContenedor(contenedor);
+                                    break;
+                                } else {
+                                    Contenedor cajaNueva = new Contenedor();
+                                    List<Producto> nuevaListaDeProductos = new ArrayList<>();
+                                    cajaNueva.setListaProductos(nuevaListaDeProductos);
+                                    cajaNueva.setAlto(50.0);
+                                    Double alto = cajaNueva.getAlto();
+                                    cajaNueva.setAncho(20.0);
+                                    Double ancho = cajaNueva.getAncho();
+                                    cajaNueva.setLargo(45.0);
+                                    Double largo = cajaNueva.getLargo();
+                                    cajaNueva.setPesoSoportado(30.0);
+                                    cajaNueva.setVolumenMaximo(alto, ancho, largo);
+                                    cajaNueva.setVolumenDisponible(cajaNueva.getVolumenMaximo());
+                                    cajaNueva.setPesoDisponible(cajaNueva.getPesoSoportado());
+                                    cajaNueva.setTipoContenedor(TipoContenedor.CAJA);
+                                    nuevosContenedores.add(cajaNueva);
+
+                                    Double volumenProducto = productoAEmpaquetar.getVolumen();
+                                    Double pesoProducto = productoAEmpaquetar.getPeso();
+                                    volumenOcupado += volumenProducto;
+                                    pesoCargado += pesoProducto;
+                                    cajaNueva.setVolumenOcupado(volumenOcupado);
+                                    cajaNueva.setPesoCargado(pesoCargado);
+                                    cajaNueva.setVolumenDisponible(cajaNueva.getVolumenDisponible() - cajaNueva.getVolumenOcupado());
+                                    cajaNueva.setPesoDisponible(cajaNueva.getPesoDisponible() - cajaNueva.getPesoCargado());
+
+                                    cajaNueva.getListaProductos().add(productoAEmpaquetar);
+                                    productoEmpaquetado = true;
+
+                                    this.repositorioEmpaquetado.crearContenedor(cajaNueva);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (productoEmpaquetado) {
+                        continue productosLoop;  // Saltar al siguiente producto en productosDelPedido
+                    }
                 }
-                }
-
             }
-
-            //Contenedor(Long id, Double alto, Double largo, Double ancho, Double pesoSoportado, TipoContenedor tipoContenedor)
-            // 22 alto, 40 largo, 30 ancho
-
-
         }
-
-
-
-
-
-    private void creacionContenedores() {
-        Contenedor caja = new Contenedor();
-        caja.setAlto(50.0);
-        caja.setAncho(20.0);
-        caja.setLargo(45.0);
-        caja.setPesoSoportado(30.0);
-        caja.setVolumen(50.0 * 20.0 * 45.0);
-        caja.setTipoContenedor(TipoContenedor.CAJA);
-
-        Contenedor bolsa = new Contenedor();
-        bolsa.setAlto(25.0);
-        bolsa.setAncho(10.0);
-        bolsa.setLargo(15.0);
-        bolsa.setPesoSoportado(7.0);
-        bolsa.setVolumen(25.0 * 10.0 * 15.0);
-        bolsa.setTipoContenedor(TipoContenedor.BOLSA);
-
-        this.repositorioEmpaquetado.crearContenedor(caja);
-        this.repositorioEmpaquetado.crearContenedor(bolsa);
     }
 
+    private void crecacionCaja() {
+        Contenedor cajaNueva = new Contenedor();
+        List<Producto> nuevaListaDeProductos = new ArrayList<>();
+        cajaNueva.setListaProductos(nuevaListaDeProductos);
+        cajaNueva.setAlto(50.0);
+        Double alto = cajaNueva.getAlto();
+        cajaNueva.setAncho(20.0);
+        Double ancho = cajaNueva.getAncho();
+        cajaNueva.setLargo(45.0);
+        Double largo = cajaNueva.getLargo();
+        cajaNueva.setPesoSoportado(30.0);
+        cajaNueva.setVolumenMaximo(alto, ancho, largo);
+        cajaNueva.setVolumenDisponible(cajaNueva.getVolumenMaximo());
+        cajaNueva.setPesoDisponible(cajaNueva.getPesoSoportado());
+        cajaNueva.setTipoContenedor(TipoContenedor.CAJA);
+        this.repositorioEmpaquetado.crearContenedor(cajaNueva);
+    }
+
+    private void creacionBolsa() {
+        Contenedor bolsaNueva = new Contenedor();
+        List<Producto> nuevaListaDeProductos = new ArrayList<>();
+        bolsaNueva.setListaProductos(nuevaListaDeProductos);
+        bolsaNueva.setAlto(25.0);
+        Double alto = bolsaNueva.getAlto();
+        bolsaNueva.setAncho(10.0);
+        Double ancho = bolsaNueva.getAncho();
+        bolsaNueva.setLargo(15.0);
+        Double largo = bolsaNueva.getLargo();
+        bolsaNueva.setPesoSoportado(7.0);
+        bolsaNueva.setVolumenMaximo(alto, ancho, largo);
+        bolsaNueva.setVolumenDisponible(bolsaNueva.getVolumenMaximo());
+        bolsaNueva.setPesoDisponible(bolsaNueva.getPesoSoportado());
+        bolsaNueva.setTipoContenedor(TipoContenedor.BOLSA);
+        this.repositorioEmpaquetado.crearContenedor(bolsaNueva);
+    }
 
 }

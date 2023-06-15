@@ -5,7 +5,7 @@ import ar.edu.unlam.tallerweb1.domain.producto.Producto;
 import java.util.List;
 
 public interface RepositorioEmpaquetado {
-    void crearContenedor(Contenedor caja);
+    void crearContenedor(Contenedor contenedor);
 
 
     List<Contenedor> obtenerContenedores();
@@ -13,4 +13,6 @@ public interface RepositorioEmpaquetado {
 
 
     void guardarEmpaque(Contenedor_Producto prod);
+
+    void modificarContenedor(Contenedor contenedor);
 }

@@ -5,8 +5,10 @@ import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor_Producto;
 import ar.edu.unlam.tallerweb1.domain.contenedor.RepositorioEmpaquetado;
 import ar.edu.unlam.tallerweb1.domain.envio.Envio;
 import ar.edu.unlam.tallerweb1.domain.producto.Producto;
+import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -48,5 +50,8 @@ public class RepositorioEmpaquetadoImpl implements RepositorioEmpaquetado {
         session.save(c);
     }
 
-
+    @Override
+    public void modificarContenedor(Contenedor contenedor) {
+        sessionFactory.getCurrentSession().update(contenedor);
+    }
 }

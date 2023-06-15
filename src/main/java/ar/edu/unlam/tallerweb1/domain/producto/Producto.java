@@ -1,6 +1,6 @@
 package ar.edu.unlam.tallerweb1.domain.producto;
 
-/*import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor;*/
+import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor;
 import ar.edu.unlam.tallerweb1.domain.carrito.Carrito;
 import ar.edu.unlam.tallerweb1.domain.enums.CategoriaProducto;
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
@@ -20,25 +20,22 @@ public class Producto {
     /*@OneToMany(mappedBy = "producto")
     private List<Carrito> carritos;*/
 
-    private Integer peso;
-    private Integer volumen;
+    private Double peso;
+    private Double volumen;
     private String nombre;
     private String marca;
-
-    private Integer alto;
-    private Integer ancho;
-    private Integer largo;
+    private Double alto;
+    private Double ancho;
+    private Double largo;
     private Integer precioArs;
-
     private String descripcion;
     private String img;
     private LocalDate fechaVencimiento;
     private CategoriaProducto categoria;
+    @ManyToOne
+    private Contenedor contenedor;
 
-    /*@ManyToOne
-    private Contenedor contenedor;*/
-
-    public Producto(Long id, Integer peso, Integer volumen, String nombre, String marca, Integer alto, Integer ancho, Integer largo, Integer precioArs, String descripcion, String img, LocalDate fechaVencimiento, CategoriaProducto categoria) {
+    public Producto(Long id, Double peso, Double volumen, String nombre, String marca, Double alto, Double ancho, Double largo, Integer precioArs, String descripcion, String img, LocalDate fechaVencimiento, CategoriaProducto categoria) {
         this.id = id;
         this.peso = peso;
         this.volumen = volumen;
@@ -62,36 +59,45 @@ public class Producto {
 
 
 
-    public Integer getAlto() {
+    public Double getAlto() {
         return alto;
     }
 
-    public void setAlto(Integer alto) {
+    public void setAlto(Double alto) {
         this.alto = alto;
     }
 
-    public Integer getAncho() {
+    public Double getAncho() {
         return ancho;
     }
 
-    public void setAncho(Integer ancho) {
+    public void setAncho(Double ancho) {
         this.ancho = ancho;
     }
 
-    public Integer getLargo() {
+    public Double getLargo() {
         return largo;
     }
 
-    public void setLargo(Integer largo) {
+    public void setLargo(Double largo) {
         this.largo = largo;
     }
-    /*public Contenedor getContenedor() {
-        return contenedor;
-    }*/
 
-    /*public void setContenedor(Contenedor contenedor) {
+    public Double getVolumen() {
+        return volumen;
+    }
+
+    public void setVolumen(Double alto, Double ancho, Double largo) {
+        this.volumen = this.alto * this.ancho * this.largo;
+    }
+
+    public Contenedor getContenedor() {
+        return contenedor;
+    }
+
+    public void setContenedor(Contenedor contenedor) {
         this.contenedor = contenedor;
-    }*/
+    }
 
     public Producto() {
 
@@ -112,14 +118,10 @@ public class Producto {
     }
 
     //@Override
-    public Integer getPeso() {
+    public Double getPeso() {
         return this.peso;
     }
 
-    //@Override
-    public Integer getVolumen() {
-        return this.alto * this.ancho * this.largo;
-    }
     public CategoriaProducto getCategoria() {
         return categoria;
     }
@@ -137,12 +139,8 @@ public class Producto {
         this.contenedor = contenedor;
     }*/
 
-    public void setPeso(Integer peso) {
+    public void setPeso(Double peso) {
         this.peso = peso;
-    }
-
-    public void setVolumen(Integer volumen) {
-        this.volumen = volumen;
     }
 
     public void setNombre(String nombre) {
@@ -199,6 +197,7 @@ public class Producto {
         }
         return false;
     }
+
 //toDo
     //@Override
     //	public String toString() {
