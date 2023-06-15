@@ -50,7 +50,6 @@ public class ControladorCarrito {
     }
 
 
-
     @RequestMapping("/eliminarProducto")
     public ModelAndView eliminarProducto(@RequestParam("id") Long productoId){
         Long idUsuario = (Long) request.getSession().getAttribute("idUsuario");
