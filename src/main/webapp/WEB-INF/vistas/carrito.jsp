@@ -6,7 +6,7 @@
 <main class="container">
     <h3 class="m-5 text-center fw-bold text-secondary-emphasis">Mi carrito</h3>
     <div class="d-flex flex-wrap gap-5 justify-content-center">
-        <div class="container">
+        <div class="container" id="container-recargar-bloque">
             <table class="table">
                 <thead class="thead-dark">
                 <tr class="table-warning">
@@ -41,6 +41,7 @@
                     <button id="btn-comprar" class="btn btn-lg btn-primary btn-block" Type="submit"/>Comprar</button>
                 </a>
             </c:if>
+
         </div>
     </div>
 </main>

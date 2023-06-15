@@ -15,12 +15,16 @@ $(document).ready(function() {
             success: function(response) {
                 // Realiza alguna acción después de eliminar el producto
 
-                console.log(response);
+                console.log("El producto se borró correctamente");
 
-                $(".eliminar-producto[data-id='" + productoId + "']").closest("tr").remove();
+                /*$(".eliminar-producto[data-id='" + productoId + "']").closest("tr").remove();
 
-                var total = $(response).find("tfoot td[colspan='8']").text();
-                $("tfoot td[colspan='8']").text(total);
+                let total = $(response).find("tfoot td[colspan='8']").text();
+                $("tfoot td[colspan='8']").text(total);*/
+
+                location.reload();
+
+
 
             },
             error: function(xhr, status, error) {

@@ -62,6 +62,8 @@ public class ControladorCarrito {
         return new ModelAndView("redirect:/carrito");
     }
 
+
+
     @RequestMapping("/carrito")
     public ModelAndView mostrarCarrito(){
         if (request.getSession().getAttribute("idUsuario") == null){
@@ -74,6 +76,7 @@ public class ControladorCarrito {
         model.put("carrito", carrito);
         model.put("total", calcularTotal(carrito));
         model.put("tamano", carrito.size());
+
         return new ModelAndView("/carrito", model);
     }
 
