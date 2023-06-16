@@ -24,7 +24,7 @@
                         </p>
                         <p class="precio fs-3 fw-bold">$${item.precioArs}</p>
                         <div class="mt-auto">
-                            <a href="agregarProducto?id=${item.id}" class="btn btn-primary">Agregar a carrito</a>
+                            <a href="#" data-id="${item.id}" class="btn btn-primary agregar-producto">Agregar a carrito</a>
                         </div>
                     </div>
                 </div>
@@ -48,7 +48,7 @@
                         </p>
                         <p class="precio fs-3 fw-bold">$${item.precioArs}</p>
                         <div class="mt-auto">
-                            <a href="agregarProducto?id=${item.id}" class="btn btn-primary">Agregar a carrito</a>
+                            <a href="#" data-id="${item.id}" class="btn btn-primary agregar-producto">Agregar a carrito</a>
                         </div>
                     </div>
                 </div>
@@ -72,7 +72,7 @@
                         </p>
                         <p class="precio fs-3 fw-bold">$${item.precioArs}</p>
                         <div class="mt-auto">
-                            <a href="agregarProducto?id=${item.id}" class="btn btn-primary">Agregar a carrito</a>
+                            <a href="#" data-id="${item.id}" class="btn btn-primary agregar-producto">Agregar a carrito</a>
                         </div>
                     </div>
                 </div>
@@ -80,6 +80,9 @@
         </c:forEach>
     </div>
 </main>
+
+<script src="${pageContext.request.contextPath}/js/carrito.js"></script>
+
 <script src="../../static/js/script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"

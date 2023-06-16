@@ -50,7 +50,6 @@ public class ControladorCarrito {
     }
 
 
-
     @RequestMapping("/eliminarProducto")
     public ModelAndView eliminarProducto(@RequestParam("id") Long productoId){
         Long idUsuario = (Long) request.getSession().getAttribute("idUsuario");
@@ -62,6 +61,8 @@ public class ControladorCarrito {
 
         return new ModelAndView("redirect:/carrito");
     }
+
+
 
     @RequestMapping("/carrito")
     public ModelAndView mostrarCarrito(){
@@ -75,6 +76,7 @@ public class ControladorCarrito {
         model.put("carrito", carrito);
         model.put("total", calcularTotal(carrito));
         model.put("tamano", carrito.size());
+
         return new ModelAndView("/carrito", model);
     }
 
