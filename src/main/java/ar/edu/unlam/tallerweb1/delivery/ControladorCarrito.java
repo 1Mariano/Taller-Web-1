@@ -38,11 +38,12 @@ public class ControladorCarrito {
 
         if (request.getSession().getAttribute("idUsuario") == null){
             return new ModelAndView("redirect:/login");
-        }
+        } else{
         Long idUsuario = (Long) request.getSession().getAttribute("idUsuario");
         Producto producto = this.servicioCarrito.obtenerProductoPorId(productoId);
         if(producto != null){
             this.servicioCarrito.agregarProductoAlCarrito(producto, idUsuario);
+        }
         }
 
 
