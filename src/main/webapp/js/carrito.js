@@ -57,8 +57,7 @@ $(document).ready(function() {
             type: "GET", // Cambiado a GET, ya que el controlador espera una solicitud GET según el código proporcionado.
             success: function(response) {
                 // Realiza alguna acción después de eliminar el producto
-                console.log(JSON.stringify(response));
-                console.log("El producto se agregó correctamente");
+
                 //El codigo de abajo funciona, pero necesita un par de vueltas mas
                 /*$(".eliminar-producto[data-id='" + productoId + "']").closest("tr").remove();
 
@@ -69,7 +68,8 @@ $(document).ready(function() {
 
                 // Habilitar el enlace de agregar después de 2 segundos
                 // Verificar si el usuario está logueado
-                if (!response.includes("Iniciar sesión")) {
+
+
                     // Mostrar el popup Swal.fire
                     Swal.fire({
                         title: "¡Producto agregado!",
@@ -83,17 +83,15 @@ $(document).ready(function() {
                     setTimeout(function() {
                         enlaceAgregar.removeClass("disabled");
                     }, 2000);
-                } else {
-                    window.location.href = "/proyecto_limpio_spring/login";
-                }
-
-
 
 
 
             },
             error: function(xhr, status, error) {
                 // Maneja el error en caso de que ocurra
+                if (xhr.status === 401) {
+                    window.location.href = "/proyecto_limpio_spring/login";
+                }
                 console.error(error);
             }
         });
