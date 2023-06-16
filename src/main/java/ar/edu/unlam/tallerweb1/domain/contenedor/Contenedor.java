@@ -25,7 +25,7 @@ public class Contenedor {
     private Double pesoDisponible;
     @ManyToOne
     private Vehiculo vehiculo;
-    @OneToMany(mappedBy = "contenedor", cascade = CascadeType.ALL)
+    @OneToMany
     private List<Producto> listaProductos;
 
     private TipoContenedor tipoContenedor;
