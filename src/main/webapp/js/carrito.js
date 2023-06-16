@@ -58,7 +58,6 @@ $(document).ready(function() {
             success: function(response) {
                 // Realiza alguna acción después de eliminar el producto
 
-                console.log("El producto se agregó correctamente");
                 //El codigo de abajo funciona, pero necesita un par de vueltas mas
                 /*$(".eliminar-producto[data-id='" + productoId + "']").closest("tr").remove();
 
@@ -68,25 +67,31 @@ $(document).ready(function() {
                 //location.reload();
 
                 // Habilitar el enlace de agregar después de 2 segundos
-                Swal.fire({
-                    title: "¡Producto agregado!",
-                    text: "El producto se agregó correctamente.",
-                    icon: "success",
-                    timer: 1500, // Duración del mensaje emergente en milisegundos
-                    showConfirmButton: false
-                });
-
-                setTimeout(function() {
-                    enlaceAgregar.removeClass("disabled");
-                }, 2000);
+                // Verificar si el usuario está logueado
 
 
+                    // Mostrar el popup Swal.fire
+                    Swal.fire({
+                        title: "¡Producto agregado!",
+                        text: "El producto se agregó correctamente.",
+                        icon: "success",
+                        timer: 1500, // Duración del mensaje emergente en milisegundos
+                        showConfirmButton: false
+                    });
+
+                    // Habilitar el enlace de agregar después de 2 segundos
+                    setTimeout(function() {
+                        enlaceAgregar.removeClass("disabled");
+                    }, 2000);
 
 
 
             },
             error: function(xhr, status, error) {
                 // Maneja el error en caso de que ocurra
+                if (xhr.status === 401) {
+                    window.location.href = "/proyecto_limpio_spring/login";
+                }
                 console.error(error);
             }
         });

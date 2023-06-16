@@ -6,6 +6,8 @@ import ar.edu.unlam.tallerweb1.domain.producto.Producto;
 import ar.edu.unlam.tallerweb1.domain.producto.ServicioListado;
 import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -34,19 +36,19 @@ public class ControladorCarrito {
     }
 
     @RequestMapping("/agregarProducto")
-    public ModelAndView agregarProducto(@RequestParam("id") Long productoId){
-
-        if (request.getSession().getAttribute("idUsuario") == null){
-            return new ModelAndView("redirect:/login");
+    public ResponseEntity<String> agregarProducto(@RequestParam("id") Long productoId) {
+        if (request.getSession().getAttribute("idUsuario") == null) {
+            // El usuario no está logueado, devolver un mensaje o código de error
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario no logueado");
+        } else {
+            Long idUsuario = (Long) request.getSession().getAttribute("idUsuario");
+            Producto producto = this.servicioCarrito.obtenerProductoPorId(productoId);
+            if (producto != null) {
+                this.servicioCarrito.agregarProductoAlCarrito(producto, idUsuario);
+            }
+            // El producto se agregó correctamente, devolver una respuesta exitosa
+            return ResponseEntity.ok("El producto se agregó correctamente");
         }
-        Long idUsuario = (Long) request.getSession().getAttribute("idUsuario");
-        Producto producto = this.servicioCarrito.obtenerProductoPorId(productoId);
-        if(producto != null){
-            this.servicioCarrito.agregarProductoAlCarrito(producto, idUsuario);
-        }
-
-
-        return new ModelAndView("redirect:/carrito");
     }
 
 
