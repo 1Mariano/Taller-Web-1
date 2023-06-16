@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ include file="header.jsp" %>
+
 <main class="container">
     <h3 class="m-5 text-center fw-bold text-secondary-emphasis">Mirá todos nuestros productos</h3>
     <!-- Example Code -->

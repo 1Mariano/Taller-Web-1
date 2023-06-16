@@ -68,9 +68,19 @@ $(document).ready(function() {
                 //location.reload();
 
                 // Habilitar el enlace de agregar después de 2 segundos
+                Swal.fire({
+                    title: "¡Producto agregado!",
+                    text: "El producto se agregó correctamente.",
+                    icon: "success",
+                    timer: 1500, // Duración del mensaje emergente en milisegundos
+                    showConfirmButton: false
+                });
+
                 setTimeout(function() {
                     enlaceAgregar.removeClass("disabled");
                 }, 2000);
+
+
 
 
 
