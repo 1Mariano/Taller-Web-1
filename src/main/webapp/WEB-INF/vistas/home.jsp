@@ -14,20 +14,6 @@
         <c:forEach var="item" items="${lista}">
             <c:if test="${item.categoria == 'HIGIENE'}">
                 <div class="card" style="width: 20rem">
-                    <!-- <svg
-                            class="bd-placeholder-img card-img-top"
-                            width="100%"
-                            height="180"
-                            xmlns=":${item.img}"
-                            role="img"
-                            aria-label="Placeholder: Image cap"
-                            preserveAspectRatio="xMidYMid slice"
-                            focusable="false"
-                    >
-                        <title>Placeholder</title>
-                        <rect width="100%" height="100%" fill="#868e96"></rect>
-                        <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
-                    </svg>-->
                     <div class="d-flex justify-content-center align-items-center" style="height: 280px;">
                         <img src="${pageContext.request.contextPath}/static/img/${item.img}" alt=""
                              style="width: 280px"/>
@@ -40,7 +26,8 @@
                         </p>
                         <p class="precio fs-3 fw-bold">$${item.precioArs}</p>
                         <div class="mt-auto">
-                            <a href="#" data-id="${item.id}" class="btn btn-primary agregar-producto">Agregar a carrito</a>
+                            <a href="#" data-id="${item.id}" class="btn btn-primary agregar-producto">Agregar a
+                                carrito</a>
                         </div>
                     </div>
                 </div>
@@ -67,7 +54,8 @@
                         </p>
                         <p class="precio fs-3 fw-bold">$${item.precioArs}</p>
                         <div class="mt-auto">
-                            <a href="#" data-id="${item.id}" class="btn btn-primary agregar-producto">Agregar a carrito</a>
+                            <a href="#" data-id="${item.id}" class="btn btn-primary agregar-producto">Agregar a
+                                carrito</a>
                         </div>
                     </div>
                 </div>
@@ -94,7 +82,8 @@
                         </p>
                         <p class="precio fs-3 fw-bold">$${item.precioArs}</p>
                         <div class="mt-auto">
-                            <a href="#" data-id="${item.id}" class="btn btn-primary agregar-producto">Agregar a carrito</a>
+                            <a href="#" data-id="${item.id}" class="btn btn-primary agregar-producto">Agregar a
+                                carrito</a>
                         </div>
                     </div>
                 </div>
@@ -122,7 +111,8 @@
                         </p>
                         <p class="precio fs-3 fw-bold">$${item.precioArs}</p>
                         <div class="mt-auto">
-                            <a href="#" data-id="${item.id}" class="btn btn-primary agregar-producto">Agregar a carrito</a>
+                            <a href="#" data-id="${item.id}" class="btn btn-primary agregar-producto">Agregar a
+                                carrito</a>
                         </div>
                     </div>
                 </div>
@@ -146,7 +136,8 @@
                         </p>
                         <p class="precio fs-3 fw-bold">$${item.precioArs}</p>
                         <div class="mt-auto">
-                            <a href="#" data-id="${item.id}" class="btn btn-primary agregar-producto">Agregar a carrito</a>
+                            <a href="#" data-id="${item.id}" class="btn btn-primary agregar-producto">Agregar a
+                                carrito</a>
                         </div>
                     </div>
                 </div>
@@ -170,7 +161,8 @@
                         </p>
                         <p class="precio fs-3 fw-bold">$${item.precioArs}</p>
                         <div class="mt-auto">
-                            <a href="#" data-id="${item.id}" class="btn btn-primary agregar-producto">Agregar a carrito</a>
+                            <a href="#" data-id="${item.id}" class="btn btn-primary agregar-producto">Agregar a
+                                carrito</a>
                         </div>
                     </div>
                 </div>
@@ -179,8 +171,8 @@
     </div>
 </main>
 
+<script src="${pageContext.request.contextPath}/js/buscador.js"></script>
 <script src="${pageContext.request.contextPath}/js/carrito.js"></script>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
         crossorigin="anonymous"></script>

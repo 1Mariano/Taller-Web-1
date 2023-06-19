@@ -14,13 +14,14 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
-public class ControladorListado{
+public class ControladorListado {
 
     private final ServicioListado servicioListado;
     @Autowired
     private HttpServletRequest request;
+
     @Autowired
-    public ControladorListado(ServicioListado servicioListado){
+    public ControladorListado(ServicioListado servicioListado) {
 
         this.servicioListado = servicioListado;
     }
@@ -35,48 +36,60 @@ public class ControladorListado{
     */
 
     @RequestMapping("/higiene")
-    public ModelAndView irAHigiene(){
+    public ModelAndView irAHigiene() {
         ModelMap modelo = new ModelMap();
+
+        modelo.put("datosBuscador", new DatosBuscador());
+
         List<Producto> productosHigiene = this.servicioListado.listarProductosHigiene();
         modelo.put("lista", productosHigiene);
         guardarCorreo(modelo);
         return new ModelAndView("/higiene", modelo);
-
     }
 
     @RequestMapping("/drogueria")
-    public ModelAndView irADrogueria(){
+    public ModelAndView irADrogueria() {
         ModelMap modelo = new ModelMap();
+
+        modelo.put("datosBuscador", new DatosBuscador());
+
         List<Producto> productosDrogueria = this.servicioListado.listarProductosDrogueria();
         modelo.put("lista", productosDrogueria);
         guardarCorreo(modelo);
         return new ModelAndView("/drogueria", modelo);
-
     }
 
     @RequestMapping("/mascota")
-    public ModelAndView irAMascota(){
+    public ModelAndView irAMascota() {
         ModelMap modelo = new ModelMap();
+
+        modelo.put("datosBuscador", new DatosBuscador());
+
         List<Producto> productosMascota = this.servicioListado.listarProductosMascota();
         modelo.put("lista", productosMascota);
         guardarCorreo(modelo);
         return new ModelAndView("/mascota", modelo);
-
     }
+
     @RequestMapping("/alimentos")
-    public ModelAndView irAAlimentos(){
+    public ModelAndView irAAlimentos() {
         ModelMap modelo = new ModelMap();
+
+        modelo.put("datosBuscador", new DatosBuscador());
+
         List<Producto> productosAlimento = this.servicioListado.listarProductosAlimento();
         modelo.put("lista", productosAlimento);
         guardarCorreo(modelo);
         return new ModelAndView("/alimentos", modelo);
-
     }
 
 
     @RequestMapping("/home")
-    public ModelAndView obtenerProductos(/*@RequestParam(value = "id") Long id*/){
+    public ModelAndView obtenerProductos(/*@RequestParam(value = "id") Long id*/) {
         ModelMap modelo = new ModelMap();
+
+        modelo.put("datosBuscador", new DatosBuscador());
+
         List<Producto> productos = this.servicioListado.obtenerProductos();
         modelo.put("lista", productos);
         // TOdo Mostrar Nombre de usuario y no ID
@@ -88,12 +101,10 @@ public class ControladorListado{
     }
 
     private void guardarCorreo(ModelMap modelo) {
-        if(request.getSession().getAttribute("idUsuario") != null){
+        if (request.getSession().getAttribute("idUsuario") != null) {
             String correo = (String) request.getSession().getAttribute("correo");
             //Long id = (Long) request.getSession().getAttribute("idUsuario");
             modelo.put("correo", correo);
         }
     }
-
-
 }

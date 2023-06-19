@@ -82,21 +82,25 @@
                 </form>
             </c:if>
             <c:if test="${sessionScope.idUsuario == null}">
-                <a
-                        class="text-white text-decoration-none m-0" href="login"><button class="btn btn-primary bg-gradient p-2 rounded text-white border-0">Loguearse</button></a>
+                <a class="text-white text-decoration-none m-0" href="login">
+                    <button class="btn btn-primary bg-gradient p-2 rounded text-white border-0">Loguearse</button>
+                </a>
             </c:if>
         </div>
 
-
         <div class="input-group w-50">
-            <input type="text" class="form-control rounded-start"
-                   placeholder="Busca por nombre, marca o categoría..."
-                   aria-label="Buscar"
-                   aria-describedby="buscador"/>
-            <button class="btn btn-primary rounded-end" type="button" id="buscador">
-                Buscar
-            </button>
+            <form:form cssClass="input-group" action="buscar-productos" method="GET" modelAttribute="datosBuscador"
+                       id="buscadorForm">
+                <form:input path="busqueda" class="form-control rounded-start"
+                            placeholder="Buscá por nombre, marca o categoría..."
+                            aria-label="Buscar"
+                            aria-describedby="buscador" id="buscadorInput"/>
+                <button class="btn btn-primary rounded-end" type="submit" id="buscadorBoton">
+                    Buscar
+                </button>
+            </form:form>
         </div>
+
     </div>
     <div>
         <ul class="m-0 pb-4 nav-underline d-flex justify-content-center list-unstyled text-secondary-emphasis">
