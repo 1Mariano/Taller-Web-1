@@ -24,7 +24,7 @@ public class ServicioBuscadorImpl implements ServicioBuscador {
     @Override
     public List<Producto> obtenerProductosPorNombreMarcaOCategoria(String busqueda) throws NoSeEncontraronCoincidenciasException {
         List<Producto> productosBuscados = this.repositorioProducto.listarProductosPorNombreMarcaOCategoria(busqueda);
-        if (productosBuscados == null) {
+        if (productosBuscados == null || productosBuscados.isEmpty()) {
             throw new NoSeEncontraronCoincidenciasException();
         } else {
             return productosBuscados;

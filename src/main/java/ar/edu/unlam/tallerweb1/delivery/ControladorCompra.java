@@ -35,9 +35,10 @@ public class ControladorCompra {
 
     @RequestMapping("/compra")
     public ModelAndView compra(){
-
-
         ModelMap model = new ModelMap();
+
+        model.put("datosBuscador", new DatosBuscador());
+
         List<Producto> productos = (List<Producto>)  request.getSession().getAttribute("carritoCompleto");
 
         request.getSession().setAttribute("arrayProductos", productos);
@@ -83,6 +84,9 @@ public class ControladorCompra {
     @RequestMapping("/pago")
     public ModelAndView pago(){
         ModelMap model = new ModelMap();
+
+        model.put("datosBuscador", new DatosBuscador());
+
         model.put("numeroPedido", request.getSession().getAttribute("numeroPedido"));
         return new ModelAndView("/pago", model);
     }
