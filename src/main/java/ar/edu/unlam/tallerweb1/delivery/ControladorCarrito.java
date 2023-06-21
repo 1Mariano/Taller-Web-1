@@ -30,8 +30,9 @@ public class ControladorCarrito {
     private HttpServletRequest request;
     @Autowired
     private HttpSession sesion;
+
     @Autowired
-    public ControladorCarrito(ServicioCarrito servicioCarrito){
+    public ControladorCarrito(ServicioCarrito servicioCarrito) {
         this.servicioCarrito = servicioCarrito;
     }
 
@@ -51,29 +52,27 @@ public class ControladorCarrito {
         }
     }
 
-
     @RequestMapping("/eliminarProducto")
-    public ModelAndView eliminarProducto(@RequestParam("id") Long productoId){
+    public ModelAndView eliminarProducto(@RequestParam("id") Long productoId) {
         Long idUsuario = (Long) request.getSession().getAttribute("idUsuario");
         Producto producto = this.servicioCarrito.obtenerProductoPorId(productoId);
-        if(producto != null){
+        if (producto != null) {
             this.servicioCarrito.BorrarProductoDelCarrito(producto, idUsuario);
         }
-
-
         return new ModelAndView("redirect:/carrito");
     }
 
-
-
     @RequestMapping("/carrito")
-    public ModelAndView mostrarCarrito(){
-        if (request.getSession().getAttribute("idUsuario") == null){
+    public ModelAndView mostrarCarrito() {
+        if (request.getSession().getAttribute("idUsuario") == null) {
             return new ModelAndView("redirect:/login");
         }
         ModelMap model = new ModelMap();
+
+        model.put("datosBuscador", new DatosBuscador());
+
         Long idUsuario = (Long) request.getSession().getAttribute("idUsuario");
-        List<Producto> carrito= this.servicioCarrito.obtenerTodosLosProductosDelCarrito(idUsuario);
+        List<Producto> carrito = this.servicioCarrito.obtenerTodosLosProductosDelCarrito(idUsuario);
         request.getSession().setAttribute("carritoCompleto", carrito);
         model.put("carrito", carrito);
         model.put("total", calcularTotal(carrito));
