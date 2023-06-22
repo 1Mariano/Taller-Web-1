@@ -80,6 +80,8 @@ public class ControladorCompra {
         //TODO creacion de contenedores ver y separar responsabilidades
         this.servicioCompra.empaquetarProductos(productos, envioNuevo);
 
+        this.servicioEnvio.agregarAlVehiculo(envioNuevo);
+
         /*ModelMap model = new ModelMap();
         model.put("numeroPedido", envioNuevo);*/
         /*Contenedor_Producto envio = new Contenedor_Producto();

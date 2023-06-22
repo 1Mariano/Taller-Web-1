@@ -31,7 +31,7 @@ public class Vehiculo {
     private TipoVehiculo tipoVehiculo;
     @OneToOne
     private Pedido pedido;
-    @OneToMany
+    @OneToMany(mappedBy = "vehiculo")
     private List<Contenedor> listaContenedores;
 
     public Vehiculo(Long id, String patente, String modelo, Double ancho, Double alto, Double largo, Double volumenMaximo, Double pesoMaximoSoportado, Double distanciaMaxima, TipoVehiculo tipoVehiculo) {

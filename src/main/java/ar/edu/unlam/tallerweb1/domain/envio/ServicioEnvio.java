@@ -20,7 +20,7 @@ public interface ServicioEnvio {
 
     Vehiculo obtenerVehiculoDePedido(Envio envio);
 
-    void agregarAlVehiculo(List<Contenedor> listaContenedores, List<Vehiculo> listaVehiculos, Envio envio);
+    void agregarAlVehiculo(Envio envio);
 
     void asignarVehiculo(Envio envio, Vehiculo vehiculo);
 }

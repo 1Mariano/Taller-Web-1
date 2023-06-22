@@ -28,8 +28,9 @@ public class Contenedor {
     private List<Producto> listaProductos;
     @ManyToOne
     private Envio envio;
-
     private TipoContenedor tipoContenedor;
+    @ManyToOne
+    private Vehiculo vehiculo;
 
     public Contenedor(Long id, Double alto, Double largo, Double ancho, Double pesoSoportado, TipoContenedor tipoContenedor) {
         this.id = id;
