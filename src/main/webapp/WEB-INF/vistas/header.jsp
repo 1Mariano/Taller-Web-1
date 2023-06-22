@@ -68,6 +68,11 @@
 
     }
 
+    .scrollable {
+        overflow: auto;
+        height: 450px;
+    }
+
 </style>
 <body>
 <header class="bg-gradient1">

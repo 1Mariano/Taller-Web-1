@@ -1,10 +1,12 @@
 package ar.edu.unlam.tallerweb1.domain.envio;
 
+import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor;
 import ar.edu.unlam.tallerweb1.domain.enums.EstadoEnvio;
 import ar.edu.unlam.tallerweb1.domain.pedidos.Pedido;
 import ar.edu.unlam.tallerweb1.domain.vehiculos.Vehiculo;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Envio {
@@ -26,6 +28,8 @@ public class Envio {
     private String pisoODepartamento;
     private String codigoPostal;
     private String localidad;
+    /*@OneToMany
+    private List<Contenedor> listaContenedores;*/
 
     public Envio(Long id, Double costoEnvio, Double distanciaEnKilometros, Integer peso, Integer volumen, EstadoEnvio estadoEnvio, String calle, Integer numero, String pisoODepartamento, String codigoPostal, String localidad) {
         this.id = id;
@@ -149,4 +153,13 @@ public class Envio {
     public void setLocalidad(String localidad) {
         this.localidad = localidad;
     }
+
+    /*
+    public List<Contenedor> getListaContenedores() {
+        return listaContenedores;
+    }
+
+    public void setListaContenedores(List<Contenedor> listaContenedores) {
+        this.listaContenedores = listaContenedores;
+    }*/
 }

@@ -25,9 +25,9 @@ public class Pedido {
     @ManyToOne
     private Usuario usuario;
     /*@OneToOne
-    private Carrito carrito;
+    private Carrito carrito;*/
     @OneToOne
-    private Envio envio;*/
+    private Envio envio;
 
     public Pedido(Long id, LocalDate fechaPedido, Double costoTotal, EstadoPedido estado, EstadoPago estadoPago) {
         this.id = id;
@@ -80,5 +80,13 @@ public class Pedido {
     public void setEstadoPago() {
 
         this.estadoPago = EstadoPago.NO_PAGADO;
+    }
+
+    public Envio getEnvio() {
+        return envio;
+    }
+
+    public void setEnvio(Envio envio) {
+        this.envio = envio;
     }
 }

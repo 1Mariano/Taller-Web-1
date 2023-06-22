@@ -4,8 +4,44 @@
 <%@ include file="header.jsp" %>
 
 <main class="container">
-    <!-- Example Code -->
+
     <h1>Su numero de Compra es: ${numeroPedido.id}</h1>
+    <div class="d-flex flex-wrap gap-1 row-gap-5 justify-content-left">
+        <c:forEach var="item" items="${contenedores}">
+            <c:if test="${item.tipoContenedor == 'BOLSA'}">
+                <p>Bolsa</p>
+                <div class="flex flex-col">
+                    <c:forEach var="productos" items="${item.listaProductos}">
+                        <li class="list-group-item">
+                            <div class="d-flex gap-3">
+                                <img src="${pageContext.request.contextPath}/static/img/${productos.img}" alt=""
+                                     style="width: 80px"/>
+                                <h5 class="card-title">
+                                        <c:out value="${productos.nombre}"/>
+                                    <p class="precio fs-3 fw-bold">$${productos.precioArs}</p>
+                            </div>
+                        </li>
+                    </c:forEach>
+                </div>
+            </c:if>
+            <c:if test="${item.tipoContenedor == 'CAJA'}">
+                <p>Caja</p>
+                <div class="flex flex-col">
+                    <c:forEach var="productosCaja" items="${item.listaProductos}">
+                        <li class="list-group-item">
+                            <div class="d-flex gap-3">
+                                <img src="${pageContext.request.contextPath}/static/img/${productosCaja.img}" alt=""
+                                     style="width: 80px"/>
+                                <h5 class="card-title">
+                                        <c:out value="${productosCaja.nombre}"/>
+                                    <p class="precio fs-3 fw-bold">$${productosCaja.precioArs}</p>
+                            </div>
+                        </li>
+                    </c:forEach>
+                </div>
+            </c:if>
+        </c:forEach>
+    </div>
 
 </main>
 <script src="../../static/js/script.js"></script>

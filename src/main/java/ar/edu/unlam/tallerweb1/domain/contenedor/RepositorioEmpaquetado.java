@@ -7,10 +7,7 @@ import java.util.List;
 public interface RepositorioEmpaquetado {
     void crearContenedor(Contenedor contenedor);
 
-
     List<Contenedor> obtenerContenedores();
-
-
 
     void guardarEmpaque(Contenedor_Producto prod);
 
