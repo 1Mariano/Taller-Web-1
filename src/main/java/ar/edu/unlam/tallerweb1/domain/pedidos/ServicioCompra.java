@@ -6,8 +6,6 @@ import ar.edu.unlam.tallerweb1.domain.enums.EstadoPedido;
 import ar.edu.unlam.tallerweb1.domain.envio.Envio;
 import ar.edu.unlam.tallerweb1.domain.producto.Producto;
 import ar.edu.unlam.tallerweb1.exceptions.CampoInvalidoException;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
