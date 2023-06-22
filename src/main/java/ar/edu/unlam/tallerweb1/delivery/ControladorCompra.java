@@ -1,5 +1,7 @@
 package ar.edu.unlam.tallerweb1.delivery;
 
+import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor;
+import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor_Producto;
 import ar.edu.unlam.tallerweb1.domain.envio.Envio;
 import ar.edu.unlam.tallerweb1.domain.pedidos.ServicioCompra;
 import ar.edu.unlam.tallerweb1.domain.producto.Producto;
@@ -72,7 +74,11 @@ public class ControladorCompra {
         this.servicioCompra.empaquetarProductos(productos, envioNuevo);
         /*ModelMap model = new ModelMap();
         model.put("numeroPedido", envioNuevo);*/
-        request.getSession().setAttribute("numeroPedido", envioNuevo);
+        /*Contenedor_Producto envio = new Contenedor_Producto();
+        envio.setEnvio(envioNuevo);*/
+        //request.getSession().setAttribute("numeroPedido", envioNuevo);
+
+
 
 
 
@@ -84,6 +90,12 @@ public class ControladorCompra {
     public ModelAndView pago(){
         ModelMap model = new ModelMap();
         model.put("numeroPedido", request.getSession().getAttribute("numeroPedido"));
+        Double peso =  this.servicioCompra.obtenerPesoTotalDeLosContenedores();
+        Double volumen = this.servicioCompra.obtenerVolumenTotalDeLosContenedores();
+        model.put("peso", peso );
+        model.put("volumen", volumen);
+        List<Contenedor> contenedoresConProductos = this.servicioCompra.devolverContenedoresConProductos();
+        model.put("contenedores", contenedoresConProductos);
         return new ModelAndView("/pago", model);
     }
 

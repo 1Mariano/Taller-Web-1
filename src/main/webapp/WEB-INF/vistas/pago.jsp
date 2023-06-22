@@ -6,6 +6,10 @@
 <main class="container">
     <!-- Example Code -->
     <h1>Su numero de Compra es: ${numeroPedido.id}</h1>
+    <h1>El peso total de pedido es: ${peso}</h1>
+    <h1>El volumen total de pedido es: ${volumen}</h1>
+
+
 
 </main>
 <script src="../../static/js/script.js"></script>

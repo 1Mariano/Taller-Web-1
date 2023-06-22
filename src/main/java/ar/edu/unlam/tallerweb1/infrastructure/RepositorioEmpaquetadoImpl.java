@@ -39,15 +39,15 @@ public class RepositorioEmpaquetadoImpl implements RepositorioEmpaquetado {
     @Override
     public void guardarEmpaque(Contenedor_Producto prod) {
         final Session session = sessionFactory.getCurrentSession();
-        Producto producto = session.get(Producto.class, prod.getProducto().getId());
+        /*Producto producto = session.get(Producto.class, prod.getProducto().getId());
         Envio envio = session.get(Envio.class, prod.getEnvio().getId());
         Contenedor contenedor = session.get(Contenedor.class, prod.getContenedor().getId());
         //sessionFactory.getCurrentSession().save(prod);
         Contenedor_Producto c = new Contenedor_Producto();
         c.setContenedor(contenedor);
         c.setEnvio(envio);
-        c.setProducto(producto);
-        session.save(c);
+        c.setProducto(producto);*/
+        session.save(prod);
     }
 
     @Override

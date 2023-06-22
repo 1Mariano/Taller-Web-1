@@ -1,6 +1,7 @@
 package ar.edu.unlam.tallerweb1.domain.contenedor;
 
 import ar.edu.unlam.tallerweb1.domain.enums.TipoContenedor;
+import ar.edu.unlam.tallerweb1.domain.envio.Envio;
 import ar.edu.unlam.tallerweb1.domain.producto.Producto;
 import ar.edu.unlam.tallerweb1.domain.vehiculos.Vehiculo;
 
@@ -25,8 +26,14 @@ public class Contenedor {
     private Double pesoDisponible;
     @ManyToOne
     private Vehiculo vehiculo;
-    @OneToMany
+    @OneToMany(mappedBy = "contenedor")
     private List<Producto> listaProductos;
+
+    @ManyToOne
+    private Envio envio;
+
+
+
 
     private TipoContenedor tipoContenedor;
 
@@ -39,9 +46,19 @@ public class Contenedor {
         this.tipoContenedor = tipoContenedor;
     }
 
+    public Envio getEnvio() {
+        return envio;
+    }
+
+    public void setEnvio(Envio envio) {
+        this.envio = envio;
+    }
+
     public Contenedor() {
 
     }
+
+
 
     public void setId(Long id) {
         this.id = id;

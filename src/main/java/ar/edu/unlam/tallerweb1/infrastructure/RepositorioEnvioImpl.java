@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.infrastructure;
 
+import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor_Producto;
 import ar.edu.unlam.tallerweb1.domain.envio.Envio;
 import ar.edu.unlam.tallerweb1.domain.envio.RepositorioEnvio;
 import org.hibernate.SessionFactory;
@@ -20,4 +21,6 @@ public class RepositorioEnvioImpl implements RepositorioEnvio {
     public void guardarEnvio(Envio envioNuevo) {
         sessionFactory.getCurrentSession().save(envioNuevo);
     }
+
+
 }
