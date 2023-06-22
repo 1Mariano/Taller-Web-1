@@ -4,13 +4,12 @@
 <%@ include file="header.jsp" %>
 
 <main class="container">
-    <!-- Example Code -->
     <div class="d-flex align-items-center mt-5">
         <i class="fa-solid fa-notes-medical fa-2xl" style="color: #212529;"></i>
         <h3 class="my-4 mx-3 fw-semibold">Productos para Procesar Compra</h3>
     </div>
-    <div class="d-flex  gap-4  justify-content-center">
-        <ol class="list-group list-group-numbered">
+    <div class="d-flex gap-5 justify-content-center">
+        <ol class="list-group list-group-numbered scrollable">
             <c:forEach var="item" items="${productos}">
                 <li class="list-group-item">
                     <div class="d-flex gap-3">

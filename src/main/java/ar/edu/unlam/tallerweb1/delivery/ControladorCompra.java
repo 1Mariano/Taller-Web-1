@@ -1,9 +1,14 @@
 package ar.edu.unlam.tallerweb1.delivery;
 
+import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor;
 import ar.edu.unlam.tallerweb1.domain.envio.Envio;
+import ar.edu.unlam.tallerweb1.domain.envio.ServicioEnvio;
 import ar.edu.unlam.tallerweb1.domain.pedidos.ServicioCompra;
 import ar.edu.unlam.tallerweb1.domain.producto.Producto;
+import ar.edu.unlam.tallerweb1.domain.vehiculos.RepositorioVehiculo;
+import ar.edu.unlam.tallerweb1.domain.vehiculos.Vehiculo;
 import ar.edu.unlam.tallerweb1.exceptions.CampoInvalidoException;
+import ar.edu.unlam.tallerweb1.infrastructure.RepositorioVehiculoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -21,25 +26,27 @@ import java.util.List;
 public class ControladorCompra {
 
     private final ServicioCompra servicioCompra;
+    private final ServicioEnvio servicioEnvio;
+
     @Autowired
     private HttpServletRequest request;
     @Autowired
     private HttpSession sesion;
 
     @Autowired
-    public ControladorCompra(ServicioCompra servicioCompra) {
+    public ControladorCompra(ServicioCompra servicioCompra, ServicioEnvio servicioEnvio) {
         this.servicioCompra = servicioCompra;
+        this.servicioEnvio = servicioEnvio;
     }
 
 
-
     @RequestMapping("/compra")
-    public ModelAndView compra(){
+    public ModelAndView compra() {
         ModelMap model = new ModelMap();
 
         model.put("datosBuscador", new DatosBuscador());
 
-        List<Producto> productos = (List<Producto>)  request.getSession().getAttribute("carritoCompleto");
+        List<Producto> productos = (List<Producto>) request.getSession().getAttribute("carritoCompleto");
 
         request.getSession().setAttribute("arrayProductos", productos);
 
@@ -49,10 +56,9 @@ public class ControladorCompra {
     }
 
 
-
     @RequestMapping(path = "/validar-datos-envio", method = RequestMethod.POST)
     public ModelAndView validarDatosEnvio(@ModelAttribute("datosEnvio") DatosEnvio datosEnvio,
-                                     HttpServletRequest request, HttpServletResponse response) {
+                                          HttpServletRequest request, HttpServletResponse response) {
         ModelMap modelo = new ModelMap();
         Envio envioNuevo = new Envio();
         try {
@@ -62,41 +68,47 @@ public class ControladorCompra {
             envioNuevo.setPisoODepartamento(datosEnvio.getPisoODepartamento());
             envioNuevo.setCodigoPostal(datosEnvio.getCodigoPostal());
             envioNuevo.setLocalidad(datosEnvio.getLocalidad());
+            envioNuevo.setVehiculo(this.servicioEnvio.obtenerVehiculoDePedido(envioNuevo));
             this.servicioCompra.guardarDatosEnvio(envioNuevo);
         } catch (CampoInvalidoException e) {
             return registroDeEnvioFallido(modelo, "El campo debe tener al menos 2 caracteres");
         }
 
         List<Producto> productos = (List<Producto>) request.getSession().getAttribute("arrayProductos");
-        Long usuario =(Long) this.request.getSession().getAttribute("idUsuario");
+        Long usuario = (Long) this.request.getSession().getAttribute("idUsuario");
         //TODO creacion de contenedores ver y separar responsabilidades
         this.servicioCompra.empaquetarProductos(productos, envioNuevo);
+
         /*ModelMap model = new ModelMap();
         model.put("numeroPedido", envioNuevo);*/
-        request.getSession().setAttribute("numeroPedido", envioNuevo);
-
-
-
+        /*Contenedor_Producto envio = new Contenedor_Producto();
+        envio.setEnvio(envioNuevo);*/
+        //request.getSession().setAttribute("numeroPedido", envioNuevo);
 
         return new ModelAndView("redirect:/pago");
     }
 
     @RequestMapping("/pago")
-    public ModelAndView pago(){
+    public ModelAndView pago() {
         ModelMap model = new ModelMap();
 
         model.put("datosBuscador", new DatosBuscador());
 
         model.put("numeroPedido", request.getSession().getAttribute("numeroPedido"));
+        Double peso = this.servicioCompra.obtenerPesoTotalDeLosContenedores();
+        Double volumen = this.servicioCompra.obtenerVolumenTotalDeLosContenedores();
+        model.put("peso", peso);
+        model.put("volumen", volumen);
+        List<Contenedor> contenedoresConProductos = this.servicioCompra.devolverContenedoresConProductos();
+        model.put("contenedores", contenedoresConProductos);
+       // model.put("costoEnvio", this.servicioEnvio.calcularCostoEnvio());
         return new ModelAndView("/pago", model);
     }
-
 
     private ModelAndView registroDeEnvioFallido(ModelMap modelo, String mensaje) {
         modelo.put("error", mensaje);
         modelo.put("productos", request.getSession().getAttribute("arrayProductos"));
         return new ModelAndView("compra", modelo);
     }
-
 
 }

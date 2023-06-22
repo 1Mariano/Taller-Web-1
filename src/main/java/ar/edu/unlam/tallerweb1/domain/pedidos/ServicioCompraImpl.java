@@ -1,6 +1,7 @@
 package ar.edu.unlam.tallerweb1.domain.pedidos;
 
 import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor;
+import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor_Producto;
 import ar.edu.unlam.tallerweb1.domain.contenedor.RepositorioEmpaquetado;
 import ar.edu.unlam.tallerweb1.domain.enums.CategoriaProducto;
 import ar.edu.unlam.tallerweb1.domain.enums.EstadoPago;
@@ -63,8 +64,8 @@ public class ServicioCompraImpl implements ServicioCompra {
 
     @Override
     public void empaquetarProductos(List<Producto> productosDelPedido, Envio envio) {
-        creacionBolsaNueva();
-        creacionCajaNueva();
+        creacionBolsaNueva(envio);
+        creacionCajaNueva(envio);
         List<Contenedor> contenedores = this.repositorioEmpaquetado.obtenerContenedores();
         List<Contenedor> nuevosContenedores = new ArrayList<>();
 
@@ -78,103 +79,85 @@ public class ServicioCompraImpl implements ServicioCompra {
             Double pesoTotalCargado= 0.0;
 
             for (Contenedor contenedor : contenedores) {
-                if (contenedor.getListaProductos().isEmpty()) {
-                    if (contenedor.getTipoContenedor().equals(TipoContenedor.BOLSA)) {
-                        if (productoAEmpaquetar.getVolumen() < 3750 && productoAEmpaquetar.getPeso() < 7) {
-                            calcularVolumenYPesoDisponible(productoAEmpaquetar, volumenTotalOcupado, pesoTotalCargado, contenedor);
+                if (contenedor.getEnvio().getId() == envio.getId()) {
+                    if (contenedor.getListaProductos().isEmpty()) {
+                        if (contenedor.getTipoContenedor().equals(TipoContenedor.BOLSA)) {
+                            if (productoAEmpaquetar.getVolumen() < 3750 && productoAEmpaquetar.getPeso() < 7) {
+                                calcularVolumenYPesoDisponible(productoAEmpaquetar, volumenTotalOcupado, pesoTotalCargado, contenedor);
 
-                            contenedor.getListaProductos().add(productoAEmpaquetar);
-                            productoEmpaquetado = true;
+                                Contenedor_Producto con = new Contenedor_Producto();
+                                con.setEnvio(envio);
+                                con.setProducto(productoAEmpaquetar);
+                                con.setContenedor(contenedor);
+                                this.repositorioEmpaquetado.guardarEmpaque(con);
 
-                            this.repositorioEmpaquetado.modificarContenedor(contenedor);
-                        } else {
-                            Double volumenTotalOcupadoCajaNueva = 0.0;
-                            Double pesoTotalCargadoCajaNueva = 0.0;
-                            Contenedor cajaNueva = creacionCajaNueva();
-
-                            nuevosContenedores.add(cajaNueva);
-
-                            calcularVolumenYPesoDisponible(productoAEmpaquetar, volumenTotalOcupadoCajaNueva, pesoTotalCargadoCajaNueva, cajaNueva);
-
-                            cajaNueva.getListaProductos().add(productoAEmpaquetar);
-                            productoEmpaquetado = true;
-
-                            this.repositorioEmpaquetado.crearContenedor(cajaNueva);
-                        }
-                        break;
-                    } else {
-                        if ((productoAEmpaquetar.getVolumen() > 3750 && productoAEmpaquetar.getVolumen() < 45000) && (productoAEmpaquetar.getPeso() > 7 && productoAEmpaquetar.getPeso() < 30)) {
-                            calcularVolumenYPesoDisponible(productoAEmpaquetar, volumenTotalOcupado, pesoTotalCargado, contenedor);
-
-                            contenedor.getListaProductos().add(productoAEmpaquetar);
-                            productoEmpaquetado = true;
-
-                            this.repositorioEmpaquetado.modificarContenedor(contenedor);
-                            break;
-                        }
-                    }
-
-                } else {
-                    for (Producto productosEmpaquetados : contenedor.getListaProductos()) {
-                        volumenTotalOcupado += productosEmpaquetados.getVolumen();
-                        pesoTotalCargado += productosEmpaquetados.getPeso();
-                    }
-                    for (Producto productoYaEmpaquetado : contenedor.getListaProductos()) {
-                        boolean tieneProductoHigiene = productoYaEmpaquetado.getCategoria().equals(CategoriaProducto.HIGIENE);
-                        if (tieneProductoHigiene && (productoAEmpaquetar.getCategoria().equals(CategoriaProducto.ALIMENTOS_CONGELADOS) ||
-                                productoAEmpaquetar.getCategoria().equals(CategoriaProducto.ALIMENTOS_FRESCOS) ||
-                                productoAEmpaquetar.getCategoria().equals(CategoriaProducto.ALIMENTOS_NO_PERECEDEROS))) {
-                            if ((productoAEmpaquetar.getVolumen() < 3750 && productoAEmpaquetar.getPeso() < 7)) {
-                                Double volumenTotalOcupadoBolsaNueva = 0.0;
-                                Double pesoTotalCargadoBolsaNueva = 0.0;
-
-                                Contenedor bolsaNueva = creacionBolsaNueva();
-                                nuevosContenedores.add(bolsaNueva);
-
-                                calcularVolumenYPesoDisponible(productoAEmpaquetar, volumenTotalOcupadoBolsaNueva, pesoTotalCargadoBolsaNueva, bolsaNueva);
-
-                                bolsaNueva.getListaProductos().add(productoAEmpaquetar);
+                                contenedor.getListaProductos().add(productoAEmpaquetar);
                                 productoEmpaquetado = true;
 
-                                this.repositorioEmpaquetado.crearContenedor(bolsaNueva);
-                                break;
+                                this.repositorioEmpaquetado.modificarContenedor(contenedor);
                             } else {
-                                if ((productoAEmpaquetar.getVolumen() > 3750 && productoAEmpaquetar.getVolumen() < 45000) && (productoAEmpaquetar.getPeso() > 7 && productoAEmpaquetar.getPeso() < 30)) {
-                                    Double volumenTotalOcupadoCajaNueva = 0.0;
-                                    Double pesoTotalCargadoCajaNueva = 0.0;
+                                Double volumenTotalOcupadoCajaNueva = 0.0;
+                                Double pesoTotalCargadoCajaNueva = 0.0;
+                                Contenedor cajaNueva = creacionCajaNueva(envio);
 
-                                    Contenedor cajaNueva = creacionCajaNueva();
-                                    nuevosContenedores.add(cajaNueva);
+                                nuevosContenedores.add(cajaNueva);
 
-                                    calcularVolumenYPesoDisponible(productoAEmpaquetar, volumenTotalOcupadoCajaNueva, pesoTotalCargadoCajaNueva, cajaNueva);
+                                calcularVolumenYPesoDisponible(productoAEmpaquetar, volumenTotalOcupadoCajaNueva, pesoTotalCargadoCajaNueva, cajaNueva);
 
-                                    cajaNueva.getListaProductos().add(productoAEmpaquetar);
-                                    productoEmpaquetado = true;
+                                Contenedor_Producto con1 = new Contenedor_Producto();
+                                con1.setEnvio(envio);
+                                con1.setProducto(productoAEmpaquetar);
+                                con1.setContenedor(cajaNueva);
+                                this.repositorioEmpaquetado.guardarEmpaque(con1);
 
-                                    this.repositorioEmpaquetado.crearContenedor(cajaNueva);
-                                    break;
-                                }
+                                cajaNueva.getListaProductos().add(productoAEmpaquetar);
+                                productoEmpaquetado = true;
+
+                                this.repositorioEmpaquetado.crearContenedor(cajaNueva);
                             }
+                            break;
                         } else {
-                            if (contenedor.getTipoContenedor().equals(TipoContenedor.BOLSA)) {
-                                if ((productoAEmpaquetar.getVolumen() < 3750 && productoAEmpaquetar.getPeso() < 7) &&
-                                        (productoAEmpaquetar.getVolumen() < contenedor.getVolumenDisponible() && productoAEmpaquetar.getPeso() < contenedor.getPesoDisponible())) {
-                                    calcularVolumenYPesoDisponible(productoAEmpaquetar, volumenTotalOcupado, pesoTotalCargado, contenedor);
+                            if ((productoAEmpaquetar.getVolumen() > 3750 && productoAEmpaquetar.getVolumen() < 45000) && (productoAEmpaquetar.getPeso() > 7 && productoAEmpaquetar.getPeso() < 30)) {
+                                calcularVolumenYPesoDisponible(productoAEmpaquetar, volumenTotalOcupado, pesoTotalCargado, contenedor);
 
-                                    contenedor.getListaProductos().add(productoAEmpaquetar);
-                                    productoEmpaquetado = true;
+                                Contenedor_Producto con2 = new Contenedor_Producto();
+                                con2.setEnvio(envio);
+                                con2.setProducto(productoAEmpaquetar);
+                                con2.setContenedor(contenedor);
+                                this.repositorioEmpaquetado.guardarEmpaque(con2);
 
-                                    this.repositorioEmpaquetado.modificarContenedor(contenedor);
-                                    break;
-                                } else if ((productoAEmpaquetar.getVolumen() < 3750 && productoAEmpaquetar.getPeso() < 7) &&
-                                        !(productoAEmpaquetar.getVolumen() < contenedor.getVolumenDisponible() && productoAEmpaquetar.getPeso() < contenedor.getPesoDisponible())) {
+                                contenedor.getListaProductos().add(productoAEmpaquetar);
+                                productoEmpaquetado = true;
+
+                                this.repositorioEmpaquetado.modificarContenedor(contenedor);
+                                break;
+                            }
+                        }
+
+                    } else {
+                        for (Producto productosEmpaquetados : contenedor.getListaProductos()) {
+                            volumenTotalOcupado += productosEmpaquetados.getVolumen();
+                            pesoTotalCargado += productosEmpaquetados.getPeso();
+                        }
+                        for (Producto productoYaEmpaquetado : contenedor.getListaProductos()) {
+                            boolean tieneProductoHigiene = productoYaEmpaquetado.getCategoria().equals(CategoriaProducto.HIGIENE);
+                            if (tieneProductoHigiene && (productoAEmpaquetar.getCategoria().equals(CategoriaProducto.ALIMENTOS_CONGELADOS) ||
+                                    productoAEmpaquetar.getCategoria().equals(CategoriaProducto.ALIMENTOS_FRESCOS) ||
+                                    productoAEmpaquetar.getCategoria().equals(CategoriaProducto.ALIMENTOS_NO_PERECEDEROS))) {
+                                if ((productoAEmpaquetar.getVolumen() < 3750 && productoAEmpaquetar.getPeso() < 7)) {
                                     Double volumenTotalOcupadoBolsaNueva = 0.0;
                                     Double pesoTotalCargadoBolsaNueva = 0.0;
 
-                                    Contenedor bolsaNueva = creacionBolsaNueva();
+                                    Contenedor bolsaNueva = creacionBolsaNueva(envio);
                                     nuevosContenedores.add(bolsaNueva);
 
                                     calcularVolumenYPesoDisponible(productoAEmpaquetar, volumenTotalOcupadoBolsaNueva, pesoTotalCargadoBolsaNueva, bolsaNueva);
+
+                                    Contenedor_Producto con3 = new Contenedor_Producto();
+                                    con3.setEnvio(envio);
+                                    con3.setProducto(productoAEmpaquetar);
+                                    con3.setContenedor(bolsaNueva);
+                                    this.repositorioEmpaquetado.guardarEmpaque(con3);
 
                                     bolsaNueva.getListaProductos().add(productoAEmpaquetar);
                                     productoEmpaquetado = true;
@@ -182,50 +165,134 @@ public class ServicioCompraImpl implements ServicioCompra {
                                     this.repositorioEmpaquetado.crearContenedor(bolsaNueva);
                                     break;
                                 } else {
-                                    Double volumenTotalOcupadoCajaNueva = 0.0;
-                                    Double pesoTotalCargadoCajaNueva = 0.0;
+                                    if ((productoAEmpaquetar.getVolumen() > 3750 && productoAEmpaquetar.getVolumen() < 45000) && (productoAEmpaquetar.getPeso() > 7 && productoAEmpaquetar.getPeso() < 30)) {
+                                        Double volumenTotalOcupadoCajaNueva = 0.0;
+                                        Double pesoTotalCargadoCajaNueva = 0.0;
 
-                                    Contenedor cajaNueva = creacionCajaNueva();
-                                    nuevosContenedores.add(cajaNueva);
+                                        Contenedor cajaNueva = creacionCajaNueva(envio);
+                                        nuevosContenedores.add(cajaNueva);
 
-                                    calcularVolumenYPesoDisponible(productoAEmpaquetar, volumenTotalOcupadoCajaNueva, pesoTotalCargadoCajaNueva, cajaNueva);
+                                        calcularVolumenYPesoDisponible(productoAEmpaquetar, volumenTotalOcupadoCajaNueva, pesoTotalCargadoCajaNueva, cajaNueva);
 
-                                    cajaNueva.getListaProductos().add(productoAEmpaquetar);
-                                    productoEmpaquetado = true;
+                                        Contenedor_Producto con4 = new Contenedor_Producto();
+                                        con4.setEnvio(envio);
+                                        con4.setProducto(productoAEmpaquetar);
+                                        con4.setContenedor(cajaNueva);
+                                        this.repositorioEmpaquetado.guardarEmpaque(con4);
 
-                                    this.repositorioEmpaquetado.crearContenedor(cajaNueva);
-                                    break;
+                                        cajaNueva.getListaProductos().add(productoAEmpaquetar);
+                                        productoEmpaquetado = true;
+
+                                        this.repositorioEmpaquetado.crearContenedor(cajaNueva);
+                                        break;
+                                    }
                                 }
                             } else {
-                                if ((productoAEmpaquetar.getVolumen() > 3750 && productoAEmpaquetar.getVolumen() < 45000) && (productoAEmpaquetar.getPeso() > 7 && productoAEmpaquetar.getPeso() < 30)) {
-                                    calcularVolumenYPesoDisponible(productoAEmpaquetar, volumenTotalOcupado, pesoTotalCargado, contenedor);
+                                if (contenedor.getTipoContenedor().equals(TipoContenedor.BOLSA)) {
+                                    if ((productoAEmpaquetar.getVolumen() < 3750 && productoAEmpaquetar.getPeso() < 7) &&
+                                            (productoAEmpaquetar.getVolumen() < contenedor.getVolumenDisponible() && productoAEmpaquetar.getPeso() < contenedor.getPesoDisponible())) {
+                                        calcularVolumenYPesoDisponible(productoAEmpaquetar, volumenTotalOcupado, pesoTotalCargado, contenedor);
 
-                                    contenedor.getListaProductos().add(productoAEmpaquetar);
-                                    productoEmpaquetado = true;
+                                        Contenedor_Producto con5 = new Contenedor_Producto();
+                                        con5.setEnvio(envio);
+                                        con5.setProducto(productoAEmpaquetar);
+                                        con5.setContenedor(contenedor);
+                                        this.repositorioEmpaquetado.guardarEmpaque(con5);
 
-                                    this.repositorioEmpaquetado.modificarContenedor(contenedor);
+                                        contenedor.getListaProductos().add(productoAEmpaquetar);
+                                        productoEmpaquetado = true;
+
+                                        this.repositorioEmpaquetado.modificarContenedor(contenedor);
+                                        break;
+                                    } else if ((productoAEmpaquetar.getVolumen() < 3750 && productoAEmpaquetar.getPeso() < 7) &&
+                                            !(productoAEmpaquetar.getVolumen() < contenedor.getVolumenDisponible() && productoAEmpaquetar.getPeso() < contenedor.getPesoDisponible())) {
+                                        Double volumenTotalOcupadoBolsaNueva = 0.0;
+                                        Double pesoTotalCargadoBolsaNueva = 0.0;
+
+                                        Contenedor bolsaNueva = creacionBolsaNueva(envio);
+
+
+                                        nuevosContenedores.add(bolsaNueva);
+
+                                        calcularVolumenYPesoDisponible(productoAEmpaquetar, volumenTotalOcupadoBolsaNueva, pesoTotalCargadoBolsaNueva, bolsaNueva);
+
+                                        Contenedor_Producto con6 = new Contenedor_Producto();
+                                        con6.setEnvio(envio);
+                                        con6.setProducto(productoAEmpaquetar);
+                                        con6.setContenedor(bolsaNueva);
+                                        this.repositorioEmpaquetado.guardarEmpaque(con6);
+
+                                        bolsaNueva.getListaProductos().add(productoAEmpaquetar);
+                                        productoEmpaquetado = true;
+
+                                        this.repositorioEmpaquetado.crearContenedor(bolsaNueva);
+                                        break;
+                                    } else {
+                                        Double volumenTotalOcupadoCajaNueva = 0.0;
+                                        Double pesoTotalCargadoCajaNueva = 0.0;
+
+                                        Contenedor cajaNueva = creacionCajaNueva(envio);
+                                        nuevosContenedores.add(cajaNueva);
+
+                                        calcularVolumenYPesoDisponible(productoAEmpaquetar, volumenTotalOcupadoCajaNueva, pesoTotalCargadoCajaNueva, cajaNueva);
+
+                                        Contenedor_Producto con7 = new Contenedor_Producto();
+                                        con7.setEnvio(envio);
+                                        con7.setProducto(productoAEmpaquetar);
+                                        con7.setContenedor(cajaNueva);
+                                        this.repositorioEmpaquetado.guardarEmpaque(con7);
+
+                                        cajaNueva.getListaProductos().add(productoAEmpaquetar);
+                                        productoEmpaquetado = true;
+
+                                        this.repositorioEmpaquetado.crearContenedor(cajaNueva);
+                                        break;
+                                    }
                                 } else {
-                                    Double volumenTotalOcupadoCajaNueva = 0.0;
-                                    Double pesoTotalCargadoCajaNueva = 0.0;
+                                    if ((productoAEmpaquetar.getVolumen() > 3750 && productoAEmpaquetar.getVolumen() < 45000) && (productoAEmpaquetar.getPeso() > 7 && productoAEmpaquetar.getPeso() < 30)) {
+                                        calcularVolumenYPesoDisponible(productoAEmpaquetar, volumenTotalOcupado, pesoTotalCargado, contenedor);
 
-                                    Contenedor cajaNueva = creacionCajaNueva();
-                                    nuevosContenedores.add(cajaNueva);
+                                        Contenedor_Producto con8 = new Contenedor_Producto();
+                                        con8.setEnvio(envio);
+                                        con8.setProducto(productoAEmpaquetar);
+                                        con8.setContenedor(contenedor);
+                                        this.repositorioEmpaquetado.guardarEmpaque(con8);
 
-                                    calcularVolumenYPesoDisponible(productoAEmpaquetar, volumenTotalOcupadoCajaNueva, pesoTotalCargadoCajaNueva, cajaNueva);
+                                        contenedor.getListaProductos().add(productoAEmpaquetar);
+                                        productoEmpaquetado = true;
 
-                                    cajaNueva.getListaProductos().add(productoAEmpaquetar);
-                                    productoEmpaquetado = true;
+                                        this.repositorioEmpaquetado.modificarContenedor(contenedor);
+                                    } else {
+                                        Double volumenTotalOcupadoCajaNueva = 0.0;
+                                        Double pesoTotalCargadoCajaNueva = 0.0;
 
-                                    this.repositorioEmpaquetado.crearContenedor(cajaNueva);
+                                        Contenedor cajaNueva = creacionCajaNueva(envio);
+                                        nuevosContenedores.add(cajaNueva);
+
+                                        calcularVolumenYPesoDisponible(productoAEmpaquetar, volumenTotalOcupadoCajaNueva, pesoTotalCargadoCajaNueva, cajaNueva);
+
+                                        Contenedor_Producto con9 = new Contenedor_Producto();
+                                        con9.setEnvio(envio);
+                                        con9.setProducto(productoAEmpaquetar);
+                                        con9.setContenedor(cajaNueva);
+                                        this.repositorioEmpaquetado.guardarEmpaque(con9);
+
+                                        cajaNueva.getListaProductos().add(productoAEmpaquetar);
+                                        productoEmpaquetado = true;
+
+                                        this.repositorioEmpaquetado.crearContenedor(cajaNueva);
+                                    }
+                                    break;
                                 }
-                                break;
                             }
                         }
+                        if (productoEmpaquetado) {
+                            continue productosLoop;
+                        }
                     }
-                    if (productoEmpaquetado) {
-                        continue productosLoop;
-                    }
+
                 }
+
             }
         }
         for (Contenedor contenedorAEliminar: contenedores) {
@@ -234,6 +301,36 @@ public class ServicioCompraImpl implements ServicioCompra {
             }
         }
     }
+
+    @Override
+    public Double obtenerPesoTotalDeLosContenedores() {
+
+        List<Contenedor> contenedores = this.repositorioEmpaquetado.obtenerContenedores();
+        Double suma = 0.0;
+        for (Contenedor c : contenedores){
+            suma += c.getPesoCargado();
+        }
+        return suma;
+    }
+
+
+    @Override
+    public Double obtenerVolumenTotalDeLosContenedores() {
+        List<Contenedor> contenedores = this.repositorioEmpaquetado.obtenerContenedores();
+        Double volumen = 0.0;
+        for (Contenedor c : contenedores){
+            volumen += c.getVolumenOcupado();
+        }
+        return volumen;
+    }
+
+    @Override
+    public List<Contenedor> devolverContenedoresConProductos() {
+        List<Contenedor> contenedores = this.repositorioEmpaquetado.obtenerContenedores();
+
+        return contenedores;
+    }
+
 
     private void calcularVolumenYPesoDisponible(Producto productoAEmpaquetar, Double volumenTotalOcupado, Double pesoTotalCargado, Contenedor contenedor) {
         Double volumenProducto = productoAEmpaquetar.getVolumen();
@@ -246,7 +343,7 @@ public class ServicioCompraImpl implements ServicioCompra {
         contenedor.setPesoCargado(pesoTotalCargado + pesoProducto);
     }
 
-    private Contenedor creacionCajaNueva() {
+    private Contenedor creacionCajaNueva(Envio envio) {
         Contenedor cajaNueva = new Contenedor();
         List<Producto> nuevaListaDeProductos = new ArrayList<>();
         cajaNueva.setListaProductos(nuevaListaDeProductos);
@@ -261,11 +358,12 @@ public class ServicioCompraImpl implements ServicioCompra {
         cajaNueva.setVolumenDisponible(cajaNueva.getVolumenMaximo());
         cajaNueva.setPesoDisponible(cajaNueva.getPesoSoportado());
         cajaNueva.setTipoContenedor(TipoContenedor.CAJA);
+        cajaNueva.setEnvio(envio);
         this.repositorioEmpaquetado.crearContenedor(cajaNueva);
         return cajaNueva;
     }
 
-    private Contenedor creacionBolsaNueva() {
+    private Contenedor creacionBolsaNueva(Envio envio) {
         Contenedor bolsaNueva = new Contenedor();
         List<Producto> nuevaListaDeProductos = new ArrayList<>();
         bolsaNueva.setListaProductos(nuevaListaDeProductos);
@@ -280,7 +378,9 @@ public class ServicioCompraImpl implements ServicioCompra {
         bolsaNueva.setVolumenDisponible(bolsaNueva.getVolumenMaximo());
         bolsaNueva.setPesoDisponible(bolsaNueva.getPesoSoportado());
         bolsaNueva.setTipoContenedor(TipoContenedor.BOLSA);
+        bolsaNueva.setEnvio(envio);
         this.repositorioEmpaquetado.crearContenedor(bolsaNueva);
         return bolsaNueva;
     }
+
 }
