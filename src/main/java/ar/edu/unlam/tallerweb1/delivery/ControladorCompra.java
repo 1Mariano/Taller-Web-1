@@ -1,15 +1,11 @@
 package ar.edu.unlam.tallerweb1.delivery;
 
 import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor;
-import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor_Producto;
 import ar.edu.unlam.tallerweb1.domain.envio.Envio;
 import ar.edu.unlam.tallerweb1.domain.envio.ServicioEnvio;
 import ar.edu.unlam.tallerweb1.domain.pedidos.ServicioCompra;
 import ar.edu.unlam.tallerweb1.domain.producto.Producto;
-import ar.edu.unlam.tallerweb1.domain.vehiculos.RepositorioVehiculo;
-import ar.edu.unlam.tallerweb1.domain.vehiculos.Vehiculo;
 import ar.edu.unlam.tallerweb1.exceptions.CampoInvalidoException;
-import ar.edu.unlam.tallerweb1.infrastructure.RepositorioVehiculoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -71,16 +67,15 @@ public class ControladorCompra {
             envioNuevo.setLocalidad(datosEnvio.getLocalidad());
             envioNuevo.setVehiculo(this.servicioEnvio.obtenerVehiculoDePedido(envioNuevo));
             this.servicioCompra.guardarDatosEnvio(envioNuevo);
+
+            List<Producto> productos = (List<Producto>) request.getSession().getAttribute("arrayProductos");
+            Long usuario = (Long) this.request.getSession().getAttribute("idUsuario");
+            this.servicioCompra.empaquetarProductos(productos, envioNuevo);
+            this.servicioEnvio.agregarAlVehiculo(envioNuevo);
+
         } catch (CampoInvalidoException e) {
             return registroDeEnvioFallido(modelo, "El campo debe tener al menos 2 caracteres");
         }
-
-        List<Producto> productos = (List<Producto>) request.getSession().getAttribute("arrayProductos");
-        Long usuario = (Long) this.request.getSession().getAttribute("idUsuario");
-        //TODO creacion de contenedores ver y separar responsabilidades
-        this.servicioCompra.empaquetarProductos(productos, envioNuevo);
-
-        this.servicioEnvio.agregarAlVehiculo(envioNuevo);
 
         /*ModelMap model = new ModelMap();
         model.put("numeroPedido", envioNuevo);*/
@@ -104,7 +99,7 @@ public class ControladorCompra {
         model.put("volumen", volumen);
         List<Contenedor> contenedoresConProductos = this.servicioCompra.devolverContenedoresConProductos();
         model.put("contenedores", contenedoresConProductos);
-       // model.put("costoEnvio", this.servicioEnvio.calcularCostoEnvio());
+        // model.put("costoEnvio", this.servicioEnvio.calcularCostoEnvio());
         return new ModelAndView("/pago", model);
     }
 
