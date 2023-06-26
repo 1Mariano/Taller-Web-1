@@ -105,22 +105,20 @@ public class ControladorLogin {
 		request.getSession().setAttribute("idUsuario", usuarioBuscado.getId());
 		request.getSession().setAttribute("correo", usuarioBuscado.getEmail());
 
-		// Guardar las cookies si el checkbox está seleccionado
 		if (request.getParameter("recordarDatos") != null) {
 			Cookie emailCookie = new Cookie("email", datosLogin.getEmail());
 			Cookie passwordCookie = new Cookie("password", datosLogin.getPassword());
-			emailCookie.setMaxAge(3600); // Establece la expiración de la cookie en 1 hora (puedes ajustarla según tus necesidades)
-			passwordCookie.setMaxAge(3600);
+			emailCookie.setMaxAge(172800);
+			passwordCookie.setMaxAge(172800);
 			response.addCookie(emailCookie);
 			response.addCookie(passwordCookie);
 		} else {
-			// Eliminar las cookies si el checkbox no está seleccionado
 			Cookie[] cookies = request.getCookies();
 			if (cookies != null) {
 				for (Cookie cookie : cookies) {
 					if (cookie.getName().equals("email") || cookie.getName().equals("password")) {
 						cookie.setValue("");
-						cookie.setMaxAge(0); // Establece la expiración de la cookie en 0 para eliminarla
+						cookie.setMaxAge(0);
 						response.addCookie(cookie);
 					}
 				}
