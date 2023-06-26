@@ -199,7 +199,6 @@ public class ServicioCompraImpl implements ServicioCompra {
                                 tieneProductoAlimentacion && (productoAEmpaquetar.getCategoria().equals(CategoriaProducto.HIGIENE))) {
                             contenedorConProductoHigiene = true;
                             contenedorConProductoAlimentacion = true;
-
                                 /*if ((productoAEmpaquetar.getVolumen() < 3750 && productoAEmpaquetar.getPeso() < 7)) {
                                     Double volumenTotalOcupadoBolsaNueva = 0.0;
                                     Double pesoTotalCargadoBolsaNueva = 0.0;
@@ -260,13 +259,11 @@ public class ServicioCompraImpl implements ServicioCompra {
                                     break;
                                 } else if ((productoAEmpaquetar.getVolumen() < 3750 && productoAEmpaquetar.getPeso() < 7) &&
                                         !(productoAEmpaquetar.getVolumen() < contenedor.getVolumenDisponible() && productoAEmpaquetar.getPeso() < contenedor.getPesoDisponible())) {
-                                    //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
                                     if (posicionActualListaContenedores == contenedores.size() - 1) {
                                         Double volumenTotalOcupadoBolsaNueva = 0.0;
                                         Double pesoTotalCargadoBolsaNueva = 0.0;
 
                                         Contenedor bolsaNueva = creacionBolsaNueva(envio);
-
 
                                         nuevosContenedores.add(bolsaNueva);
 
