@@ -1,14 +1,10 @@
 package ar.edu.unlam.tallerweb1.domain.envio;
 
-import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor;
-import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor_Producto;
 import ar.edu.unlam.tallerweb1.domain.enums.EstadoEnvio;
 import ar.edu.unlam.tallerweb1.domain.pedidos.Pedido;
 import ar.edu.unlam.tallerweb1.domain.vehiculos.Vehiculo;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 public class Envio {
@@ -17,7 +13,7 @@ public class Envio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Double costoEnvio;
-    private Double distanciaEnKilometros;
+    private Integer distanciaEnKilometros;
     @OneToOne
     private Pedido pedido;
     @OneToOne
@@ -33,7 +29,7 @@ public class Envio {
     /*@OneToMany
     private List<Contenedor> listaContenedores;*/
 
-    public Envio(Long id, Double costoEnvio, Double distanciaEnKilometros, Integer peso, Integer volumen, EstadoEnvio estadoEnvio, String calle, Integer numero, String pisoODepartamento, String codigoPostal, String localidad) {
+    public Envio(Long id, Double costoEnvio, Integer distanciaEnKilometros, Integer peso, Integer volumen, EstadoEnvio estadoEnvio, String calle, Integer numero, String pisoODepartamento, String codigoPostal, String localidad) {
         this.id = id;
         this.costoEnvio = costoEnvio;
         this.distanciaEnKilometros = distanciaEnKilometros;
@@ -68,11 +64,11 @@ public class Envio {
         this.costoEnvio = costoEnvio;
     }
 
-    public Double getDistanciaEnKilometros() {
+    public Integer getDistanciaEnKilometros() {
         return distanciaEnKilometros;
     }
 
-    public void setDistanciaEnKilometros(Double distanciaEnKilometros) {
+    public void setDistanciaEnKilometros(Integer distanciaEnKilometros) {
         this.distanciaEnKilometros = distanciaEnKilometros;
     }
 

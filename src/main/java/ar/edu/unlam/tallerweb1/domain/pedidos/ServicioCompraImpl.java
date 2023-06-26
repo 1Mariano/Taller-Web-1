@@ -10,6 +10,7 @@ import ar.edu.unlam.tallerweb1.domain.enums.TipoContenedor;
 import ar.edu.unlam.tallerweb1.domain.envio.Envio;
 import ar.edu.unlam.tallerweb1.domain.envio.RepositorioEnvio;
 import ar.edu.unlam.tallerweb1.domain.producto.Producto;
+import ar.edu.unlam.tallerweb1.domain.producto.RepositorioProducto;
 import ar.edu.unlam.tallerweb1.exceptions.CampoInvalidoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,22 +25,26 @@ public class ServicioCompraImpl implements ServicioCompra {
 
     private final RepositorioEnvio repositorioEnvio;
     private final RepositorioEmpaquetado repositorioEmpaquetado;
+    private final RepositorioPedido repositorioPedido;
+    private final RepositorioProducto repositorioProducto;
 
     @Autowired
-    public ServicioCompraImpl(RepositorioEnvio repositorioEnvio, RepositorioEmpaquetado repositorioEmpaquetado) {
+    public ServicioCompraImpl(RepositorioEnvio repositorioEnvio, RepositorioEmpaquetado repositorioEmpaquetado, RepositorioPedido repositorioPedido, RepositorioProducto repositorioProducto) {
 
         this.repositorioEnvio = repositorioEnvio;
         this.repositorioEmpaquetado = repositorioEmpaquetado;
+        this.repositorioPedido = repositorioPedido;
+        this.repositorioProducto = repositorioProducto;
     }
 
     @Override
-    public void cambiarEstadoDePago(EstadoPago estadoPago) {
-        estadoPago = EstadoPago.PAGADO;
+    public void cambiarEstadoDePago(Pedido pedido) {
+        pedido.setEstadoPago(EstadoPago.PAGADO);
     }
 
     @Override
-    public void cambiarEstadoDePedido(EstadoPedido estadoPedido) {
-        estadoPedido = EstadoPedido.EN_PREPARACION;
+    public void cambiarEstadoDePedido(Pedido pedido) {
+        pedido.setEstado(EstadoPedido.EN_PREPARACION);
     }
 
     @Override
@@ -399,7 +404,6 @@ public class ServicioCompraImpl implements ServicioCompra {
         return suma;
     }
 
-
     @Override
     public Double obtenerVolumenTotalDeLosContenedores() {
         List<Contenedor> contenedores = this.repositorioEmpaquetado.obtenerContenedores();
@@ -416,7 +420,6 @@ public class ServicioCompraImpl implements ServicioCompra {
 
         return contenedores;
     }
-
 
     private void calcularVolumenYPesoDisponible(Producto productoAEmpaquetar, Double volumenTotalOcupado, Double
             pesoTotalCargado, Contenedor contenedor) {
@@ -468,6 +471,36 @@ public class ServicioCompraImpl implements ServicioCompra {
         bolsaNueva.setEnvio(envio);
         this.repositorioEmpaquetado.crearContenedor(bolsaNueva);
         return bolsaNueva;
+    }
+
+    @Override
+    public void agregarPedido(Pedido pedidoNuevo) {
+        this.repositorioPedido.agregarPedido(pedidoNuevo);
+    }
+
+    @Override
+    public void pagar(Pedido pedido) {
+        cambiarEstadoDePago(pedido);
+        cambiarEstadoDePedido(pedido);
+
+        Envio envioDelPedido = this.repositorioEnvio.obtenerEnvioDelPedido(pedido.getEnvio().getId());
+        Double costoDelEnvio = envioDelPedido.getCostoEnvio();
+
+        List<Producto> listaDeProductosDelEnvio = this.repositorioEnvio.obtenerLosProductosDeUnEnvio(pedido.getEnvio().getId());
+
+        Double costoTotal = obtenerCostoTotalDeLosProductos(listaDeProductosDelEnvio);
+
+        pedido.setCostoTotal(costoDelEnvio + costoTotal);
+
+    }
+
+    @Override
+    public Double obtenerCostoTotalDeLosProductos(List<Producto> listaProductos) {
+        Double costoTotal = 0.0;
+        for (Producto productosDelPedido : listaProductos) {
+            costoTotal += productosDelPedido.getPrecioArs();
+        }
+        return costoTotal;
     }
 
 }

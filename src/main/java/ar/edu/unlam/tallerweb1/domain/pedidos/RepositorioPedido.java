@@ -2,6 +2,6 @@ package ar.edu.unlam.tallerweb1.domain.pedidos;
 
 public interface RepositorioPedido {
 
-    void agregarPedido();
+    void agregarPedido(Pedido pedido);
     Pedido buscarPedidoPorUsuarioDni();
 }

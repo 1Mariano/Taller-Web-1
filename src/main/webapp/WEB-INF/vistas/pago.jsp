@@ -5,13 +5,30 @@
 
 <main class="container">
 
-    <h1>Su numero de Compra es: ${numeroPedido.id}</h1>
+    <h1>Su numero de Compra es: ${numeroPedido}</h1>
     <div class="d-flex flex-wrap gap-1 row-gap-5 justify-content-left">
-        <c:forEach var="item" items="${contenedores}">
+        <div>
+            <p>Distancia: ${distanciaEnvio}</p>
+            <p>Costo envío: ${costoEnvio}</p>
+        </div>
+        <form:form action="pagar" method="POST">
+            <c:if test="${not empty error}">
+                <h5><span>${error}</span></h5>
+                <br>
+            </c:if>
+            <c:if test="${empty exito}">
+                <h5><span>${exito}</span></h5>
+                <br>
+            </c:if>
+
+            <button class="btn btn-lg btn-primary btn-block my-2" type="submit">Pagar</button>
+        </form:form>
+        <%--  <c:forEach var="item" items="${contenedores}">
+
             <c:if test="${item.tipoContenedor == 'BOLSA'}">
                 <p>Bolsa</p>
                 <div class="flex flex-col">
-                    <c:forEach var="productos" items="${item.listaProductos}">
+                   <c:forEach var="productos" items="${item.listaProductos}">
                         <li class="list-group-item">
                             <div class="d-flex gap-3">
                                 <img src="${pageContext.request.contextPath}/static/img/${productos.img}" alt=""
@@ -40,7 +57,7 @@
                     </c:forEach>
                 </div>
             </c:if>
-        </c:forEach>
+        </c:forEach>--%>
     </div>
 
 </main>

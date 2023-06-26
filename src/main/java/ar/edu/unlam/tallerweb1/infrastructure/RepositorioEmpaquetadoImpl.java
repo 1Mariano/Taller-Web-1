@@ -3,12 +3,8 @@ package ar.edu.unlam.tallerweb1.infrastructure;
 import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor;
 import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor_Producto;
 import ar.edu.unlam.tallerweb1.domain.contenedor.RepositorioEmpaquetado;
-import ar.edu.unlam.tallerweb1.domain.envio.Envio;
-import ar.edu.unlam.tallerweb1.domain.producto.Producto;
-import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -18,6 +14,7 @@ import java.util.List;
 public class RepositorioEmpaquetadoImpl implements RepositorioEmpaquetado {
 
     private SessionFactory sessionFactory;
+
     @Autowired
     public RepositorioEmpaquetadoImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;

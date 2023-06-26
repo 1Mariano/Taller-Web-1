@@ -36,7 +36,6 @@ public class ControladorCompra {
         this.servicioEnvio = servicioEnvio;
     }
 
-
     @RequestMapping("/compra")
     public ModelAndView compra() {
         ModelMap model = new ModelMap();
@@ -52,14 +51,13 @@ public class ControladorCompra {
         return new ModelAndView("/compra", model);
     }
 
-
     @RequestMapping(path = "/validar-datos-envio", method = RequestMethod.POST)
     public ModelAndView validarDatosEnvio(@ModelAttribute("datosEnvio") DatosEnvio datosEnvio,
                                           HttpServletRequest request, HttpServletResponse response) {
         ModelMap modelo = new ModelMap();
         Envio envioNuevo = new Envio();
-        try {
 
+        try {
             envioNuevo.setCalle(datosEnvio.getCalle());
             envioNuevo.setNumero(datosEnvio.getNumero());
             envioNuevo.setPisoODepartamento(datosEnvio.getPisoODepartamento());
@@ -73,6 +71,8 @@ public class ControladorCompra {
             this.servicioCompra.empaquetarProductos(productos, envioNuevo);
             this.servicioEnvio.agregarAlVehiculo(envioNuevo);
 
+            request.getSession().setAttribute("envio", envioNuevo);
+
         } catch (CampoInvalidoException e) {
             return registroDeEnvioFallido(modelo, "El campo debe tener al menos 2 caracteres");
         }
@@ -84,23 +84,6 @@ public class ControladorCompra {
         //request.getSession().setAttribute("numeroPedido", envioNuevo);
 
         return new ModelAndView("redirect:/pago");
-    }
-
-    @RequestMapping("/pago")
-    public ModelAndView pago() {
-        ModelMap model = new ModelMap();
-
-        model.put("datosBuscador", new DatosBuscador());
-
-        model.put("numeroPedido", request.getSession().getAttribute("numeroPedido"));
-        Double peso = this.servicioCompra.obtenerPesoTotalDeLosContenedores();
-        Double volumen = this.servicioCompra.obtenerVolumenTotalDeLosContenedores();
-        model.put("peso", peso);
-        model.put("volumen", volumen);
-        List<Contenedor> contenedoresConProductos = this.servicioCompra.devolverContenedoresConProductos();
-        model.put("contenedores", contenedoresConProductos);
-        // model.put("costoEnvio", this.servicioEnvio.calcularCostoEnvio());
-        return new ModelAndView("/pago", model);
     }
 
     private ModelAndView registroDeEnvioFallido(ModelMap modelo, String mensaje) {
