@@ -7,9 +7,11 @@
 <main class="container">
 
     <h1>Su numero de Compra es: ${numeroPedido}</h1>
-    <div class="d-flex flex-wrap gap-1 row-gap-5 justify-content-left">
+    <div class="d-flex flex-wrap gap-5 row-gap-5 justify-content-center">
         <!-- Mostrar cajas -->
-        <h2>Cajas:</h2>
+
+        <div class="d-flex flex-column">
+            <h2>Bolsas:</h2>
         <c:forEach var="bolsa" items="${bolsas}">
             <p>Bolsa ID: ${bolsa.key}</p>
             <ul>
@@ -18,10 +20,34 @@
                 </c:forEach>
             </ul>
         </c:forEach>
+        </div>
 
 
+        <div class="d-flex flex-column">
+            <h2>Cajas:</h2>
+        <c:forEach var="caja" items="${cajas}">
+            <p>Caja ID: ${caja.key}</p>
+            <ul>
+                <c:forEach var="producto" items="${caja.value}">
+                    <li>${producto.nombre} - ${producto.img}</li>
+                </c:forEach>
+            </ul>
+        </c:forEach>
+        </div>
 
     </div>
+    <form:form action="pagar" method="POST">
+        <c:if test="${not empty error}">
+            <h5><span>${error}</span></h5>
+            <br>
+        </c:if>
+        <c:if test="${empty error}">
+            <h5><span>${exito}</span></h5>
+            <br>
+        </c:if>
+
+        <button class="btn btn-lg btn-primary btn-block my-2" type="submit">Pagar</button>
+    </form:form>
 
 </main>
 <script src="../../static/js/script.js"></script>

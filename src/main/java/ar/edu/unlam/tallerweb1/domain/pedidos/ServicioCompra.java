@@ -41,11 +41,13 @@ public interface ServicioCompra {
     void modificarPedido(Pedido pedido);
 
     void modificarEnvio(Envio envio);
-    List<Contenedor_Producto> devolverContenedoresConProductos();
+
 
     List<Contenedor> obtenerCajasPorEnvio(Long envio);
 
     List<Contenedor> obtenerBolsasPorEnvio(Long numeroPedido);
 
     List<Producto> obtenerProductosDeUnContenedor(Long contId);
+
+    void vaciarCarrito(Long idUsuario);
 }

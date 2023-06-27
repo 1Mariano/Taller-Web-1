@@ -7,6 +7,7 @@ import ar.edu.unlam.tallerweb1.domain.enums.*;
 import ar.edu.unlam.tallerweb1.domain.envio.Envio;
 import ar.edu.unlam.tallerweb1.domain.envio.RepositorioEnvio;
 import ar.edu.unlam.tallerweb1.domain.producto.Producto;
+import ar.edu.unlam.tallerweb1.domain.producto.RepositorioProducto;
 import ar.edu.unlam.tallerweb1.exceptions.CampoInvalidoException;
 import ar.edu.unlam.tallerweb1.exceptions.NoSeConcretoElPagoException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,13 +24,15 @@ public class ServicioCompraImpl implements ServicioCompra {
     private final RepositorioEnvio repositorioEnvio;
     private final RepositorioEmpaquetado repositorioEmpaquetado;
     private final RepositorioPedido repositorioPedido;
+    private final RepositorioProducto repositorioProducto;
 
     @Autowired
-    public ServicioCompraImpl(RepositorioEnvio repositorioEnvio, RepositorioEmpaquetado repositorioEmpaquetado, RepositorioPedido repositorioPedido) {
+    public ServicioCompraImpl(RepositorioEnvio repositorioEnvio, RepositorioEmpaquetado repositorioEmpaquetado, RepositorioPedido repositorioPedido, RepositorioProducto repositorioProducto) {
 
         this.repositorioEnvio = repositorioEnvio;
         this.repositorioEmpaquetado = repositorioEmpaquetado;
         this.repositorioPedido = repositorioPedido;
+        this.repositorioProducto = repositorioProducto;
     }
 
     @Override
@@ -414,11 +417,7 @@ public class ServicioCompraImpl implements ServicioCompra {
         return volumen;
     }
 
-    @Override
-    public List<Contenedor_Producto> devolverContenedoresConProductos() {
 
-
-        return this.repositorioEmpaquetado.obtenerContenedoresConProductos();}
     public List<Contenedor> devolverContenedoresConProductos() {
         return this.repositorioEmpaquetado.obtenerContenedores();
     }
@@ -490,6 +489,11 @@ public class ServicioCompraImpl implements ServicioCompra {
     @Override
     public List<Producto> obtenerProductosDeUnContenedor(Long contId) {
         return this.repositorioEmpaquetado.obtenerLosProductosDeUnContenedor(contId);
+    }
+
+    @Override
+    public void vaciarCarrito(Long idUsuario) {
+        this.repositorioProducto.vaciarCarrito(idUsuario);
     }
 
 

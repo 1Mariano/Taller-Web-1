@@ -4,6 +4,7 @@ import ar.edu.unlam.tallerweb1.domain.carrito.Carrito;
 import ar.edu.unlam.tallerweb1.domain.enums.CategoriaProducto;
 import ar.edu.unlam.tallerweb1.domain.producto.*;
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.MatchMode;
@@ -106,6 +107,25 @@ public class RepositorioProductoImpl implements RepositorioProducto {
                     .list();
         }
         return productosFiltrados;
+    }
+
+    @Override
+    public void vaciarCarrito(Long idUsuario) {
+        final Session session = sessionFactory.getCurrentSession();
+        Criteria criteria = session.createCriteria(Carrito.class);
+
+        // Agrega la restricción para que coincida con el ID de usuario
+        criteria.createAlias("usuario", "u")
+                .add(Restrictions.eq("u.id", idUsuario));
+
+        // Obtiene la lista de carritos que coinciden con la restricción
+        List<Carrito> carritos = criteria.list();
+
+        // Elimina cada carrito de la lista
+        for (Carrito carrito : carritos) {
+            session.delete(carrito);
+        }
+
     }
 
     @Override
