@@ -1,47 +1,53 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ include file="header.jsp" %>
 
 <main class="container">
 
-    <h1>Su numero de Compra es: ${numeroPedido.id}</h1>
-    <div class="d-flex flex-wrap gap-1 row-gap-5 justify-content-left">
-        <c:forEach var="item" items="${contenedores}">
-            <c:if test="${item.tipoContenedor == 'BOLSA'}">
-                <p>Bolsa</p>
-                <div class="flex flex-col">
-                    <c:forEach var="productos" items="${item.listaProductos}">
-                        <li class="list-group-item">
-                            <div class="d-flex gap-3">
-                                <img src="${pageContext.request.contextPath}/static/img/${productos.img}" alt=""
-                                     style="width: 80px"/>
-                                <h5 class="card-title">
-                                        <c:out value="${productos.nombre}"/>
-                                    <p class="precio fs-3 fw-bold">$${productos.precioArs}</p>
-                            </div>
-                        </li>
-                    </c:forEach>
-                </div>
-            </c:if>
-            <c:if test="${item.tipoContenedor == 'CAJA'}">
-                <p>Caja</p>
-                <div class="flex flex-col">
-                    <c:forEach var="productosCaja" items="${item.listaProductos}">
-                        <li class="list-group-item">
-                            <div class="d-flex gap-3">
-                                <img src="${pageContext.request.contextPath}/static/img/${productosCaja.img}" alt=""
-                                     style="width: 80px"/>
-                                <h5 class="card-title">
-                                        <c:out value="${productosCaja.nombre}"/>
-                                    <p class="precio fs-3 fw-bold">$${productosCaja.precioArs}</p>
-                            </div>
-                        </li>
-                    </c:forEach>
-                </div>
-            </c:if>
+    <h1>Su numero de Compra es: ${numeroPedido}</h1>
+    <div class="d-flex flex-wrap gap-5 row-gap-5 justify-content-center">
+        <!-- Mostrar cajas -->
+
+        <div class="d-flex flex-column">
+            <h2>Bolsas:</h2>
+        <c:forEach var="bolsa" items="${bolsas}">
+            <p>Bolsa ID: ${bolsa.key}</p>
+            <ul>
+                <c:forEach var="producto" items="${bolsa.value}">
+                    <li>${producto.nombre} - ${producto.img}</li>
+                </c:forEach>
+            </ul>
         </c:forEach>
+        </div>
+
+
+        <div class="d-flex flex-column">
+            <h2>Cajas:</h2>
+        <c:forEach var="caja" items="${cajas}">
+            <p>Caja ID: ${caja.key}</p>
+            <ul>
+                <c:forEach var="producto" items="${caja.value}">
+                    <li>${producto.nombre} - ${producto.img}</li>
+                </c:forEach>
+            </ul>
+        </c:forEach>
+        </div>
+
     </div>
+    <form:form action="pagar" method="POST">
+        <c:if test="${not empty error}">
+            <h5><span>${error}</span></h5>
+            <br>
+        </c:if>
+        <c:if test="${empty error}">
+            <h5><span>${exito}</span></h5>
+            <br>
+        </c:if>
+
+        <button class="btn btn-lg btn-primary btn-block my-2" type="submit">Pagar</button>
+    </form:form>
 
 </main>
 <script src="../../static/js/script.js"></script>

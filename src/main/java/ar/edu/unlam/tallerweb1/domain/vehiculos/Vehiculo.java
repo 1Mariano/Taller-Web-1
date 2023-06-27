@@ -4,7 +4,6 @@ package ar.edu.unlam.tallerweb1.domain.vehiculos;
 
 import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor;
 import ar.edu.unlam.tallerweb1.domain.enums.TipoVehiculo;
-import ar.edu.unlam.tallerweb1.domain.pedidos.Pedido;
 
 import javax.persistence.*;
 import java.util.List;
@@ -29,9 +28,9 @@ public class Vehiculo {
     private Double pesoCargado;
     private Double volumenOcupado;
     private TipoVehiculo tipoVehiculo;
-    @OneToOne
-    private Pedido pedido;
-    @OneToMany
+    /*@OneToOne
+    private Pedido pedido;*/
+    @OneToMany(mappedBy = "vehiculo")
     private List<Contenedor> listaContenedores;
 
     public Vehiculo(Long id, String patente, String modelo, Double ancho, Double alto, Double largo, Double volumenMaximo, Double pesoMaximoSoportado, Double distanciaMaxima, TipoVehiculo tipoVehiculo) {
@@ -87,12 +86,12 @@ public class Vehiculo {
         return this.volumenMaximo;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getPatente() {
@@ -163,16 +162,16 @@ public class Vehiculo {
         return pesoDisponible;
     }
 
-    public void setPesoDisponible(Double pesoCargado) {
-        this.pesoDisponible = getPesoMaximoSoportado();
+    public void setPesoDisponible(Double pesoDisponible) {
+        this.pesoDisponible = pesoDisponible;
     }
 
     public Double getVolumenDisponible() {
         return volumenDisponible;
     }
 
-    public void setVolumenDisponible(Double volumenOcupado) {
-        this.volumenDisponible = getVolumenMaximo();
+    public void setVolumenDisponible(Double volumenDisponible) {
+        this.volumenDisponible = volumenDisponible;
     }
 
     public Double getPesoCargado() {

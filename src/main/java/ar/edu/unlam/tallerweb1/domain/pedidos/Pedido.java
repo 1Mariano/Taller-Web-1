@@ -1,15 +1,12 @@
 package ar.edu.unlam.tallerweb1.domain.pedidos;
 
-import ar.edu.unlam.tallerweb1.domain.carrito.Carrito;
 import ar.edu.unlam.tallerweb1.domain.enums.EstadoPago;
 import ar.edu.unlam.tallerweb1.domain.enums.EstadoPedido;
 import ar.edu.unlam.tallerweb1.domain.envio.Envio;
-import ar.edu.unlam.tallerweb1.domain.producto.Producto;
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 public class Pedido {
@@ -77,9 +74,8 @@ public class Pedido {
         return estadoPago;
     }
 
-    public void setEstadoPago() {
-
-        this.estadoPago = EstadoPago.NO_PAGADO;
+    public void setEstadoPago(EstadoPago estadoPago) {
+        this.estadoPago = estadoPago;
     }
 
     public Envio getEnvio() {
@@ -88,5 +84,13 @@ public class Pedido {
 
     public void setEnvio(Envio envio) {
         this.envio = envio;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }

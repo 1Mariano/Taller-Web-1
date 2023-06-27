@@ -1,4 +1,4 @@
-/*package ar.edu.unlam.tallerweb1.domain.vehiculos;
+package ar.edu.unlam.tallerweb1.domain.vehiculos;
 
 import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor;
 import ar.edu.unlam.tallerweb1.domain.envio.Envio;
@@ -16,16 +16,16 @@ public class Vehiculo_Contenedor {
     @ManyToOne
     private Vehiculo vehiculo;
 
-    @OneToMany
-    private List<Contenedor> listaContenedores;
+    @ManyToOne
+    private Contenedor contenedor;
 
-    @OneToOne
+    @ManyToOne
     private Envio envio;
 
-    public Vehiculo_Contenedor(Long id, Vehiculo vehiculo, List<Contenedor> listaContenedores, Envio envio) {
+    public Vehiculo_Contenedor(Long id, Vehiculo vehiculo, Contenedor contenedor, Envio envio) {
         this.id = id;
         this.vehiculo = vehiculo;
-        this.listaContenedores = listaContenedores;
+        this.contenedor = contenedor;
         this.envio = envio;
     }
 
@@ -49,12 +49,12 @@ public class Vehiculo_Contenedor {
         this.vehiculo = vehiculo;
     }
 
-    public List<Contenedor> getListaContenedores() {
-        return listaContenedores;
+    public Contenedor getContenedor() {
+        return contenedor;
     }
 
-    public void setListaContenedores(List<Contenedor> listaContenedores) {
-        this.listaContenedores = listaContenedores;
+    public void setContenedor(Contenedor contenedor) {
+        this.contenedor = contenedor;
     }
 
     public Envio getEnvio() {
@@ -65,4 +65,3 @@ public class Vehiculo_Contenedor {
         this.envio = envio;
     }
 }
-*/

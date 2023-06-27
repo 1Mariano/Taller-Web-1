@@ -29,6 +29,8 @@ public interface RepositorioProducto {
 
     List<Producto> listarProductosPorNombreMarcaOCategoria(String busqueda);
 
+    void vaciarCarrito(Long idUsuario);
+
     //List<Producto> listarDrogueria();
     /*
     List<Mascota> listarMascotas();

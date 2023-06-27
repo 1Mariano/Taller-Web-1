@@ -6,6 +6,7 @@ import ar.edu.unlam.tallerweb1.domain.producto.Producto;
 import ar.edu.unlam.tallerweb1.domain.vehiculos.Vehiculo;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -28,8 +29,9 @@ public class Contenedor {
     private List<Producto> listaProductos;
     @ManyToOne
     private Envio envio;
-
     private TipoContenedor tipoContenedor;
+    @ManyToOne
+    private Vehiculo vehiculo;
 
     public Contenedor(Long id, Double alto, Double largo, Double ancho, Double pesoSoportado, TipoContenedor tipoContenedor) {
         this.id = id;
@@ -38,6 +40,7 @@ public class Contenedor {
         this.ancho = ancho;
         this.pesoSoportado = pesoSoportado;
         this.tipoContenedor = tipoContenedor;
+        this.listaProductos = new ArrayList<>();
     }
 
     public Contenedor() {
