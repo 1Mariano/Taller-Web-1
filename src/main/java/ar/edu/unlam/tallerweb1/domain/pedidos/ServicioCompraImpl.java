@@ -325,10 +325,10 @@ public class ServicioCompraImpl implements ServicioCompra {
     }
 
     @Override
-    public List<Contenedor> devolverContenedoresConProductos() {
-        List<Contenedor> contenedores = this.repositorioEmpaquetado.obtenerContenedores();
+    public List<Contenedor_Producto> devolverContenedoresConProductos() {
 
-        return contenedores;
+
+        return this.repositorioEmpaquetado.obtenerContenedoresConProductos();
     }
 
 
@@ -382,5 +382,23 @@ public class ServicioCompraImpl implements ServicioCompra {
         this.repositorioEmpaquetado.crearContenedor(bolsaNueva);
         return bolsaNueva;
     }
+
+
+    @Override
+    public List<Contenedor> obtenerCajasPorEnvio(Long envio){
+
+        return this.repositorioEmpaquetado.obtenerLosContenedoresDeTipoCajaDeUnEnvio(envio);
+    }
+
+    @Override
+    public List<Contenedor> obtenerBolsasPorEnvio(Long numeroPedido) {
+        return this.repositorioEmpaquetado.obtenerLosContenedoresDeTipoBolsaDeUnEnvio(numeroPedido);
+    }
+
+    @Override
+    public List<Producto> obtenerProductosDeUnContenedor(Long contId) {
+        return this.repositorioEmpaquetado.obtenerLosProductosDeUnContenedor(contId);
+    }
+
 
 }

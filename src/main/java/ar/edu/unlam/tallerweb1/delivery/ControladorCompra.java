@@ -2,6 +2,7 @@ package ar.edu.unlam.tallerweb1.delivery;
 
 import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor;
 import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor_Producto;
+import ar.edu.unlam.tallerweb1.domain.enums.TipoContenedor;
 import ar.edu.unlam.tallerweb1.domain.envio.Envio;
 import ar.edu.unlam.tallerweb1.domain.envio.ServicioEnvio;
 import ar.edu.unlam.tallerweb1.domain.pedidos.ServicioCompra;
@@ -21,7 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class ControladorCompra {
@@ -87,7 +88,7 @@ public class ControladorCompra {
         /*Contenedor_Producto envio = new Contenedor_Producto();
         envio.setEnvio(envioNuevo);*/
         //request.getSession().setAttribute("numeroPedido", envioNuevo);
-
+        request.getSession().setAttribute("numeroEnvio", envioNuevo.getId());
         return new ModelAndView("redirect:/pago");
     }
 
@@ -97,13 +98,49 @@ public class ControladorCompra {
 
         model.put("datosBuscador", new DatosBuscador());
 
-        model.put("numeroPedido", request.getSession().getAttribute("numeroPedido"));
+        model.put("numeroEnvio", request.getSession().getAttribute("numeroEnvio"));
         Double peso = this.servicioCompra.obtenerPesoTotalDeLosContenedores();
         Double volumen = this.servicioCompra.obtenerVolumenTotalDeLosContenedores();
         model.put("peso", peso);
         model.put("volumen", volumen);
-        List<Contenedor> contenedoresConProductos = this.servicioCompra.devolverContenedoresConProductos();
-        model.put("contenedores", contenedoresConProductos);
+        //List<Contenedor_Producto> contenedoresConProductos = this.servicioCompra.devolverContenedoresConProductos();
+        Long numeroEnvio = (Long) request.getSession().getAttribute("numeroEnvio");
+        //Todo separar responsabilidades desde el respositorio. Necesito dos arrays para bolsa o caja distintos
+
+        List<Contenedor> bolsas = this.servicioCompra.obtenerBolsasPorEnvio(numeroEnvio);
+        Set<Long> idContenedor = new HashSet<>();
+        for (Contenedor bolsa: bolsas) {
+            idContenedor.add(bolsa.getId());
+        }
+
+        Map<Long, List<Producto>> addBolsas = new HashMap<>();
+        for (Long contId : idContenedor) {
+            List<Producto> productosPorContenedor = this.servicioCompra.obtenerProductosDeUnContenedor(contId);
+            addBolsas.put(contId, productosPorContenedor);
+        }
+
+        // Cajas
+        List<Contenedor> cajas = this.servicioCompra.obtenerCajasPorEnvio(numeroEnvio);
+        Set<Long> idContenedorCaja = new HashSet<>();
+        for (Contenedor caja: cajas) {
+            idContenedorCaja.add(caja.getId());
+        }
+
+        Map<Long, List<Producto>> addCajas = new HashMap<>();
+        for (Long contId : idContenedorCaja) {
+            List<Producto> productosPorContenedorCaja = this.servicioCompra.obtenerProductosDeUnContenedor(contId);
+            addCajas.put(contId, productosPorContenedorCaja);
+        }
+
+
+
+
+        //this.servicioCompra.obtenerProductosDeUnContenedor(caja.getId());
+        model.put("bolsas", addBolsas);
+        model.put("cajas", addCajas);
+
+
+
        // model.put("costoEnvio", this.servicioEnvio.calcularCostoEnvio());
         return new ModelAndView("/pago", model);
     }

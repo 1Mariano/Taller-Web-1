@@ -6,6 +6,7 @@ import ar.edu.unlam.tallerweb1.domain.producto.Producto;
 import ar.edu.unlam.tallerweb1.domain.vehiculos.Vehiculo;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -39,6 +40,7 @@ public class Contenedor {
         this.ancho = ancho;
         this.pesoSoportado = pesoSoportado;
         this.tipoContenedor = tipoContenedor;
+        this.listaProductos = new ArrayList<>();
     }
 
     public Contenedor() {

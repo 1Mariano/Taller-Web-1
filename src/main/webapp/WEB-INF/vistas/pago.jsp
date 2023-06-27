@@ -1,5 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ include file="header.jsp" %>
 
@@ -7,40 +8,19 @@
 
     <h1>Su numero de Compra es: ${numeroPedido.id}</h1>
     <div class="d-flex flex-wrap gap-1 row-gap-5 justify-content-left">
-        <c:forEach var="item" items="${contenedores}">
-            <c:if test="${item.tipoContenedor == 'BOLSA'}">
-                <p>Bolsa</p>
-                <div class="flex flex-col">
-                    <c:forEach var="productos" items="${item.listaProductos}">
-                        <li class="list-group-item">
-                            <div class="d-flex gap-3">
-                                <img src="${pageContext.request.contextPath}/static/img/${productos.img}" alt=""
-                                     style="width: 80px"/>
-                                <h5 class="card-title">
-                                        <c:out value="${productos.nombre}"/>
-                                    <p class="precio fs-3 fw-bold">$${productos.precioArs}</p>
-                            </div>
-                        </li>
-                    </c:forEach>
-                </div>
-            </c:if>
-            <c:if test="${item.tipoContenedor == 'CAJA'}">
-                <p>Caja</p>
-                <div class="flex flex-col">
-                    <c:forEach var="productosCaja" items="${item.listaProductos}">
-                        <li class="list-group-item">
-                            <div class="d-flex gap-3">
-                                <img src="${pageContext.request.contextPath}/static/img/${productosCaja.img}" alt=""
-                                     style="width: 80px"/>
-                                <h5 class="card-title">
-                                        <c:out value="${productosCaja.nombre}"/>
-                                    <p class="precio fs-3 fw-bold">$${productosCaja.precioArs}</p>
-                            </div>
-                        </li>
-                    </c:forEach>
-                </div>
-            </c:if>
+        <!-- Mostrar cajas -->
+        <h2>Cajas:</h2>
+        <c:forEach var="bolsa" items="${bolsas}">
+            <p>Bolsa ID: ${bolsa.key}</p>
+            <ul>
+                <c:forEach var="producto" items="${bolsa.value}">
+                    <li>${producto.nombre} - ${producto.img}</li>
+                </c:forEach>
+            </ul>
         </c:forEach>
+
+
+
     </div>
 
 </main>

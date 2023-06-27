@@ -14,4 +14,12 @@ public interface RepositorioEmpaquetado {
     void modificarContenedor(Contenedor contenedor);
 
     void eliminarContenedorVacio(Contenedor contenedorAEliminar);
+
+    List<Contenedor_Producto> obtenerContenedoresConProductos();
+
+    List<Contenedor> obtenerLosContenedoresDeTipoCajaDeUnEnvio(Long envioId);
+
+    List<Contenedor> obtenerLosContenedoresDeTipoBolsaDeUnEnvio(Long numeroPedido);
+
+    List<Producto> obtenerLosProductosDeUnContenedor(Long contId);
 }
