@@ -18,8 +18,8 @@ public class Envio {
     private Pedido pedido;
     @OneToOne
     private Vehiculo vehiculo;
-    private Integer peso;
-    private Integer volumen;
+    private Double peso;
+    private Double volumen;
     private EstadoEnvio estadoEnvio;
     private String calle;
     private Integer numero;
@@ -29,7 +29,7 @@ public class Envio {
     /*@OneToMany
     private List<Contenedor> listaContenedores;*/
 
-    public Envio(Long id, Double costoEnvio, Integer distanciaEnKilometros, Integer peso, Integer volumen, EstadoEnvio estadoEnvio, String calle, Integer numero, String pisoODepartamento, String codigoPostal, String localidad) {
+    public Envio(Long id, Double costoEnvio, Integer distanciaEnKilometros, Double peso, Double volumen, EstadoEnvio estadoEnvio, String calle, Integer numero, String pisoODepartamento, String codigoPostal, String localidad) {
         this.id = id;
         this.costoEnvio = costoEnvio;
         this.distanciaEnKilometros = distanciaEnKilometros;
@@ -87,19 +87,19 @@ public class Envio {
         this.vehiculo = vehiculo;
     }
 
-    public Integer getPeso() {
+    public Double getPeso() {
         return peso;
     }
 
-    public void setPeso(Integer peso) {
+    public void setPeso(Double peso) {
         this.peso = peso;
     }
 
-    public Integer getVolumen() {
+    public Double getVolumen() {
         return volumen;
     }
 
-    public void setVolumen(Integer volumen) {
+    public void setVolumen(Double volumen) {
         this.volumen = volumen;
     }
 

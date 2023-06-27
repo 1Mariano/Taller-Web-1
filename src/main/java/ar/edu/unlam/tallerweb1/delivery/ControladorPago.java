@@ -49,8 +49,8 @@ public class ControladorPago {
         model.put("volumen", volumen);
         List<Contenedor> contenedoresConProductos = this.servicioCompra.devolverContenedoresConProductos();
         model.put("contenedores", contenedoresConProductos);
-        model.put("distanciaEnvio", this.servicioEnvio.distanciaEnvio());
-        model.put("costoEnvio", this.servicioEnvio.calcularCostoEnvio(this.servicioEnvio.obtenerVehiculoDePedido((Envio) request.getSession().getAttribute("envio"))));
+        model.put("distanciaEnvio", this.servicioEnvio.obtenerEnvio((Envio) request.getSession().getAttribute("envio")).getDistanciaEnKilometros());
+        model.put("costoEnvio", this.servicioEnvio.obtenerEnvio((Envio) request.getSession().getAttribute("envio")).getCostoEnvio());
         return new ModelAndView("/pago", model);
     }
 
@@ -58,11 +58,17 @@ public class ControladorPago {
     public ModelAndView pagar(HttpServletRequest request, HttpServletResponse response) throws NoSeConcretoElPagoException {
         ModelMap modelo = new ModelMap();
 
+        modelo.put("datosBuscador", new DatosBuscador());
+
         Pedido pedido = new Pedido();
         pedido = (Pedido) request.getSession().getAttribute("pedido");
+        Envio envio = new Envio();
+        envio = (Envio) request.getSession().getAttribute("envio");
 
         try {
-            this.servicioCompra.pagar(pedido);
+            this.servicioCompra.pagar(pedido, envio);
+            this.servicioCompra.modificarPedido(pedido);
+            this.servicioEnvio.modificarEnvio(envio);
         } catch (NoSeConcretoElPagoException e) {
             return registroDePagoFallido(modelo, "No fue posible concretar el pago");
         }

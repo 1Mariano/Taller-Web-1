@@ -16,7 +16,7 @@
                 <h5><span>${error}</span></h5>
                 <br>
             </c:if>
-            <c:if test="${empty exito}">
+            <c:if test="${empty error}">
                 <h5><span>${exito}</span></h5>
                 <br>
             </c:if>

@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.delivery;
 
+import ar.edu.unlam.tallerweb1.domain.enums.EstadoEnvio;
 import ar.edu.unlam.tallerweb1.domain.enums.EstadoPago;
 import ar.edu.unlam.tallerweb1.domain.enums.EstadoPedido;
 import ar.edu.unlam.tallerweb1.domain.envio.Envio;
@@ -58,6 +59,9 @@ public class ControladorCompra {
     public ModelAndView validarDatosEnvio(@ModelAttribute("datosEnvio") DatosEnvio datosEnvio,
                                           HttpServletRequest request, HttpServletResponse response) {
         ModelMap modelo = new ModelMap();
+
+        modelo.put("datosBuscador", new DatosBuscador());
+
         Envio envioNuevo = new Envio();
         Pedido pedidoNuevo = new Pedido();
         List<Producto> productos = (List<Producto>) request.getSession().getAttribute("arrayProductos");
@@ -69,13 +73,15 @@ public class ControladorCompra {
             envioNuevo.setCodigoPostal(datosEnvio.getCodigoPostal());
             envioNuevo.setLocalidad(datosEnvio.getLocalidad());
             envioNuevo.setVehiculo(this.servicioEnvio.obtenerVehiculoDePedido(envioNuevo));
+            envioNuevo.setEstadoEnvio(EstadoEnvio.EN_ESPERA);
             this.servicioCompra.guardarDatosEnvio(envioNuevo);
             this.servicioCompra.empaquetarProductos(productos, envioNuevo);
             this.servicioEnvio.agregarAlVehiculo(envioNuevo);
+            this.servicioEnvio.modificarEnvio(envioNuevo);
 
             //pedidoNuevo.setUsuario((Usuario) request.getSession().getAttribute("idUsuario"));
             pedidoNuevo.setFechaPedido(LocalDate.now());
-            pedidoNuevo.setEstado(EstadoPedido.EN_PREPARACION);
+            pedidoNuevo.setEstado(EstadoPedido.CREADO);
             pedidoNuevo.setEstadoPago(EstadoPago.NO_PAGADO);
             pedidoNuevo.setCostoTotal(this.servicioCompra.obtenerCostoTotalDelPedido(pedidoNuevo, envioNuevo));
             this.servicioCompra.agregarPedido(pedidoNuevo);

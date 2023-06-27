@@ -3,10 +3,7 @@ package ar.edu.unlam.tallerweb1.domain.pedidos;
 import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor;
 import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor_Producto;
 import ar.edu.unlam.tallerweb1.domain.contenedor.RepositorioEmpaquetado;
-import ar.edu.unlam.tallerweb1.domain.enums.CategoriaProducto;
-import ar.edu.unlam.tallerweb1.domain.enums.EstadoPago;
-import ar.edu.unlam.tallerweb1.domain.enums.EstadoPedido;
-import ar.edu.unlam.tallerweb1.domain.enums.TipoContenedor;
+import ar.edu.unlam.tallerweb1.domain.enums.*;
 import ar.edu.unlam.tallerweb1.domain.envio.Envio;
 import ar.edu.unlam.tallerweb1.domain.envio.RepositorioEnvio;
 import ar.edu.unlam.tallerweb1.domain.producto.Producto;
@@ -36,13 +33,18 @@ public class ServicioCompraImpl implements ServicioCompra {
     }
 
     @Override
-    public void cambiarEstadoDePago(Pedido pedido) {
+    public void cambiarEstadoDePagoAPagado(Pedido pedido) {
         pedido.setEstadoPago(EstadoPago.PAGADO);
     }
 
     @Override
-    public void cambiarEstadoDePedido(Pedido pedido) {
+    public void cambiarEstadoDePedidoAEnPreparacion(Pedido pedido) {
         pedido.setEstado(EstadoPedido.EN_PREPARACION);
+    }
+
+    @Override
+    public void cambiarEstadoDeEnvioAEnPreparacion(Envio envio) {
+        envio.setEstadoEnvio(EstadoEnvio.EN_PREPARACION);
     }
 
     @Override
@@ -487,7 +489,8 @@ public class ServicioCompraImpl implements ServicioCompra {
     public Double obtenerCostoTotalDelPedido(Pedido pedido, Envio envio) {
         double costoTotalDelPedido;
 
-        Double costoDelEnvio = envio.getCostoEnvio();
+        Double costoDelEnvio = 0.0;
+        costoDelEnvio = envio.getCostoEnvio();
 
         List<Producto> listaDeProductosDelEnvio = this.repositorioEnvio.obtenerLosProductosDeUnEnvio(envio.getId());
         Double costoTotalDeLosProductos = obtenerCostoTotalDeLosProductos(listaDeProductosDelEnvio);
@@ -498,13 +501,24 @@ public class ServicioCompraImpl implements ServicioCompra {
     }
 
     @Override
-    public void pagar(Pedido pedido) throws NoSeConcretoElPagoException {
+    public void pagar(Pedido pedido, Envio envio) throws NoSeConcretoElPagoException {
         if (!pagoFallido()) {
-            cambiarEstadoDePago(pedido);
-            cambiarEstadoDePedido(pedido);
+            cambiarEstadoDePagoAPagado(pedido);
+            cambiarEstadoDePedidoAEnPreparacion(pedido);
+            cambiarEstadoDeEnvioAEnPreparacion(envio);
         } else {
             throw new NoSeConcretoElPagoException();
         }
+    }
+
+    @Override
+    public void modificarPedido(Pedido pedido) {
+        this.repositorioPedido.modificarPedido(pedido);
+    }
+
+    @Override
+    public void modificarEnvio(Envio envio) {
+        this.repositorioEnvio.modificarEnvio(envio);
     }
 
     public boolean pagoFallido() {

@@ -101,7 +101,9 @@ public class ServicioEnvioImpl implements ServicioEnvio {
                             envio.setVehiculo(vehiculoAsignado);
                             envio.setDistanciaEnKilometros(distanciaEnvio());
                             envio.setCostoEnvio(calcularCostoEnvio(vehiculoAsignado));
-                            asignarVehiculo(envio, vehiculo);
+                            envio.setVolumen(obtenerVolumenTotalOcupado(listaContenedores));
+                            envio.setPeso(obtenerPesoTotalCargado(listaContenedores));
+                            //asignarVehiculo(envio, vehiculoAsignado);
 
                         }
                     } else if (vehiculo.getTipoVehiculo().equals(TipoVehiculo.AUTO)) {
@@ -123,7 +125,8 @@ public class ServicioEnvioImpl implements ServicioEnvio {
                             envio.setVehiculo(vehiculoAsignado);
                             envio.setDistanciaEnKilometros(distanciaEnvio());
                             envio.setCostoEnvio(calcularCostoEnvio(vehiculoAsignado));
-                            asignarVehiculo(envio, vehiculo);
+                            envio.setVolumen(obtenerVolumenTotalOcupado(listaContenedores));
+                            envio.setPeso(obtenerPesoTotalCargado(listaContenedores));
 
                         }
                     } else {
@@ -145,7 +148,8 @@ public class ServicioEnvioImpl implements ServicioEnvio {
                             envio.setVehiculo(vehiculoAsignado);
                             envio.setDistanciaEnKilometros(distanciaEnvio());
                             envio.setCostoEnvio(calcularCostoEnvio(vehiculoAsignado));
-                            asignarVehiculo(envio, vehiculo);
+                            envio.setVolumen(obtenerVolumenTotalOcupado(listaContenedores));
+                            envio.setPeso(obtenerPesoTotalCargado(listaContenedores));
 
                         }
                     }
@@ -174,7 +178,8 @@ public class ServicioEnvioImpl implements ServicioEnvio {
                             envio.setVehiculo(vehiculoAsignado);
                             envio.setDistanciaEnKilometros(distanciaEnvio());
                             envio.setCostoEnvio(calcularCostoEnvio(vehiculoAsignado));
-                            asignarVehiculo(envio, vehiculo);
+                            envio.setVolumen(obtenerVolumenTotalOcupado(listaContenedores));
+                            envio.setPeso(obtenerPesoTotalCargado(listaContenedores));
 
                         }
                     } else if (vehiculo.getTipoVehiculo().equals(TipoVehiculo.AUTO)) {
@@ -197,7 +202,8 @@ public class ServicioEnvioImpl implements ServicioEnvio {
                             envio.setVehiculo(vehiculoAsignado);
                             envio.setDistanciaEnKilometros(distanciaEnvio());
                             envio.setCostoEnvio(calcularCostoEnvio(vehiculoAsignado));
-                            asignarVehiculo(envio, vehiculo);
+                            envio.setVolumen(obtenerVolumenTotalOcupado(listaContenedores));
+                            envio.setPeso(obtenerPesoTotalCargado(listaContenedores));
 
                         }
                     } else {
@@ -219,7 +225,9 @@ public class ServicioEnvioImpl implements ServicioEnvio {
                             envio.setVehiculo(vehiculoAsignado);
                             envio.setDistanciaEnKilometros(distanciaEnvio());
                             envio.setCostoEnvio(calcularCostoEnvio(vehiculoAsignado));
-                            asignarVehiculo(envio, vehiculo);
+                            envio.setVolumen(obtenerVolumenTotalOcupado(listaContenedores));
+                            envio.setPeso(obtenerPesoTotalCargado(listaContenedores));
+
                         }
                     }
                 }
@@ -277,5 +285,15 @@ public class ServicioEnvioImpl implements ServicioEnvio {
     @Override
     public Vehiculo obtenerVehiculoDePedido(Envio envio) {
         return envio.getVehiculo();
+    }
+
+    @Override
+    public Envio obtenerEnvio(Envio envio) {
+        return envio;
+    }
+
+    @Override
+    public void modificarEnvio(Envio envioNuevo) {
+        this.repositorioEnvio.modificarEnvio(envioNuevo);
     }
 }

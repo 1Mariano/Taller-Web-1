@@ -11,9 +11,11 @@ import java.util.List;
 
 public interface ServicioCompra {
 
-    void cambiarEstadoDePago(Pedido pedido);
+    void cambiarEstadoDePagoAPagado(Pedido pedido);
 
-    void cambiarEstadoDePedido(Pedido pedido);
+    void cambiarEstadoDePedidoAEnPreparacion(Pedido pedido);
+
+    void cambiarEstadoDeEnvioAEnPreparacion(Envio envio);
 
     void agregarPedido(Pedido pedidoNuevo);
 
@@ -31,5 +33,9 @@ public interface ServicioCompra {
 
     Double obtenerCostoTotalDelPedido(Pedido pedido, Envio envio);
 
-    void pagar(Pedido pedido) throws NoSeConcretoElPagoException;
+    void pagar(Pedido pedido, Envio envio) throws NoSeConcretoElPagoException;
+
+    void modificarPedido(Pedido pedido);
+
+    void modificarEnvio(Envio envio);
 }

@@ -11,6 +11,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository("repositorioEnvio")
@@ -50,9 +51,15 @@ public class RepositorioEnvioImpl implements RepositorioEnvio {
     @Override
     public List<Producto> obtenerLosProductosDeUnEnvio(Long envioId) {
         final Session session = sessionFactory.getCurrentSession();
-        return session.createCriteria(Contenedor_Producto.class)
-                .add(Restrictions.eq("envio", envioId))
+        Envio envio = session.get(Envio.class, envioId); // Obtener el objeto Envio según el ID
+        List<Contenedor_Producto> contenedorProductos = session.createCriteria(Contenedor_Producto.class)
+                .add(Restrictions.eq("envio", envio)) // Pasar el objeto Envio en lugar del ID
                 .list();
 
+        List<Producto> idsProductos = new ArrayList<>();
+        for (Contenedor_Producto contenedorProducto : contenedorProductos) {
+            idsProductos.add(contenedorProducto.getProducto()); // Obtener la ID del Producto
+        }
+        return idsProductos;
     }
 }

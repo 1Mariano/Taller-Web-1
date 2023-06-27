@@ -23,4 +23,8 @@ public interface ServicioEnvio {
     void agregarAlVehiculo(Envio envio);
 
     void asignarVehiculo(Envio envio, Vehiculo vehiculo);
+
+    Envio obtenerEnvio(Envio envio);
+
+    void modificarEnvio(Envio envioNuevo);
 }

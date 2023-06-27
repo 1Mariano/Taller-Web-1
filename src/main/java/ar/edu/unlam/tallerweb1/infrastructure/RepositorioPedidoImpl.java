@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 public class RepositorioPedidoImpl implements RepositorioPedido {
 
     private SessionFactory sessionFactory;
+
     @Autowired
     public RepositorioPedidoImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
@@ -23,5 +24,10 @@ public class RepositorioPedidoImpl implements RepositorioPedido {
     @Override
     public Pedido buscarPedidoPorUsuarioDni() {
         return null;
+    }
+
+    @Override
+    public void modificarPedido(Pedido pedido) {
+        sessionFactory.getCurrentSession().update(pedido);
     }
 }
