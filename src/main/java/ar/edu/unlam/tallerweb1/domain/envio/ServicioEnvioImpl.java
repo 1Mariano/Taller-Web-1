@@ -21,6 +21,7 @@ public class ServicioEnvioImpl implements ServicioEnvio {
     private final RepositorioVehiculo repositorioVehiculo;
     private final RepositorioEmpaquetado repositorioEmpaquetado;
     private Vehiculo vehiculoAsignado;
+    private Integer distanciaEnvio;
 
     @Autowired
     public ServicioEnvioImpl(RepositorioEnvio repositorioEnvio, RepositorioVehiculo repositorioVehiculo, RepositorioEmpaquetado repositorioEmpaquetado) {
@@ -31,8 +32,19 @@ public class ServicioEnvioImpl implements ServicioEnvio {
     }
 
     @Override
-    public Double distanciaEnvio() {
-        return Math.random() * 150 + 1;
+    public Integer distanciaEnvio() {
+        switch (vehiculoAsignado.getTipoVehiculo()) {
+            case MOTO:
+                distanciaEnvio = (int) (Math.random() * 20 + 1);
+                break;
+            case AUTO:
+                distanciaEnvio = (int) (Math.random() * 80 + 1);
+                break;
+            case CAMIONETA:
+                distanciaEnvio = (int) (Math.random() * 150 + 1);
+                break;
+        }
+        return distanciaEnvio;
     }
 
     @Override
@@ -40,13 +52,13 @@ public class ServicioEnvioImpl implements ServicioEnvio {
         double costo = 0.0;
         switch (vehiculoAsignado.getTipoVehiculo()) {
             case MOTO:
-                costo = distanciaEnvio() * 1000.0;
+                costo = distanciaEnvio * 100.0;
                 break;
             case AUTO:
-                costo = distanciaEnvio() * 1500.0;
+                costo = distanciaEnvio * 200.0;
                 break;
             case CAMIONETA:
-                costo = distanciaEnvio() * 2000.0;
+                costo = distanciaEnvio * 300.0;
                 break;
         }
         return costo;
@@ -57,15 +69,17 @@ public class ServicioEnvioImpl implements ServicioEnvio {
         List<Vehiculo> listaVehiculos = this.repositorioVehiculo.obtenerVehiculos();
         List<Contenedor> listaContenedores = this.repositorioEmpaquetado.obtenerContenedores();
 
+        Double volumenTotalOcupado;
+        Double pesoTotalCargado;
 
         vehiculosLoop:
         for (Vehiculo vehiculo : listaVehiculos) {
             boolean contenedoresGuardados = false;
 
-            Double volumenTotalOcupado = 0.0;
-            Double pesoTotalCargado = 0.0;
-
             for (Contenedor contenedoresAGuardar : listaContenedores) {
+
+                volumenTotalOcupado = 0.0;
+                pesoTotalCargado = 0.0;
 
                 if (vehiculo.getListaContenedores().isEmpty()) {
                     if (vehiculo.getTipoVehiculo().equals(TipoVehiculo.MOTO)) {
@@ -85,7 +99,11 @@ public class ServicioEnvioImpl implements ServicioEnvio {
                             contenedoresGuardados = true;
 
                             envio.setVehiculo(vehiculoAsignado);
-                            asignarVehiculo(envio, vehiculo);
+                            envio.setDistanciaEnKilometros(distanciaEnvio());
+                            envio.setCostoEnvio(calcularCostoEnvio(vehiculoAsignado));
+                            envio.setVolumen(obtenerVolumenTotalOcupado(listaContenedores));
+                            envio.setPeso(obtenerPesoTotalCargado(listaContenedores));
+                            //asignarVehiculo(envio, vehiculoAsignado);
 
                         }
                     } else if (vehiculo.getTipoVehiculo().equals(TipoVehiculo.AUTO)) {
@@ -105,7 +123,10 @@ public class ServicioEnvioImpl implements ServicioEnvio {
                             contenedoresGuardados = true;
 
                             envio.setVehiculo(vehiculoAsignado);
-                            asignarVehiculo(envio, vehiculo);
+                            envio.setDistanciaEnKilometros(distanciaEnvio());
+                            envio.setCostoEnvio(calcularCostoEnvio(vehiculoAsignado));
+                            envio.setVolumen(obtenerVolumenTotalOcupado(listaContenedores));
+                            envio.setPeso(obtenerPesoTotalCargado(listaContenedores));
 
                         }
                     } else {
@@ -125,7 +146,10 @@ public class ServicioEnvioImpl implements ServicioEnvio {
                             contenedoresGuardados = true;
 
                             envio.setVehiculo(vehiculoAsignado);
-                            asignarVehiculo(envio, vehiculo);
+                            envio.setDistanciaEnKilometros(distanciaEnvio());
+                            envio.setCostoEnvio(calcularCostoEnvio(vehiculoAsignado));
+                            envio.setVolumen(obtenerVolumenTotalOcupado(listaContenedores));
+                            envio.setPeso(obtenerPesoTotalCargado(listaContenedores));
 
                         }
                     }
@@ -152,7 +176,10 @@ public class ServicioEnvioImpl implements ServicioEnvio {
                             contenedoresGuardados = true;
 
                             envio.setVehiculo(vehiculoAsignado);
-                            asignarVehiculo(envio, vehiculo);
+                            envio.setDistanciaEnKilometros(distanciaEnvio());
+                            envio.setCostoEnvio(calcularCostoEnvio(vehiculoAsignado));
+                            envio.setVolumen(obtenerVolumenTotalOcupado(listaContenedores));
+                            envio.setPeso(obtenerPesoTotalCargado(listaContenedores));
 
                         }
                     } else if (vehiculo.getTipoVehiculo().equals(TipoVehiculo.AUTO)) {
@@ -173,7 +200,10 @@ public class ServicioEnvioImpl implements ServicioEnvio {
                             contenedoresGuardados = true;
 
                             envio.setVehiculo(vehiculoAsignado);
-                            asignarVehiculo(envio, vehiculo);
+                            envio.setDistanciaEnKilometros(distanciaEnvio());
+                            envio.setCostoEnvio(calcularCostoEnvio(vehiculoAsignado));
+                            envio.setVolumen(obtenerVolumenTotalOcupado(listaContenedores));
+                            envio.setPeso(obtenerPesoTotalCargado(listaContenedores));
 
                         }
                     } else {
@@ -193,7 +223,11 @@ public class ServicioEnvioImpl implements ServicioEnvio {
                             contenedoresGuardados = true;
 
                             envio.setVehiculo(vehiculoAsignado);
-                            asignarVehiculo(envio, vehiculo);
+                            envio.setDistanciaEnKilometros(distanciaEnvio());
+                            envio.setCostoEnvio(calcularCostoEnvio(vehiculoAsignado));
+                            envio.setVolumen(obtenerVolumenTotalOcupado(listaContenedores));
+                            envio.setPeso(obtenerPesoTotalCargado(listaContenedores));
+
                         }
                     }
                 }
@@ -251,5 +285,15 @@ public class ServicioEnvioImpl implements ServicioEnvio {
     @Override
     public Vehiculo obtenerVehiculoDePedido(Envio envio) {
         return envio.getVehiculo();
+    }
+
+    @Override
+    public Envio obtenerEnvio(Envio envio) {
+        return envio;
+    }
+
+    @Override
+    public void modificarEnvio(Envio envioNuevo) {
+        this.repositorioEnvio.modificarEnvio(envioNuevo);
     }
 }

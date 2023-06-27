@@ -12,7 +12,7 @@ public interface ServicioEnvio {
 
     //List<Contenedor> getContenedores();
 
-    Double distanciaEnvio();
+    Integer distanciaEnvio();
 
     Double calcularCostoEnvio(Vehiculo vehiculoAsignado);
 
@@ -23,4 +23,8 @@ public interface ServicioEnvio {
     void agregarAlVehiculo(Envio envio);
 
     void asignarVehiculo(Envio envio, Vehiculo vehiculo);
+
+    Envio obtenerEnvio(Envio envio);
+
+    void modificarEnvio(Envio envioNuevo);
 }

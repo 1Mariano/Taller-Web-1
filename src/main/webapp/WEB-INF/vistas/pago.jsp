@@ -6,7 +6,7 @@
 
 <main class="container">
 
-    <h1>Su numero de Compra es: ${numeroPedido.id}</h1>
+    <h1>Su numero de Compra es: ${numeroPedido}</h1>
     <div class="d-flex flex-wrap gap-1 row-gap-5 justify-content-left">
         <!-- Mostrar cajas -->
         <h2>Cajas:</h2>

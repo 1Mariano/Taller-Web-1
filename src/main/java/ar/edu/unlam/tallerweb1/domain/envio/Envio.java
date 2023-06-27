@@ -1,14 +1,10 @@
 package ar.edu.unlam.tallerweb1.domain.envio;
 
-import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor;
-import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor_Producto;
 import ar.edu.unlam.tallerweb1.domain.enums.EstadoEnvio;
 import ar.edu.unlam.tallerweb1.domain.pedidos.Pedido;
 import ar.edu.unlam.tallerweb1.domain.vehiculos.Vehiculo;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 public class Envio {
@@ -17,13 +13,13 @@ public class Envio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Double costoEnvio;
-    private Double distanciaEnKilometros;
+    private Integer distanciaEnKilometros;
     @OneToOne
     private Pedido pedido;
     @OneToOne
     private Vehiculo vehiculo;
-    private Integer peso;
-    private Integer volumen;
+    private Double peso;
+    private Double volumen;
     private EstadoEnvio estadoEnvio;
     private String calle;
     private Integer numero;
@@ -33,7 +29,7 @@ public class Envio {
     /*@OneToMany
     private List<Contenedor> listaContenedores;*/
 
-    public Envio(Long id, Double costoEnvio, Double distanciaEnKilometros, Integer peso, Integer volumen, EstadoEnvio estadoEnvio, String calle, Integer numero, String pisoODepartamento, String codigoPostal, String localidad) {
+    public Envio(Long id, Double costoEnvio, Integer distanciaEnKilometros, Double peso, Double volumen, EstadoEnvio estadoEnvio, String calle, Integer numero, String pisoODepartamento, String codigoPostal, String localidad) {
         this.id = id;
         this.costoEnvio = costoEnvio;
         this.distanciaEnKilometros = distanciaEnKilometros;
@@ -51,7 +47,6 @@ public class Envio {
 
     }
 
-
     public Long getId() {
         return id;
     }
@@ -68,11 +63,11 @@ public class Envio {
         this.costoEnvio = costoEnvio;
     }
 
-    public Double getDistanciaEnKilometros() {
+    public Integer getDistanciaEnKilometros() {
         return distanciaEnKilometros;
     }
 
-    public void setDistanciaEnKilometros(Double distanciaEnKilometros) {
+    public void setDistanciaEnKilometros(Integer distanciaEnKilometros) {
         this.distanciaEnKilometros = distanciaEnKilometros;
     }
 
@@ -92,19 +87,19 @@ public class Envio {
         this.vehiculo = vehiculo;
     }
 
-    public Integer getPeso() {
+    public Double getPeso() {
         return peso;
     }
 
-    public void setPeso(Integer peso) {
+    public void setPeso(Double peso) {
         this.peso = peso;
     }
 
-    public Integer getVolumen() {
+    public Double getVolumen() {
         return volumen;
     }
 
-    public void setVolumen(Integer volumen) {
+    public void setVolumen(Double volumen) {
         this.volumen = volumen;
     }
 

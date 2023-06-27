@@ -1,6 +1,9 @@
 package ar.edu.unlam.tallerweb1.domain.envio;
 
+import ar.edu.unlam.tallerweb1.domain.producto.Producto;
 import ar.edu.unlam.tallerweb1.domain.vehiculos.Vehiculo_Contenedor;
+
+import java.util.List;
 
 public interface RepositorioEnvio {
 
@@ -10,4 +13,7 @@ public interface RepositorioEnvio {
 
     void guardarVehiculoContenedor(Vehiculo_Contenedor vc);
 
+    Envio obtenerEnvioDelPedido(Long envioId);
+
+    List<Producto> obtenerLosProductosDeUnEnvio(Long envioId);
 }

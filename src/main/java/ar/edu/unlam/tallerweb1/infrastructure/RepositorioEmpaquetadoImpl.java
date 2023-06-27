@@ -21,6 +21,7 @@ import java.util.List;
 public class RepositorioEmpaquetadoImpl implements RepositorioEmpaquetado {
 
     private SessionFactory sessionFactory;
+
     @Autowired
     public RepositorioEmpaquetadoImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
