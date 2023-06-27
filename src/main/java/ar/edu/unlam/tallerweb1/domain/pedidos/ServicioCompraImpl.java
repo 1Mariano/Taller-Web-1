@@ -10,8 +10,8 @@ import ar.edu.unlam.tallerweb1.domain.enums.TipoContenedor;
 import ar.edu.unlam.tallerweb1.domain.envio.Envio;
 import ar.edu.unlam.tallerweb1.domain.envio.RepositorioEnvio;
 import ar.edu.unlam.tallerweb1.domain.producto.Producto;
-import ar.edu.unlam.tallerweb1.domain.producto.RepositorioProducto;
 import ar.edu.unlam.tallerweb1.exceptions.CampoInvalidoException;
+import ar.edu.unlam.tallerweb1.exceptions.NoSeConcretoElPagoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,15 +26,13 @@ public class ServicioCompraImpl implements ServicioCompra {
     private final RepositorioEnvio repositorioEnvio;
     private final RepositorioEmpaquetado repositorioEmpaquetado;
     private final RepositorioPedido repositorioPedido;
-    private final RepositorioProducto repositorioProducto;
 
     @Autowired
-    public ServicioCompraImpl(RepositorioEnvio repositorioEnvio, RepositorioEmpaquetado repositorioEmpaquetado, RepositorioPedido repositorioPedido, RepositorioProducto repositorioProducto) {
+    public ServicioCompraImpl(RepositorioEnvio repositorioEnvio, RepositorioEmpaquetado repositorioEmpaquetado, RepositorioPedido repositorioPedido) {
 
         this.repositorioEnvio = repositorioEnvio;
         this.repositorioEmpaquetado = repositorioEmpaquetado;
         this.repositorioPedido = repositorioPedido;
-        this.repositorioProducto = repositorioProducto;
     }
 
     @Override
@@ -416,9 +414,7 @@ public class ServicioCompraImpl implements ServicioCompra {
 
     @Override
     public List<Contenedor> devolverContenedoresConProductos() {
-        List<Contenedor> contenedores = this.repositorioEmpaquetado.obtenerContenedores();
-
-        return contenedores;
+        return this.repositorioEmpaquetado.obtenerContenedores();
     }
 
     private void calcularVolumenYPesoDisponible(Producto productoAEmpaquetar, Double volumenTotalOcupado, Double
@@ -479,22 +475,6 @@ public class ServicioCompraImpl implements ServicioCompra {
     }
 
     @Override
-    public void pagar(Pedido pedido) {
-        cambiarEstadoDePago(pedido);
-        cambiarEstadoDePedido(pedido);
-
-        Envio envioDelPedido = this.repositorioEnvio.obtenerEnvioDelPedido(pedido.getEnvio().getId());
-        Double costoDelEnvio = envioDelPedido.getCostoEnvio();
-
-        List<Producto> listaDeProductosDelEnvio = this.repositorioEnvio.obtenerLosProductosDeUnEnvio(pedido.getEnvio().getId());
-
-        Double costoTotal = obtenerCostoTotalDeLosProductos(listaDeProductosDelEnvio);
-
-        pedido.setCostoTotal(costoDelEnvio + costoTotal);
-
-    }
-
-    @Override
     public Double obtenerCostoTotalDeLosProductos(List<Producto> listaProductos) {
         Double costoTotal = 0.0;
         for (Producto productosDelPedido : listaProductos) {
@@ -503,4 +483,31 @@ public class ServicioCompraImpl implements ServicioCompra {
         return costoTotal;
     }
 
+    @Override
+    public Double obtenerCostoTotalDelPedido(Pedido pedido, Envio envio) {
+        double costoTotalDelPedido;
+
+        Double costoDelEnvio = envio.getCostoEnvio();
+
+        List<Producto> listaDeProductosDelEnvio = this.repositorioEnvio.obtenerLosProductosDeUnEnvio(envio.getId());
+        Double costoTotalDeLosProductos = obtenerCostoTotalDeLosProductos(listaDeProductosDelEnvio);
+
+        costoTotalDelPedido = costoDelEnvio + costoTotalDeLosProductos;
+
+        return costoTotalDelPedido;
+    }
+
+    @Override
+    public void pagar(Pedido pedido) throws NoSeConcretoElPagoException {
+        if (!pagoFallido()) {
+            cambiarEstadoDePago(pedido);
+            cambiarEstadoDePedido(pedido);
+        } else {
+            throw new NoSeConcretoElPagoException();
+        }
+    }
+
+    public boolean pagoFallido() {
+        return false;
+    }
 }

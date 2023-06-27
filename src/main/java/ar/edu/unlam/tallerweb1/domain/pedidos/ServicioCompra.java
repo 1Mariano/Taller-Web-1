@@ -29,5 +29,7 @@ public interface ServicioCompra {
 
     Double obtenerCostoTotalDeLosProductos(List<Producto> listaProductos);
 
+    Double obtenerCostoTotalDelPedido(Pedido pedido, Envio envio);
+
     void pagar(Pedido pedido) throws NoSeConcretoElPagoException;
 }

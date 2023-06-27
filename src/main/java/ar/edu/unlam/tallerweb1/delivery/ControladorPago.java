@@ -1,13 +1,10 @@
 package ar.edu.unlam.tallerweb1.delivery;
 
 import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor;
-import ar.edu.unlam.tallerweb1.domain.enums.EstadoPago;
-import ar.edu.unlam.tallerweb1.domain.enums.EstadoPedido;
 import ar.edu.unlam.tallerweb1.domain.envio.Envio;
 import ar.edu.unlam.tallerweb1.domain.envio.ServicioEnvio;
 import ar.edu.unlam.tallerweb1.domain.pedidos.Pedido;
 import ar.edu.unlam.tallerweb1.domain.pedidos.ServicioCompra;
-import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 import ar.edu.unlam.tallerweb1.exceptions.NoSeConcretoElPagoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,7 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -59,18 +55,14 @@ public class ControladorPago {
     }
 
     @RequestMapping(path = "/pagar", method = RequestMethod.POST)
-    public ModelAndView pagar(HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView pagar(HttpServletRequest request, HttpServletResponse response) throws NoSeConcretoElPagoException {
         ModelMap modelo = new ModelMap();
-        Pedido pedidoNuevo = new Pedido();
+
+        Pedido pedido = new Pedido();
+        pedido = (Pedido) request.getSession().getAttribute("pedido");
+
         try {
-            pedidoNuevo.setEnvio((Envio) request.getSession().getAttribute("envio"));
-         //   pedidoNuevo.setUsuario((Usuario) request.getSession().getAttribute("idUsuario"));
-            pedidoNuevo.setEstado(EstadoPedido.EN_PREPARACION);
-            pedidoNuevo.setFechaPedido(LocalDate.now());
-            this.servicioCompra.agregarPedido(pedidoNuevo);
-
-            this.servicioCompra.pagar(pedidoNuevo);
-
+            this.servicioCompra.pagar(pedido);
         } catch (NoSeConcretoElPagoException e) {
             return registroDePagoFallido(modelo, "No fue posible concretar el pago");
         }
