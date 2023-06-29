@@ -31,6 +31,7 @@
         font-family: 'Work Sans', sans-serif;
         font-size: larger;
         height: 100vh;
+        background-color: #FAFAFA;
     }
 
     .bg-gradient1 {
@@ -71,6 +72,11 @@
     .scrollable {
         overflow: auto;
         height: 450px;
+    }
+
+    .contenedorbc {
+        box-sizing: border-box;
+        border: 1px solid #DEE2E6;
     }
 
 </style>

@@ -15,9 +15,10 @@
                     <div class="d-flex gap-3">
                         <img src="${pageContext.request.contextPath}/static/img/${item.img}" alt=""
                              style="width: 80px"/>
-                        <h5 class="card-title">
-                                <c:out value="${item.nombre}"/>
+                        <div class="card-title">
+                            <c:out value="${item.nombre}"/>
                             <p class="precio fs-3 fw-bold">$${item.precioArs}</p>
+                        </div>
                     </div>
                 </li>
             </c:forEach>
