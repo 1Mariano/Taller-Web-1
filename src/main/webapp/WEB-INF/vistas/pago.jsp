@@ -8,6 +8,30 @@
 
     <h1 class="my-4">Su número de compra es: <span class="precio fw-bold">${numeroEnvio}</span></h1>
 
+    <form:form action="pagar" method="POST" modelAttribute="datosPago">
+        <c:if test="${empty error}">
+            <h5><span>${exito}</span></h5>
+            <br>
+        </c:if>
+        <c:if test="${not empty error}">
+            <h5><span>${error}</span></h5>
+            <br>
+        </c:if>
+        <div class="mb-3 w-50">
+            <div class="w-100">
+                <label for="nombreYApellidoDeTitular" class="form-label">Nombre y Apellido</label>
+                <div>
+                    <form:input path="nombreYApellidoDeTitular" id="nombreYApellidoDeTitular" type="text" class="form-control"/>
+                </div>
+            </div>
+        </div>
+
+
+        <button class="btn btn-lg btn-primary btn-block my-2" type="submit">Pagar</button>
+    </form:form>
+
+
+
     <div class="d-flex flex-column gap-5">
 
         <div class="p-3 card-body rounded contenedorbc">
@@ -58,18 +82,7 @@
 
     </div>
 
-    <form:form action="pagar" method="POST">
-        <c:if test="${empty error}">
-            <h5><span>${exito}</span></h5>
-            <br>
-        </c:if>
-        <c:if test="${not empty error}">
-            <h5><span>${error}</span></h5>
-            <br>
-        </c:if>
 
-        <button class="btn btn-lg btn-primary btn-block my-2" type="submit">Pagar</button>
-    </form:form>
 
 </main>
 <script src="../../static/js/script.js"></script>

@@ -10,6 +10,7 @@ import ar.edu.unlam.tallerweb1.exceptions.NoSeConcretoElPagoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -88,6 +89,9 @@ public class ControladorPago {
 
 
 // model.put("costoEnvio", this.servicioEnvio.calcularCostoEnvio());
+
+        model.put("datosPago", new DatosPago());
+
         return new ModelAndView("/pago", model);
     }
 
@@ -101,7 +105,7 @@ public class ControladorPago {
 
 
     @RequestMapping(path = "/pagar", method = RequestMethod.POST)
-    public ModelAndView pagar(HttpServletRequest request, HttpServletResponse response) throws NoSeConcretoElPagoException {
+    public ModelAndView pagar(@ModelAttribute("datosPago") DatosPago datosPago, HttpServletRequest request, HttpServletResponse response) throws NoSeConcretoElPagoException {
         ModelMap modelo = new ModelMap();
 
         modelo.put("datosBuscador", new DatosBuscador());
@@ -120,13 +124,22 @@ public class ControladorPago {
         }
         Long idUsuario = (Long) request.getSession().getAttribute("idUsuario");
         this.servicioCompra.vaciarCarrito(idUsuario);
-        return registroExitoso(modelo, "Pago confirmado");
+        //return registroExitoso(modelo, "Pago confirmado");
+        return new ModelAndView("redirect:/pagoConfirmado");
     }
 
-    private ModelAndView registroExitoso(ModelMap modelo, String mensaje) {
-        modelo.put("exito", mensaje);
-        return new ModelAndView("pago", modelo);
+    @RequestMapping(path = "/pagoConfirmado")
+    public ModelAndView pagoConfirmado(){
+
+        return new ModelAndView("/pagoConfirmado");
     }
+
+
+
+    /*private ModelAndView registroExitoso(ModelMap modelo, String mensaje) {
+        modelo.put("exito", mensaje);
+        return new ModelAndView("redirect:/pagoConfirmado", modelo);
+    }*/
 
     private ModelAndView registroDePagoFallido(ModelMap modelo, String mensaje) {
         modelo.put("error", mensaje);
