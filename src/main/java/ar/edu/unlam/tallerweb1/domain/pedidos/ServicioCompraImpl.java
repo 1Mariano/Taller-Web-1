@@ -8,8 +8,14 @@ import ar.edu.unlam.tallerweb1.domain.envio.Envio;
 import ar.edu.unlam.tallerweb1.domain.envio.RepositorioEnvio;
 import ar.edu.unlam.tallerweb1.domain.producto.Producto;
 import ar.edu.unlam.tallerweb1.domain.producto.RepositorioProducto;
+import ar.edu.unlam.tallerweb1.domain.usuarios.RepositorioUsuario;
+import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 import ar.edu.unlam.tallerweb1.exceptions.CampoInvalidoException;
 import ar.edu.unlam.tallerweb1.exceptions.NoSeConcretoElPagoException;
+import com.mercadopago.client.payment.PaymentClient;
+import com.mercadopago.exceptions.MPApiException;
+import com.mercadopago.exceptions.MPException;
+import com.mercadopago.resources.payment.Payment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,13 +32,16 @@ public class ServicioCompraImpl implements ServicioCompra {
     private final RepositorioPedido repositorioPedido;
     private final RepositorioProducto repositorioProducto;
 
+    private final RepositorioUsuario repositorioUsuario;
+
     @Autowired
-    public ServicioCompraImpl(RepositorioEnvio repositorioEnvio, RepositorioEmpaquetado repositorioEmpaquetado, RepositorioPedido repositorioPedido, RepositorioProducto repositorioProducto) {
+    public ServicioCompraImpl(RepositorioEnvio repositorioEnvio, RepositorioEmpaquetado repositorioEmpaquetado, RepositorioPedido repositorioPedido, RepositorioProducto repositorioProducto, RepositorioUsuario repositorioUsuario) {
 
         this.repositorioEnvio = repositorioEnvio;
         this.repositorioEmpaquetado = repositorioEmpaquetado;
         this.repositorioPedido = repositorioPedido;
         this.repositorioProducto = repositorioProducto;
+        this.repositorioUsuario = repositorioUsuario;
     }
 
     @Override
@@ -495,6 +504,21 @@ public class ServicioCompraImpl implements ServicioCompra {
     public void vaciarCarrito(Long idUsuario) {
         this.repositorioProducto.vaciarCarrito(idUsuario);
     }
+
+    @Override
+    public Payment verificarPago(Long paymentId) throws MPException, MPApiException {
+
+        PaymentClient client = new PaymentClient();
+        Payment payment = client.get(paymentId);
+        /*if (!payment.getStatus().equals("approved")) {
+            throw new NoSeConcretoElPagoException("El pago no fue aprobado");
+        }*/
+
+        return payment;
+
+    }
+
+
 
 
     @Override
