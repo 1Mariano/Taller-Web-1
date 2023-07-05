@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.domain.contenedor;
 
+import ar.edu.unlam.tallerweb1.domain.envio.Envio;
 import ar.edu.unlam.tallerweb1.domain.producto.Producto;
 
 import java.util.List;
@@ -16,6 +17,8 @@ public interface RepositorioEmpaquetado {
     void eliminarContenedorVacio(Contenedor contenedorAEliminar);
 
     List<Contenedor_Producto> obtenerContenedoresConProductos();
+
+    List<Contenedor> obtenerLosContenedoresDeUnEnvio(Long envioId);
 
     List<Contenedor> obtenerLosContenedoresDeTipoCajaDeUnEnvio(Long envioId);
 

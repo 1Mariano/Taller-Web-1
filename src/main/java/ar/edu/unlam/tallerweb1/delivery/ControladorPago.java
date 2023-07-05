@@ -38,21 +38,13 @@ public class ControladorPago {
         this.servicioEnvio = servicioEnvio;
     }
 
-
     @RequestMapping("/pago")
     public ModelAndView pago() {
         ModelMap model = new ModelMap();
 
         model.put("datosBuscador", new DatosBuscador());
 
-        model.put("numeroEnvio", request.getSession().getAttribute("numeroEnvio"));
-        Double peso = this.servicioCompra.obtenerPesoTotalDeLosContenedores();
-        Double volumen = this.servicioCompra.obtenerVolumenTotalDeLosContenedores();
-        model.put("peso", peso);
-        model.put("volumen", volumen);
-
         Long numeroEnvio = (Long) request.getSession().getAttribute("numeroEnvio");
-//Todo separar responsabilidades desde el respositorio. Necesito dos arrays para bolsa o caja distintos
 
         List<Contenedor> bolsas = this.servicioCompra.obtenerBolsasPorEnvio(numeroEnvio);
         Set<Long> idContenedor = new HashSet<>();
@@ -66,7 +58,6 @@ public class ControladorPago {
             addBolsas.put(contId, productosPorContenedor);
         }
 
-// Cajas
         List<Contenedor> cajas = this.servicioCompra.obtenerCajasPorEnvio(numeroEnvio);
         Set<Long> idContenedorCaja = new HashSet<>();
         for (Contenedor caja : cajas) {
@@ -79,67 +70,51 @@ public class ControladorPago {
             addCajas.put(contId, productosPorContenedorCaja);
         }
 
-
-//this.servicioCompra.obtenerProductosDeUnContenedor(caja.getId());
+        model.put("numeroEnvio", numeroEnvio);
         model.put("bolsas", addBolsas);
         model.put("cajas", addCajas);
 
-        model.put("distanciaEnvio", this.servicioEnvio.obtenerEnvio((Envio) request.getSession().getAttribute("envio")).getDistanciaEnKilometros());
+        model.put("costoProductos", this.servicioCompra.obtenerCostoTotalDeLosProductos((List<Producto>) request.getSession().getAttribute("arrayProductos")));
         model.put("costoEnvio", this.servicioEnvio.obtenerEnvio((Envio) request.getSession().getAttribute("envio")).getCostoEnvio());
-
-
-// model.put("costoEnvio", this.servicioEnvio.calcularCostoEnvio());
+        model.put("costoTotal", this.servicioCompra.obtenerCostoTotalDelPedido((Pedido) request.getSession().getAttribute("pedido"), (Envio) request.getSession().getAttribute("envio")));
 
         model.put("datosPago", new DatosPago());
 
         return new ModelAndView("/pago", model);
     }
 
-    private ModelAndView registroDeEnvioFallido(ModelMap modelo, String mensaje) {
-        modelo.put("error", mensaje);
-        modelo.put("productos", request.getSession().getAttribute("arrayProductos"));
-        return new ModelAndView("compra", modelo);
-    }
-
-
-
-
     @RequestMapping(path = "/pagar", method = RequestMethod.POST)
-    public ModelAndView pagar(@ModelAttribute("datosPago") DatosPago datosPago, HttpServletRequest request, HttpServletResponse response) throws NoSeConcretoElPagoException {
+    public ModelAndView pagar(@ModelAttribute("datosPago") DatosPago datosPago, HttpServletRequest request, HttpServletResponse response) {
         ModelMap modelo = new ModelMap();
 
         modelo.put("datosBuscador", new DatosBuscador());
 
-        Pedido pedido = new Pedido();
-        pedido = (Pedido) request.getSession().getAttribute("pedido");
-        Envio envio = new Envio();
-        envio = (Envio) request.getSession().getAttribute("envio");
+        Long idUsuario = (Long) request.getSession().getAttribute("idUsuario");
+        Pedido pedido = (Pedido) request.getSession().getAttribute("pedido");
+        Envio envio = (Envio) request.getSession().getAttribute("envio");
 
         try {
             this.servicioCompra.pagar(pedido, envio);
             this.servicioCompra.modificarPedido(pedido);
             this.servicioEnvio.modificarEnvio(envio);
+
         } catch (NoSeConcretoElPagoException e) {
             return registroDePagoFallido(modelo, "No fue posible concretar el pago");
         }
-        Long idUsuario = (Long) request.getSession().getAttribute("idUsuario");
+
         this.servicioCompra.vaciarCarrito(idUsuario);
-        //return registroExitoso(modelo, "Pago confirmado");
-        return new ModelAndView("redirect:/pagoConfirmado");
+
+        return new ModelAndView("redirect:/pago-confirmado");
     }
 
-    @RequestMapping(path = "/pagoConfirmado")
-    public ModelAndView pagoConfirmado(){
+    @RequestMapping(path = "/pago-confirmado")
+    public ModelAndView pagoConfirmado() {
+        ModelMap modelo = new ModelMap();
 
-        return new ModelAndView("/pagoConfirmado");
+        modelo.put("datosBuscador", new DatosBuscador());
+
+        return new ModelAndView("/pago-confirmado", modelo);
     }
-
-
-
-    /*private ModelAndView registroExitoso(ModelMap modelo, String mensaje) {
-        modelo.put("exito", mensaje);
-        return new ModelAndView("redirect:/pagoConfirmado", modelo);
-    }*/
 
     private ModelAndView registroDePagoFallido(ModelMap modelo, String mensaje) {
         modelo.put("error", mensaje);
