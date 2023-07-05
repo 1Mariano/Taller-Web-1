@@ -67,7 +67,7 @@ public class ServicioEnvioImpl implements ServicioEnvio {
     @Override
     public void agregarAlVehiculo(Envio envio) {
         List<Vehiculo> listaVehiculos = this.repositorioVehiculo.obtenerVehiculos();
-        List<Contenedor> listaContenedores = this.repositorioEmpaquetado.obtenerContenedores();
+        List<Contenedor> listaContenedores = this.repositorioEmpaquetado.obtenerLosContenedoresDeUnEnvio(envio.getId());
 
         Double volumenTotalOcupado;
         Double pesoTotalCargado;
@@ -89,11 +89,13 @@ public class ServicioEnvioImpl implements ServicioEnvio {
 
                             vehiculoAsignado = vehiculo;
 
-                            Vehiculo_Contenedor vc = new Vehiculo_Contenedor();
-                            vc.setEnvio(envio);
-                            vc.setVehiculo(vehiculoAsignado);
-                            vc.setContenedor(contenedoresAGuardar);
-                            this.repositorioEnvio.guardarVehiculoContenedor(vc);
+                            for (Contenedor c : listaContenedores) {
+                                Vehiculo_Contenedor vc = new Vehiculo_Contenedor();
+                                vc.setEnvio(envio);
+                                vc.setVehiculo(vehiculoAsignado);
+                                vc.setContenedor(c);
+                                this.repositorioEnvio.guardarVehiculoContenedor(vc);
+                            }
 
                             vehiculo.getListaContenedores().addAll(listaContenedores);
                             contenedoresGuardados = true;
@@ -114,10 +116,13 @@ public class ServicioEnvioImpl implements ServicioEnvio {
 
                             vehiculoAsignado = vehiculo;
 
-                            Vehiculo_Contenedor vc = new Vehiculo_Contenedor();
-                            vc.setEnvio(envio);
-                            vc.setVehiculo(vehiculoAsignado);
-                            this.repositorioEnvio.guardarVehiculoContenedor(vc);
+                            for (Contenedor c : listaContenedores) {
+                                Vehiculo_Contenedor vc = new Vehiculo_Contenedor();
+                                vc.setEnvio(envio);
+                                vc.setVehiculo(vehiculoAsignado);
+                                vc.setContenedor(c);
+                                this.repositorioEnvio.guardarVehiculoContenedor(vc);
+                            }
 
                             vehiculo.getListaContenedores().addAll(listaContenedores);
                             contenedoresGuardados = true;
@@ -137,10 +142,13 @@ public class ServicioEnvioImpl implements ServicioEnvio {
 
                             vehiculoAsignado = vehiculo;
 
-                            Vehiculo_Contenedor vc = new Vehiculo_Contenedor();
-                            vc.setEnvio(envio);
-                            vc.setVehiculo(vehiculoAsignado);
-                            this.repositorioEnvio.guardarVehiculoContenedor(vc);
+                            for (Contenedor c : listaContenedores) {
+                                Vehiculo_Contenedor vc = new Vehiculo_Contenedor();
+                                vc.setEnvio(envio);
+                                vc.setVehiculo(vehiculoAsignado);
+                                vc.setContenedor(c);
+                                this.repositorioEnvio.guardarVehiculoContenedor(vc);
+                            }
 
                             vehiculo.getListaContenedores().addAll(listaContenedores);
                             contenedoresGuardados = true;
@@ -167,10 +175,13 @@ public class ServicioEnvioImpl implements ServicioEnvio {
 
                             vehiculoAsignado = vehiculo;
 
-                            Vehiculo_Contenedor vc = new Vehiculo_Contenedor();
-                            vc.setEnvio(envio);
-                            vc.setVehiculo(vehiculoAsignado);
-                            this.repositorioEnvio.guardarVehiculoContenedor(vc);
+                            for (Contenedor c : listaContenedores) {
+                                Vehiculo_Contenedor vc = new Vehiculo_Contenedor();
+                                vc.setEnvio(envio);
+                                vc.setVehiculo(vehiculoAsignado);
+                                vc.setContenedor(c);
+                                this.repositorioEnvio.guardarVehiculoContenedor(vc);
+                            }
 
                             vehiculo.getListaContenedores().addAll(listaContenedores);
                             contenedoresGuardados = true;
@@ -191,10 +202,13 @@ public class ServicioEnvioImpl implements ServicioEnvio {
 
                             vehiculoAsignado = vehiculo;
 
-                            Vehiculo_Contenedor vc = new Vehiculo_Contenedor();
-                            vc.setEnvio(envio);
-                            vc.setVehiculo(vehiculoAsignado);
-                            this.repositorioEnvio.guardarVehiculoContenedor(vc);
+                            for (Contenedor c : listaContenedores) {
+                                Vehiculo_Contenedor vc = new Vehiculo_Contenedor();
+                                vc.setEnvio(envio);
+                                vc.setVehiculo(vehiculoAsignado);
+                                vc.setContenedor(c);
+                                this.repositorioEnvio.guardarVehiculoContenedor(vc);
+                            }
 
                             vehiculo.getListaContenedores().addAll(listaContenedores);
                             contenedoresGuardados = true;
@@ -214,10 +228,13 @@ public class ServicioEnvioImpl implements ServicioEnvio {
 
                             vehiculoAsignado = vehiculo;
 
-                            Vehiculo_Contenedor vc = new Vehiculo_Contenedor();
-                            vc.setEnvio(envio);
-                            vc.setVehiculo(vehiculoAsignado);
-                            this.repositorioEnvio.guardarVehiculoContenedor(vc);
+                            for (Contenedor c : listaContenedores) {
+                                Vehiculo_Contenedor vc = new Vehiculo_Contenedor();
+                                vc.setEnvio(envio);
+                                vc.setVehiculo(vehiculoAsignado);
+                                vc.setContenedor(c);
+                                this.repositorioEnvio.guardarVehiculoContenedor(vc);
+                            }
 
                             vehiculo.getListaContenedores().addAll(listaContenedores);
                             contenedoresGuardados = true;
@@ -238,8 +255,6 @@ public class ServicioEnvioImpl implements ServicioEnvio {
                 }
             }
         }
-
-        //this.repositorioEnvio.modificarEnvio(envio);
     }
 
     @Override
