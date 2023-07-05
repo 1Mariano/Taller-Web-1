@@ -1,6 +1,8 @@
 package ar.edu.unlam.tallerweb1.domain.contenedor;
 
 import ar.edu.unlam.tallerweb1.domain.producto.Producto;
+import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
+import com.mercadopago.resources.payment.Payment;
 
 import java.util.List;
 
@@ -22,4 +24,6 @@ public interface RepositorioEmpaquetado {
     List<Contenedor> obtenerLosContenedoresDeTipoBolsaDeUnEnvio(Long numeroPedido);
 
     List<Producto> obtenerLosProductosDeUnContenedor(Long contId);
+
+
 }

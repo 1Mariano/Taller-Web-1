@@ -8,6 +8,9 @@ import ar.edu.unlam.tallerweb1.domain.envio.Envio;
 import ar.edu.unlam.tallerweb1.domain.producto.Producto;
 import ar.edu.unlam.tallerweb1.exceptions.CampoInvalidoException;
 import ar.edu.unlam.tallerweb1.exceptions.NoSeConcretoElPagoException;
+import com.mercadopago.exceptions.MPApiException;
+import com.mercadopago.exceptions.MPException;
+import com.mercadopago.resources.payment.Payment;
 
 import java.util.List;
 
@@ -50,4 +53,8 @@ public interface ServicioCompra {
     List<Producto> obtenerProductosDeUnContenedor(Long contId);
 
     void vaciarCarrito(Long idUsuario);
+
+    Payment verificarPago(Long paymentId) throws MPException, MPApiException;
+
+
 }
