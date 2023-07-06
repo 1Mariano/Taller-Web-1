@@ -6,7 +6,7 @@
 
 <main class="container">
 
-    <h1 class="my-4">Su número de compra es: <span class="precio fw-bold">${numeroEnvio}</span></h1>
+    <h1 class="my-4">Su número de compra es: <span class="precio fw-bold">${numeroPedido}</span></h1>
 
     <div>
         <table class="table">

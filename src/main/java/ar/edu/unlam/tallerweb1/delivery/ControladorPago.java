@@ -58,6 +58,7 @@ public class ControladorPago {
         model.put("datosBuscador", new DatosBuscador());
 
         Long numeroEnvio = (Long) request.getSession().getAttribute("numeroEnvio");
+        Long numeroPedido = (Long) request.getSession().getAttribute("numeroPedido");
 
         List<Contenedor> bolsas = this.servicioCompra.obtenerBolsasPorEnvio(numeroEnvio);
         Set<Long> idContenedor = new HashSet<>();
@@ -83,7 +84,7 @@ public class ControladorPago {
             addCajas.put(contId, productosPorContenedorCaja);
         }
 
-        model.put("numeroEnvio", numeroEnvio);
+        model.put("numeroPedido", numeroPedido);
         model.put("bolsas", addBolsas);
         model.put("cajas", addCajas);
 
@@ -102,27 +103,17 @@ public class ControladorPago {
 
         modelo.put("datosBuscador", new DatosBuscador());
 
-        Long idUsuario = (Long) request.getSession().getAttribute("idUsuario");
-        Pedido pedido = (Pedido) request.getSession().getAttribute("pedido");
-        Envio envio = (Envio) request.getSession().getAttribute("envio");
-
-        try {
-            this.servicioCompra.pagar(pedido, envio);
-            this.servicioCompra.modificarPedido(pedido);
-            this.servicioEnvio.modificarEnvio(envio);
-        } catch (NoSeConcretoElPagoException e) {
-            return registroDePagoFallido(modelo, "No fue posible concretar el pago");
-        }
-        this.servicioCompra.vaciarCarrito(idUsuario);
         //return registroExitoso(modelo, "Pago confirmado");
+
+        Double precioTotal = (Double) request.getSession().getAttribute("precioTotal");
 
         // iniciar el pago
         MercadoPagoConfig.setAccessToken("TEST-272116395368831-070419-c63b9de14d78e46ea5b2a5bb27fbfb3d-253329177");
 
         PreferenceClient client = new PreferenceClient();
         // Crea un ítem en la preferencia
-        PreferenceItemRequest item = PreferenceItemRequest.builder().title("Algo").quantity(1)
-                .unitPrice(new BigDecimal("4000")).build();
+        PreferenceItemRequest item = PreferenceItemRequest.builder().title("Pedido").quantity(1)
+                .unitPrice(new BigDecimal(precioTotal)).build();
         List<PreferenceItemRequest> items = new ArrayList<>();
         items.add(item);
         PreferenceBackUrlsRequest backUrls = PreferenceBackUrlsRequest.builder()
@@ -145,7 +136,23 @@ public class ControladorPago {
     @RequestMapping(path = "/pagoConfirmado")
     public ModelAndView pagoConfirmado(@RequestParam Long payment_id) {
         ModelMap modelo = new ModelMap();
+
+        /*if (payment_id == null) {
+            return new ModelAndView("redirect:/home");
+        }*/
+        modelo.put("datosBuscador", new DatosBuscador());
         modelo.put("numeroPago", payment_id);
+
+        Pedido pedido = (Pedido) request.getSession().getAttribute("pedido");
+        Envio envio = (Envio) request.getSession().getAttribute("envio");
+
+        try {
+            this.servicioCompra.pagar(pedido, envio);
+            this.servicioCompra.modificarPedido(pedido);
+            this.servicioEnvio.modificarEnvio(envio);
+        } catch (NoSeConcretoElPagoException e) {
+            return registroDePagoFallido(modelo, "No fue posible concretar el pago");
+        }
 
         try {
             Payment payment = this.servicioCompra.verificarPago(payment_id);
@@ -153,6 +160,9 @@ public class ControladorPago {
         } catch (MPException | MPApiException e) {
             return new ModelAndView("redirect:/pago");
         }
+
+        Long idUsuario = (Long) request.getSession().getAttribute("idUsuario");
+        this.servicioCompra.vaciarCarrito(idUsuario);
 
         return new ModelAndView("/pagoConfirmado", modelo);
 

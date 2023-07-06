@@ -9,7 +9,6 @@ import ar.edu.unlam.tallerweb1.domain.envio.RepositorioEnvio;
 import ar.edu.unlam.tallerweb1.domain.producto.Producto;
 import ar.edu.unlam.tallerweb1.domain.producto.RepositorioProducto;
 import ar.edu.unlam.tallerweb1.domain.usuarios.RepositorioUsuario;
-import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 import ar.edu.unlam.tallerweb1.exceptions.CampoInvalidoException;
 import ar.edu.unlam.tallerweb1.exceptions.NoSeConcretoElPagoException;
 import com.mercadopago.client.payment.PaymentClient;
@@ -426,7 +425,6 @@ public class ServicioCompraImpl implements ServicioCompra {
         return volumen;
     }
 
-
     public List<Contenedor> devolverContenedoresConProductos() {
         return this.repositorioEmpaquetado.obtenerContenedores();
     }
@@ -483,9 +481,8 @@ public class ServicioCompraImpl implements ServicioCompra {
         return bolsaNueva;
     }
 
-
     @Override
-    public List<Contenedor> obtenerCajasPorEnvio(Long envio){
+    public List<Contenedor> obtenerCajasPorEnvio(Long envio) {
 
         return this.repositorioEmpaquetado.obtenerLosContenedoresDeTipoCajaDeUnEnvio(envio);
     }
@@ -513,13 +510,8 @@ public class ServicioCompraImpl implements ServicioCompra {
         /*if (!payment.getStatus().equals("approved")) {
             throw new NoSeConcretoElPagoException("El pago no fue aprobado");
         }*/
-
         return payment;
-
     }
-
-
-
 
     @Override
     public void agregarPedido(Pedido pedidoNuevo) {
@@ -537,13 +529,14 @@ public class ServicioCompraImpl implements ServicioCompra {
 
     @Override
     public Double obtenerCostoTotalDelPedido(Pedido pedido, Envio envio) {
-        double costoTotalDelPedido;
-
+        double costoTotalDelPedido = 0.0;
+        Double costoTotalDeLosProductos = 0.0;
         Double costoDelEnvio = 0.0;
+
         costoDelEnvio = envio.getCostoEnvio();
 
         List<Producto> listaDeProductosDelEnvio = this.repositorioEnvio.obtenerLosProductosDeUnEnvio(envio.getId());
-        Double costoTotalDeLosProductos = obtenerCostoTotalDeLosProductos(listaDeProductosDelEnvio);
+        costoTotalDeLosProductos = obtenerCostoTotalDeLosProductos(listaDeProductosDelEnvio);
 
         costoTotalDelPedido = costoDelEnvio + costoTotalDeLosProductos;
 
@@ -573,5 +566,16 @@ public class ServicioCompraImpl implements ServicioCompra {
 
     public boolean pagoFallido() {
         return false;
+    }
+
+    @Override
+    public boolean verificarSiExistePedidoActivo(Long usuarioId) {
+        Pedido pedido = this.repositorioPedido.buscarPedidoPorUsuarioDni(usuarioId);
+        return pedido != null && pedido.getEstado().equals(EstadoPedido.CREADO);
+    }
+
+    @Override
+    public List<Pedido> obtenerPedidosDeUnUsuario(Long usuarioId) {
+        return this.repositorioPedido.buscarPedidosDeUnUsuario(usuarioId);
     }
 }
