@@ -23,7 +23,7 @@
         <c:forEach var="pedido" items="${pedidos}">
         <tr>
             <td>${pedido.id}</td>
-            <td>${pedido.fechaPedido}</td>
+            <td>${fechaPedido}</td>
             <td>${fechaEnvio}</td>
             <td>${pedido.estado}</td>
             <td>${vehiculo.tipoVehiculo}</td>
