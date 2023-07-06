@@ -103,6 +103,7 @@ public class ControladorLogin {
 		//model.put("usuario", usuarioBuscado);
 		//model.put("id", usuarioBuscado.getId());
 		request.getSession().setAttribute("idUsuario", usuarioBuscado.getId());
+		request.getSession().setAttribute("usuario", usuarioBuscado);
 		request.getSession().setAttribute("correo", usuarioBuscado.getEmail());
 
 		if (request.getParameter("recordarDatos") != null) {

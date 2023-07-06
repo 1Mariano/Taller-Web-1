@@ -56,5 +56,7 @@ public interface ServicioCompra {
 
     Payment verificarPago(Long paymentId) throws MPException, MPApiException;
 
+    boolean verificarSiExistePedidoActivo(Long usuario);
 
+    List<Pedido> obtenerPedidosDeUnUsuario(Long usuarioId);
 }

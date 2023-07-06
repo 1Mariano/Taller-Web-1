@@ -6,11 +6,8 @@ import ar.edu.unlam.tallerweb1.domain.contenedor.RepositorioEmpaquetado;
 import ar.edu.unlam.tallerweb1.domain.enums.TipoContenedor;
 import ar.edu.unlam.tallerweb1.domain.envio.Envio;
 import ar.edu.unlam.tallerweb1.domain.producto.Producto;
-import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
-import com.mercadopago.resources.payment.Payment;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -71,6 +68,15 @@ public class RepositorioEmpaquetadoImpl implements RepositorioEmpaquetado {
                 .list();
     }
 
+    @Override
+    public List<Contenedor> obtenerLosContenedoresDeUnEnvio(Long envioId) {
+        final Session session = sessionFactory.getCurrentSession();
+        Envio envio = session.get(Envio.class, envioId);
+        return session.createCriteria(Contenedor.class)
+                .add(Restrictions.eq("envio", envio))
+                .list();
+    }
+
 
     @Override
     public List<Contenedor> obtenerLosContenedoresDeTipoCajaDeUnEnvio(Long envioId) {
@@ -82,7 +88,7 @@ public class RepositorioEmpaquetadoImpl implements RepositorioEmpaquetado {
 
         List<Contenedor> contenedoresCaja = new ArrayList<>();
         for (Contenedor_Producto contenedorProducto : contenedorProductos) {
-            if (contenedorProducto.getContenedor().getTipoContenedor().equals(TipoContenedor.CAJA)){
+            if (contenedorProducto.getContenedor().getTipoContenedor().equals(TipoContenedor.CAJA)) {
                 contenedoresCaja.add(contenedorProducto.getContenedor());
             }
         }
@@ -99,7 +105,7 @@ public class RepositorioEmpaquetadoImpl implements RepositorioEmpaquetado {
 
         List<Contenedor> contenedoresBolsa = new ArrayList<>();
         for (Contenedor_Producto contenedorProducto : contenedorProductos) {
-            if (contenedorProducto.getContenedor().getTipoContenedor().equals(TipoContenedor.BOLSA)){
+            if (contenedorProducto.getContenedor().getTipoContenedor().equals(TipoContenedor.BOLSA)) {
                 contenedoresBolsa.add(contenedorProducto.getContenedor());
             }
         }

@@ -3,14 +3,12 @@ package ar.edu.unlam.tallerweb1.delivery;
 import ar.edu.unlam.tallerweb1.domain.enums.EstadoEnvio;
 import ar.edu.unlam.tallerweb1.domain.enums.EstadoPago;
 import ar.edu.unlam.tallerweb1.domain.enums.EstadoPedido;
-import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor;
-import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor_Producto;
-import ar.edu.unlam.tallerweb1.domain.enums.TipoContenedor;
 import ar.edu.unlam.tallerweb1.domain.envio.Envio;
 import ar.edu.unlam.tallerweb1.domain.envio.ServicioEnvio;
 import ar.edu.unlam.tallerweb1.domain.pedidos.Pedido;
 import ar.edu.unlam.tallerweb1.domain.pedidos.ServicioCompra;
 import ar.edu.unlam.tallerweb1.domain.producto.Producto;
+import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 import ar.edu.unlam.tallerweb1.exceptions.CampoInvalidoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,7 +23,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.*;
 
 @Controller
 public class ControladorCompra {
@@ -66,6 +63,7 @@ public class ControladorCompra {
 
         modelo.put("datosBuscador", new DatosBuscador());
 
+        Long usuario = (Long) this.request.getSession().getAttribute("idUsuario");
         Envio envioNuevo = new Envio();
         Pedido pedidoNuevo = new Pedido();
         List<Producto> productos = (List<Producto>) request.getSession().getAttribute("arrayProductos");
@@ -83,17 +81,21 @@ public class ControladorCompra {
             this.servicioEnvio.agregarAlVehiculo(envioNuevo);
             this.servicioEnvio.modificarEnvio(envioNuevo);
 
-            //pedidoNuevo.setUsuario((Usuario) request.getSession().getAttribute("idUsuario"));
-            pedidoNuevo.setFechaPedido(LocalDate.now());
-            pedidoNuevo.setEstado(EstadoPedido.CREADO);
-            pedidoNuevo.setEstadoPago(EstadoPago.NO_PAGADO);
-            pedidoNuevo.setCostoTotal(this.servicioCompra.obtenerCostoTotalDelPedido(pedidoNuevo, envioNuevo));
-            this.servicioCompra.agregarPedido(pedidoNuevo);
-
-            Long usuario = (Long) this.request.getSession().getAttribute("idUsuario");
+            if (!this.servicioCompra.verificarSiExistePedidoActivo(usuario)) {
+                pedidoNuevo.setUsuario((Usuario) request.getSession().getAttribute("usuario"));
+                pedidoNuevo.setFechaPedido(LocalDate.now());
+                pedidoNuevo.setEstado(EstadoPedido.CREADO);
+                pedidoNuevo.setEstadoPago(EstadoPago.NO_PAGADO);
+                pedidoNuevo.setEnvio(envioNuevo);
+                pedidoNuevo.setCostoTotal(this.servicioCompra.obtenerCostoTotalDelPedido(pedidoNuevo, envioNuevo));
+                request.getSession().setAttribute("precioTotal", pedidoNuevo.getCostoTotal());
+                this.servicioCompra.agregarPedido(pedidoNuevo);
+                request.getSession().setAttribute("pedido", pedidoNuevo);
+                request.getSession().setAttribute("numeroPedido", pedidoNuevo.getId());
+            }
 
             request.getSession().setAttribute("envio", envioNuevo);
-            request.getSession().setAttribute("pedido", pedidoNuevo);
+            request.getSession().setAttribute("numeroEnvio", envioNuevo.getId());
 
         } catch (CampoInvalidoException e) {
             return registroDeEnvioFallido(modelo, "El campo debe tener al menos 2 caracteres");
@@ -104,7 +106,6 @@ public class ControladorCompra {
         /*Contenedor_Producto envio = new Contenedor_Producto();
         envio.setEnvio(envioNuevo);*/
         //request.getSession().setAttribute("numeroPedido", envioNuevo);
-        request.getSession().setAttribute("numeroEnvio", envioNuevo.getId());
         return new ModelAndView("redirect:/pago");
     }
 

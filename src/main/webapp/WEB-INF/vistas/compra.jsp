@@ -68,11 +68,11 @@
                     </div>
                 </div>
 
-                <c:if test="${not empty error}">
-                    <h5><span>${error}</span></h5>
-                    <br>
-                </c:if>
-                ${msg}
+                <div class="text-nowrap text-danger mb-2" id="errorDni" style="height: 15px">
+                    <c:if test="${not empty error}">
+                        <h5 class="error m-0"><span>${error}</span></h5>
+                        <br></c:if>
+                </div>
 
                 <button class="btn btn-lg btn-primary btn-block my-2" type="submit">Calcular envío
                 </button>
