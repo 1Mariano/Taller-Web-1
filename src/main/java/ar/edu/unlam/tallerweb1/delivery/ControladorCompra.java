@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 
 @Controller
@@ -68,6 +69,9 @@ public class ControladorCompra {
         Pedido pedidoNuevo = new Pedido();
         List<Producto> productos = (List<Producto>) request.getSession().getAttribute("arrayProductos");
 
+        ZoneId zonaHoraria = ZoneId.of("America/Argentina/Buenos_Aires"); // Obtener la fecha actual en Argentina
+        LocalDate fechaActual = LocalDate.now(zonaHoraria);
+
         try {
             envioNuevo.setCalle(datosEnvio.getCalle());
             envioNuevo.setNumero(datosEnvio.getNumero());
@@ -83,7 +87,7 @@ public class ControladorCompra {
 
             if (!this.servicioCompra.verificarSiExistePedidoActivo(usuario)) {
                 pedidoNuevo.setUsuario((Usuario) request.getSession().getAttribute("usuario"));
-                pedidoNuevo.setFechaPedido(LocalDate.now());
+                pedidoNuevo.setFechaPedido(fechaActual);
                 pedidoNuevo.setEstado(EstadoPedido.CREADO);
                 pedidoNuevo.setEstadoPago(EstadoPago.NO_PAGADO);
                 pedidoNuevo.setEnvio(envioNuevo);

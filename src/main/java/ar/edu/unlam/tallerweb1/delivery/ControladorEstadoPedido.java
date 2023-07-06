@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 
 @Controller
@@ -42,12 +43,14 @@ public class ControladorEstadoPedido {
 
         model.put("pedidos", pedidos);
 
-        LocalDate fechaPedido = null;
+        ZoneId zonaHoraria = ZoneId.of("America/Argentina/Buenos_Aires");
+        LocalDate fechaPedido;
         LocalDate fechaEnvio = null;
 
         for (Pedido p : pedidos) {
-            fechaPedido = p.getFechaPedido();
+            fechaPedido = p.getFechaPedido().plusDays(1);
             fechaEnvio = fechaPedido.plusDays(1);
+            model.put("fechaPedido", fechaPedido);
             model.put("fechaEnvio", fechaEnvio);
             model.put("vehiculo", this.servicioEnvio.obtenerVehiculoDePedido(p.getEnvio()));
         }
