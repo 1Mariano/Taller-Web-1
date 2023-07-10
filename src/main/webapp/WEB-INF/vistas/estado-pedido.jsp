@@ -23,11 +23,11 @@
         <c:forEach var="pedido" items="${pedidos}">
         <tr>
             <td>${pedido.id}</td>
-            <td>${fechaPedido}</td>
-            <td>${fechaEnvio}</td>
+            <td>${pedido.fechaPedido}</td>
+            <td>${pedido.fechadeEnvio}</td>
             <td>${pedido.estado}</td>
-            <td>${vehiculo.tipoVehiculo}</td>
-            <td>${vehiculo.patente}</td>
+            <td>${pedido.vehiculo.tipoVehiculo}</td>
+            <td>${pedido.vehiculo.patente}</td>
             <td>$${pedido.costoTotal}</td>
         </tr>
         </c:forEach>

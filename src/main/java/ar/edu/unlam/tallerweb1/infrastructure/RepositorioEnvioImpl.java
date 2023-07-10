@@ -3,6 +3,7 @@ package ar.edu.unlam.tallerweb1.infrastructure;
 import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor_Producto;
 import ar.edu.unlam.tallerweb1.domain.envio.Envio;
 import ar.edu.unlam.tallerweb1.domain.envio.RepositorioEnvio;
+import ar.edu.unlam.tallerweb1.domain.pedidos.Pedido;
 import ar.edu.unlam.tallerweb1.domain.producto.Producto;
 import ar.edu.unlam.tallerweb1.domain.vehiculos.Vehiculo_Contenedor;
 import org.hibernate.Session;
@@ -61,5 +62,10 @@ public class RepositorioEnvioImpl implements RepositorioEnvio {
             idsProductos.add(contenedorProducto.getProducto()); // Obtener la ID del Producto
         }
         return idsProductos;
+    }
+
+    @Override
+    public void actualizarPedido(Pedido p) {
+        sessionFactory.getCurrentSession().update(p);
     }
 }

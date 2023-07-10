@@ -4,6 +4,7 @@ package ar.edu.unlam.tallerweb1.domain.envio;
 import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor;
 import ar.edu.unlam.tallerweb1.domain.contenedor.RepositorioEmpaquetado;
 import ar.edu.unlam.tallerweb1.domain.enums.TipoVehiculo;
+import ar.edu.unlam.tallerweb1.domain.pedidos.Pedido;
 import ar.edu.unlam.tallerweb1.domain.vehiculos.RepositorioVehiculo;
 import ar.edu.unlam.tallerweb1.domain.vehiculos.Vehiculo;
 import ar.edu.unlam.tallerweb1.domain.vehiculos.Vehiculo_Contenedor;
@@ -35,13 +36,13 @@ public class ServicioEnvioImpl implements ServicioEnvio {
     public Integer distanciaEnvio() {
         switch (vehiculoAsignado.getTipoVehiculo()) {
             case MOTO:
-                distanciaEnvio = (int) (Math.random() * 20 + 1);
+                distanciaEnvio = (int) ((Math.random() * 20) + 1);
                 break;
             case AUTO:
-                distanciaEnvio = (int) (Math.random() * 80 + 1);
+                distanciaEnvio = (int) ((Math.random() * 80) + 1);
                 break;
             case CAMIONETA:
-                distanciaEnvio = (int) (Math.random() * 150 + 1);
+                distanciaEnvio = (int) ((Math.random() * 150) + 1);
                 break;
         }
         return distanciaEnvio;
@@ -310,5 +311,10 @@ public class ServicioEnvioImpl implements ServicioEnvio {
     @Override
     public void modificarEnvio(Envio envioNuevo) {
         this.repositorioEnvio.modificarEnvio(envioNuevo);
+    }
+
+    @Override
+    public void actualizarPedido(Pedido p) {
+        this.repositorioEnvio.actualizarPedido(p);
     }
 }

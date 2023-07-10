@@ -67,6 +67,10 @@ public class Envio {
         return distanciaEnKilometros;
     }
 
+    /*public void setDistanciaEnKilometros(Integer distanciaEnKilometros) {
+        this.distanciaEnKilometros = distanciaEnKilometros;
+    }*/
+
     public void setDistanciaEnKilometros(Integer distanciaEnKilometros) {
         this.distanciaEnKilometros = distanciaEnKilometros;
     }
