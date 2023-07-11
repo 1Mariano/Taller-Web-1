@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.domain.envio;
 
+import ar.edu.unlam.tallerweb1.domain.pedidos.Pedido;
 import ar.edu.unlam.tallerweb1.domain.producto.Producto;
 import ar.edu.unlam.tallerweb1.domain.vehiculos.Vehiculo_Contenedor;
 
@@ -16,4 +17,6 @@ public interface RepositorioEnvio {
     Envio obtenerEnvioDelPedido(Long envioId);
 
     List<Producto> obtenerLosProductosDeUnEnvio(Long envioId);
+
+    void actualizarPedido(Pedido p);
 }

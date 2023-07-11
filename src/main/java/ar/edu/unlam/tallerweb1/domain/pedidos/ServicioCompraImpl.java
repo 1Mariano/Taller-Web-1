@@ -570,8 +570,13 @@ public class ServicioCompraImpl implements ServicioCompra {
 
     @Override
     public boolean verificarSiExistePedidoActivo(Long usuarioId) {
-        Pedido pedido = this.repositorioPedido.buscarPedidoPorUsuarioDni(usuarioId);
-        return pedido != null && pedido.getEstado().equals(EstadoPedido.CREADO);
+        List<Pedido> pedido = this.repositorioPedido.buscarPedidoPorUsuarioDni(usuarioId);
+        for (Pedido p: pedido) {
+            if (p.getEstado().equals(EstadoPedido.CREADO)){
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

@@ -4,6 +4,7 @@ import ar.edu.unlam.tallerweb1.domain.enums.EstadoPago;
 import ar.edu.unlam.tallerweb1.domain.enums.EstadoPedido;
 import ar.edu.unlam.tallerweb1.domain.envio.Envio;
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
+import ar.edu.unlam.tallerweb1.domain.vehiculos.Vehiculo;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -15,12 +16,18 @@ public class Pedido {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDate fechaPedido;
+    private LocalDate fechadeEnvio;
+
     private Double costoTotal;
     private EstadoPedido estado;
     private EstadoPago estadoPago;
+    @ManyToOne
+    private Vehiculo vehiculo;
 
     @ManyToOne
     private Usuario usuario;
+
+
     /*@OneToOne
     private Carrito carrito;*/
     @OneToOne
@@ -36,6 +43,22 @@ public class Pedido {
 
     public Pedido() {
 
+    }
+
+    public Vehiculo getVehiculo() {
+        return vehiculo;
+    }
+
+    public void setVehiculo(Vehiculo vehiculo) {
+        this.vehiculo = vehiculo;
+    }
+
+    public LocalDate getFechadeEnvio() {
+        return fechadeEnvio;
+    }
+
+    public void setFechadeEnvio(LocalDate fechadeEnvio) {
+        this.fechadeEnvio = fechadeEnvio;
     }
 
     public Long getId() {

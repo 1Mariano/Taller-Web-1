@@ -1,6 +1,5 @@
 package ar.edu.unlam.tallerweb1.infrastructure;
 
-import ar.edu.unlam.tallerweb1.domain.envio.Envio;
 import ar.edu.unlam.tallerweb1.domain.pedidos.Pedido;
 import ar.edu.unlam.tallerweb1.domain.pedidos.RepositorioPedido;
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
@@ -28,12 +27,12 @@ public class RepositorioPedidoImpl implements RepositorioPedido {
     }
 
     @Override
-    public Pedido buscarPedidoPorUsuarioDni(Long usuarioId) {
+    public List<Pedido> buscarPedidoPorUsuarioDni(Long usuarioId) {
         final Session session = sessionFactory.getCurrentSession();
         Usuario usuario = session.get(Usuario.class, usuarioId);
-        return (Pedido) session.createCriteria(Pedido.class)
+        return  session.createCriteria(Pedido.class)
                 .add(Restrictions.eq("usuario", usuario))
-                .uniqueResult();
+                .list();
     }
 
     @Override

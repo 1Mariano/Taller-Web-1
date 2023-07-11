@@ -41,21 +41,22 @@ public class ControladorEstadoPedido {
         Long usuario = (Long) this.request.getSession().getAttribute("idUsuario");
         List<Pedido> pedidos = this.servicioCompra.obtenerPedidosDeUnUsuario(usuario);
 
-        model.put("pedidos", pedidos);
 
-        ZoneId zonaHoraria = ZoneId.of("America/Argentina/Buenos_Aires");
-        LocalDate fechaPedido;
-        LocalDate fechaEnvio = null;
+
 
         for (Pedido p : pedidos) {
-            fechaPedido = p.getFechaPedido().plusDays(1);
-            fechaEnvio = fechaPedido.plusDays(1);
-            model.put("fechaPedido", fechaPedido);
-            model.put("fechaEnvio", fechaEnvio);
-            model.put("vehiculo", this.servicioEnvio.obtenerVehiculoDePedido(p.getEnvio()));
+            if (p.getFechadeEnvio() == null && p.getVehiculo() == null) {
+                p.setFechaPedido(p.getFechaPedido().plusDays(1));
+                p.setFechadeEnvio(p.getFechaPedido().plusDays(1));
+                p.setVehiculo(this.servicioEnvio.obtenerVehiculoDePedido(p.getEnvio()));
+                this.servicioEnvio.actualizarPedido(p);
+            }
         }
 
+        List<Pedido> historialDePedidos = this.servicioCompra.obtenerPedidosDeUnUsuario(usuario);
+        model.put("pedidos", historialDePedidos);
         //model.put("fechaEnvio", );
+
 
         return new ModelAndView("/estado-pedido", model);
     }

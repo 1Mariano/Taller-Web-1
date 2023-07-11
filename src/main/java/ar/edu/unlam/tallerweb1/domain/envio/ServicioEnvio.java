@@ -4,6 +4,7 @@ package ar.edu.unlam.tallerweb1.domain.envio;
 /*import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor;*/
 
 import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor;
+import ar.edu.unlam.tallerweb1.domain.pedidos.Pedido;
 import ar.edu.unlam.tallerweb1.domain.vehiculos.Vehiculo;
 
 import java.util.List;
@@ -27,4 +28,6 @@ public interface ServicioEnvio {
     Envio obtenerEnvio(Envio envio);
 
     void modificarEnvio(Envio envioNuevo);
+
+    void actualizarPedido(Pedido p);
 }
