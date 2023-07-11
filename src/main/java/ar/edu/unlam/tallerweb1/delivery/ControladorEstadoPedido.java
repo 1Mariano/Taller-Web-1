@@ -53,7 +53,8 @@ public class ControladorEstadoPedido {
             }
         }
 
-        model.put("pedidos", pedidos);
+        List<Pedido> historialDePedidos = this.servicioCompra.obtenerPedidosDeUnUsuario(usuario);
+        model.put("pedidos", historialDePedidos);
         //model.put("fechaEnvio", );
 
 

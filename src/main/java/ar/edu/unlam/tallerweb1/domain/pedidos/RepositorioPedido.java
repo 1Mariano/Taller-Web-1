@@ -6,7 +6,7 @@ public interface RepositorioPedido {
 
     void agregarPedido(Pedido pedido);
 
-    Pedido buscarPedidoPorUsuarioDni(Long usuario);
+    List<Pedido> buscarPedidoPorUsuarioDni(Long usuario);
 
     void modificarPedido(Pedido pedido);
 
