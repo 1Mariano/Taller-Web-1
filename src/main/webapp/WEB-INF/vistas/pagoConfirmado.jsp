@@ -8,16 +8,16 @@
 
     <div class="m-5 p-5 rounded alert alert-success">
         <h3 class="m-auto text-center">Se ha confirmado el pago correctamente: ${numeroPago}</h3>
+        <ul class="list-unstyled d-flex flex-column align-items-center m-0 mt-4 gap-3" style="width: fit-content">
+            <li class="nav-item nav-underline fs-5">
+                <a class="nav-link" href="estado-pedido">Ver el estado de mi pedido</a>
+            </li>
+            <li>
+                <a href="home" class="btn btn-lg btn-primary btn-block mt-2" type="submit">Volver al inicio</a>
+            </li>
+        </ul>
     </div>
 
-    <ul class="nav-underline list-unstyled text-secondary-emphasis" style="width: fit-content">
-        <li class="nav-item">
-            <a class="nav-link" href="home">Ir al inicio</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="estado-pedido">Ver el estado de mi pedido</a>
-        </li>
-    </ul>
 
 </main>
 <script src="../../static/js/script.js"></script>

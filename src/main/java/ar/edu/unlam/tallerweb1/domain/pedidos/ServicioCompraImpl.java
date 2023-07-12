@@ -9,8 +9,7 @@ import ar.edu.unlam.tallerweb1.domain.envio.RepositorioEnvio;
 import ar.edu.unlam.tallerweb1.domain.producto.Producto;
 import ar.edu.unlam.tallerweb1.domain.producto.RepositorioProducto;
 import ar.edu.unlam.tallerweb1.domain.usuarios.RepositorioUsuario;
-import ar.edu.unlam.tallerweb1.exceptions.CampoInvalidoException;
-import ar.edu.unlam.tallerweb1.exceptions.NoSeConcretoElPagoException;
+import ar.edu.unlam.tallerweb1.exceptions.*;
 import com.mercadopago.client.payment.PaymentClient;
 import com.mercadopago.exceptions.MPApiException;
 import com.mercadopago.exceptions.MPException;
@@ -59,21 +58,18 @@ public class ServicioCompraImpl implements ServicioCompra {
     }
 
     @Override
-    public void guardarDatosEnvio(Envio envioNuevo) throws CampoInvalidoException {
-        if (envioNuevo.getCalle().length() < 2) {
-            throw new CampoInvalidoException();
+    public void guardarDatosEnvio(Envio envioNuevo) throws CampoCalleInvalidoException, CampoLocalidadInvalidoException, CampoCpInvalidoException, CampoNumeroInvalidoException {
+        if (envioNuevo.getCalle().isEmpty()) {
+            throw new CampoCalleInvalidoException();
         }
-        if (envioNuevo.getLocalidad().length() < 2) {
-            throw new CampoInvalidoException();
+        if (envioNuevo.getLocalidad().isEmpty()) {
+            throw new CampoLocalidadInvalidoException();
         }
-        if (envioNuevo.getCodigoPostal().length() < 2) {
-            throw new CampoInvalidoException();
+        if (envioNuevo.getCodigoPostal().isEmpty()) {
+            throw new CampoCpInvalidoException();
         }
         if (envioNuevo.getNumero() == null) {
-            throw new CampoInvalidoException();
-        }
-        if (envioNuevo.getPisoODepartamento() == null) {
-            throw new CampoInvalidoException();
+            throw new CampoNumeroInvalidoException();
         }
         this.repositorioEnvio.guardarEnvio(envioNuevo);
     }

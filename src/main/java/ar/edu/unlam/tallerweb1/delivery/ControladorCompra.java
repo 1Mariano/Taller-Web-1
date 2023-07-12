@@ -9,7 +9,10 @@ import ar.edu.unlam.tallerweb1.domain.pedidos.Pedido;
 import ar.edu.unlam.tallerweb1.domain.pedidos.ServicioCompra;
 import ar.edu.unlam.tallerweb1.domain.producto.Producto;
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
-import ar.edu.unlam.tallerweb1.exceptions.CampoInvalidoException;
+import ar.edu.unlam.tallerweb1.exceptions.CampoCalleInvalidoException;
+import ar.edu.unlam.tallerweb1.exceptions.CampoCpInvalidoException;
+import ar.edu.unlam.tallerweb1.exceptions.CampoLocalidadInvalidoException;
+import ar.edu.unlam.tallerweb1.exceptions.CampoNumeroInvalidoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -70,7 +73,8 @@ public class ControladorCompra {
         List<Producto> productos = (List<Producto>) request.getSession().getAttribute("arrayProductos");
 
         ZoneId zonaHoraria = ZoneId.of("America/Argentina/Buenos_Aires"); // Obtener la fecha actual en Argentina
-        LocalDate fechaActual = LocalDate.now(zonaHoraria);
+        LocalDate fechaActual = LocalDate.now(zonaHoraria).plusDays(1);
+        LocalDate fechaEnvio = fechaActual.plusDays(1);
 
         try {
             envioNuevo.setCalle(datosEnvio.getCalle());
@@ -88,9 +92,11 @@ public class ControladorCompra {
             if (!this.servicioCompra.verificarSiExistePedidoActivo(usuario)) {
                 pedidoNuevo.setUsuario((Usuario) request.getSession().getAttribute("usuario"));
                 pedidoNuevo.setFechaPedido(fechaActual);
+                pedidoNuevo.setFechadeEnvio(fechaEnvio);
                 pedidoNuevo.setEstado(EstadoPedido.CREADO);
                 pedidoNuevo.setEstadoPago(EstadoPago.NO_PAGADO);
                 pedidoNuevo.setEnvio(envioNuevo);
+                pedidoNuevo.setVehiculo(this.servicioEnvio.obtenerVehiculoDePedido(pedidoNuevo.getEnvio()));
                 pedidoNuevo.setCostoTotal(this.servicioCompra.obtenerCostoTotalDelPedido(pedidoNuevo, envioNuevo));
                 request.getSession().setAttribute("precioTotal", pedidoNuevo.getCostoTotal());
                 this.servicioCompra.agregarPedido(pedidoNuevo);
@@ -101,9 +107,16 @@ public class ControladorCompra {
             request.getSession().setAttribute("envio", envioNuevo);
             request.getSession().setAttribute("numeroEnvio", envioNuevo.getId());
 
-        } catch (CampoInvalidoException e) {
-            return registroDeEnvioFallido(modelo, "El campo debe tener al menos 2 caracteres");
+        } catch (CampoCalleInvalidoException e) {
+            return registroDeCalleFallido(modelo, "El campo es obligatorio");
+        } catch (CampoNumeroInvalidoException e) {
+            return registroDeNumeroFallido(modelo, "El campo es obligatorio");
+        } catch (CampoLocalidadInvalidoException e) {
+            return registroDeLocalidadFallido(modelo, "El campo es obligatorio");
+        } catch (CampoCpInvalidoException e) {
+            return registroDeCpFallido(modelo, "El campo es obligatorio");
         }
+
 
         /*ModelMap model = new ModelMap();
         model.put("numeroPedido", envioNuevo);*/
@@ -113,10 +126,27 @@ public class ControladorCompra {
         return new ModelAndView("redirect:/pago");
     }
 
-    private ModelAndView registroDeEnvioFallido(ModelMap modelo, String mensaje) {
-        modelo.put("error", mensaje);
+    private ModelAndView registroDeCalleFallido(ModelMap modelo, String mensaje) {
+        modelo.put("errorCalle", mensaje);
         modelo.put("productos", request.getSession().getAttribute("arrayProductos"));
         return new ModelAndView("compra", modelo);
     }
 
+    private ModelAndView registroDeNumeroFallido(ModelMap modelo, String mensaje) {
+        modelo.put("errorNumero", mensaje);
+        modelo.put("productos", request.getSession().getAttribute("arrayProductos"));
+        return new ModelAndView("compra", modelo);
+    }
+
+    private ModelAndView registroDeLocalidadFallido(ModelMap modelo, String mensaje) {
+        modelo.put("errorLocalidad", mensaje);
+        modelo.put("productos", request.getSession().getAttribute("arrayProductos"));
+        return new ModelAndView("compra", modelo);
+    }
+
+    private ModelAndView registroDeCpFallido(ModelMap modelo, String mensaje) {
+        modelo.put("errorCp", mensaje);
+        modelo.put("productos", request.getSession().getAttribute("arrayProductos"));
+        return new ModelAndView("compra", modelo);
+    }
 }

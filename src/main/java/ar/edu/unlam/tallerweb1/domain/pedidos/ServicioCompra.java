@@ -1,13 +1,9 @@
 package ar.edu.unlam.tallerweb1.domain.pedidos;
 
 import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor;
-import ar.edu.unlam.tallerweb1.domain.contenedor.Contenedor_Producto;
-import ar.edu.unlam.tallerweb1.domain.enums.EstadoPago;
-import ar.edu.unlam.tallerweb1.domain.enums.EstadoPedido;
 import ar.edu.unlam.tallerweb1.domain.envio.Envio;
 import ar.edu.unlam.tallerweb1.domain.producto.Producto;
-import ar.edu.unlam.tallerweb1.exceptions.CampoInvalidoException;
-import ar.edu.unlam.tallerweb1.exceptions.NoSeConcretoElPagoException;
+import ar.edu.unlam.tallerweb1.exceptions.*;
 import com.mercadopago.exceptions.MPApiException;
 import com.mercadopago.exceptions.MPException;
 import com.mercadopago.resources.payment.Payment;
@@ -25,7 +21,7 @@ public interface ServicioCompra {
 
     void agregarPedido(Pedido pedidoNuevo);
 
-    void guardarDatosEnvio(Envio envioNuevo) throws CampoInvalidoException;
+    void guardarDatosEnvio(Envio envioNuevo) throws CampoCalleInvalidoException, CampoLocalidadInvalidoException, CampoCpInvalidoException, CampoNumeroInvalidoException;
 
     void empaquetarProductos(List<Producto> productos, Envio envio);
 
