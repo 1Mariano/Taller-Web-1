@@ -11,8 +11,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.List;
 
 @Controller
@@ -39,19 +37,16 @@ public class ControladorEstadoPedido {
         model.put("datosBuscador", new DatosBuscador());
 
         Long usuario = (Long) this.request.getSession().getAttribute("idUsuario");
-        List<Pedido> pedidos = this.servicioCompra.obtenerPedidosDeUnUsuario(usuario);
+       /* List<Pedido> pedidos = this.servicioCompra.obtenerPedidosDeUnUsuario(usuario);*/
 
-
-
-
-        for (Pedido p : pedidos) {
+        /*for (Pedido p : pedidos) {
             if (p.getFechadeEnvio() == null && p.getVehiculo() == null) {
                 p.setFechaPedido(p.getFechaPedido().plusDays(1));
                 p.setFechadeEnvio(p.getFechaPedido().plusDays(1));
                 p.setVehiculo(this.servicioEnvio.obtenerVehiculoDePedido(p.getEnvio()));
                 this.servicioEnvio.actualizarPedido(p);
             }
-        }
+        }*/
 
         List<Pedido> historialDePedidos = this.servicioCompra.obtenerPedidosDeUnUsuario(usuario);
         model.put("pedidos", historialDePedidos);

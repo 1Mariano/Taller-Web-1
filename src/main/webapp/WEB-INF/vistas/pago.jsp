@@ -6,7 +6,8 @@
 
 <main class="container">
 
-    <h1 class="my-4">Su número de compra es: <span class="precio fw-bold">${numeroPedido}</span></h1>
+    <h3 class="my-4 fw-bold text-secondary-emphasis">Su número de compra es: <span
+            class="precio fw-bold">${numeroPedido}</span></h3>
 
     <div>
         <table class="table">
@@ -27,29 +28,32 @@
         </table>
     </div>
 
-    <div class="text-nowrap text-danger mb-2" id="errorDni" style="height: 15px">
-        <c:if test="${not empty error}">
+    <c:if test="${not empty error}">
+        <div class="text-nowrap text-danger mb-2" id="error" style="height: 15px">
             <h5 class="error m-0"><span>${error}</span></h5>
-            <br></c:if>
-    </div>
+            <br>
+        </div>
+    </c:if>
 
 
     <form:form action="pagar" method="POST" modelAttribute="datosPago">
-        <button class="btn btn-lg btn-primary btn-block my-2" type="submit">Pagar</button>
+        <button class="btn btn-lg btn-primary btn-block my-2" type="submit">Confirmar pago</button>
     </form:form>
 
 
     <div class="py-5 d-flex flex-column gap-5">
 
+        <c:set var="contador" value="0"/>
         <c:if test="${not empty bolsas}">
             <div class="p-3 card-body rounded contenedorbc">
                 <h2 class="mb-3 precio fw-semibold text-center">Bolsas</h2>
                 <hr style="color: #AAADB0">
                 <div class="d-flex flex-wrap justify-content-center gap-5">
                     <c:forEach var="bolsa" items="${bolsas}">
+                        <c:set var="contador" value="${contador + 1}"/>
                         <div class="list-group">
                             <div class="list-group-item text-center p-auto">
-                                <p class="m-2 fw-semibold">Bolsa ID: ${bolsa.key}</p>
+                                <p class="m-2 fw-semibold">Bolsa n°${contador}</p>
                             </div>
                             <c:forEach var="producto" items="${bolsa.value}">
                                 <ul class="list-unstyled m-0 list-group-item" style="width: 375px;">
@@ -66,15 +70,17 @@
             </div>
         </c:if>
 
+        <c:set var="contador" value="0"/>
         <c:if test="${not empty cajas}">
             <div class="p-3 card-body rounded contenedorbc">
                 <h2 class="mb-3 precio fw-semibold text-center">Cajas</h2>
                 <hr style="color: #AAADB0">
                 <div class="d-flex flex-wrap justify-content-center gap-5">
                     <c:forEach var="caja" items="${cajas}">
+                        <c:set var="contador" value="${contador + 1}"/>
                         <div class="list-group">
                             <div class="list-group-item text-center p-auto">
-                                <p class="m-2 fw-semibold">Caja ID: ${caja.key}</p>
+                                <p class="m-2 fw-semibold">Caja n°${contador}</p>
                             </div>
                             <c:forEach var="producto" items="${caja.value}">
                                 <ul class="list-unstyled m-0 list-group-item" style="width: 375px;">

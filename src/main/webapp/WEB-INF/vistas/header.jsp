@@ -133,6 +133,11 @@
             <li class="nav-item">
                 <a class="nav-link" href="carrito">Carrito</a>
             </li>
+            <c:if test="${sessionScope.idUsuario != null}">
+                <li class="nav-item">
+                    <a class="nav-link" href="estado-pedido">Mis pedidos</a>
+                </li>
+            </c:if>
         </ul>
     </div>
 </header>
