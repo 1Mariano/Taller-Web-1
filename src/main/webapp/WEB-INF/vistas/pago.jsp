@@ -13,15 +13,15 @@
             <tbody>
             <tr class="mt-2">
                 <td>Subtotal</td>
-                <td>$${costoProductos}</td>
+                <td class="text-end">$${costoProductos}</td>
             </tr>
             <tr class="mb-2">
                 <td>Costo de envío</td>
-                <td>$${costoEnvio}</td>
+                <td class="text-end">$${costoEnvio}</td>
             </tr>
             <tr class="fw-bold table-warning">
                 <td>Total</td>
-                <td>$${costoTotal}</td>
+                <td class="text-end">$${costoTotal}</td>
             </tr>
             </tbody>
         </table>
@@ -45,7 +45,7 @@
             <div class="p-3 card-body rounded contenedorbc">
                 <h2 class="mb-3 precio fw-semibold text-center">Bolsas</h2>
                 <hr style="color: #AAADB0">
-                <div class="d-flex justify-content-center gap-5">
+                <div class="d-flex flex-wrap justify-content-center gap-5">
                     <c:forEach var="bolsa" items="${bolsas}">
                         <div class="list-group">
                             <div class="list-group-item text-center p-auto">
@@ -70,7 +70,7 @@
             <div class="p-3 card-body rounded contenedorbc">
                 <h2 class="mb-3 precio fw-semibold text-center">Cajas</h2>
                 <hr style="color: #AAADB0">
-                <div class="d-flex justify-content-center gap-5">
+                <div class="d-flex flex-wrap justify-content-center gap-5">
                     <c:forEach var="caja" items="${cajas}">
                         <div class="list-group">
                             <div class="list-group-item text-center p-auto">

@@ -84,7 +84,7 @@ public class ServicioEnvioImpl implements ServicioEnvio {
 
                 if (vehiculo.getListaContenedores().isEmpty()) {
                     if (vehiculo.getTipoVehiculo().equals(TipoVehiculo.MOTO)) {
-                        if (obtenerVolumenTotalOcupado(listaContenedores) < 96000.0 && obtenerPesoTotalCargado(listaContenedores) < 35.0) {
+                        if (obtenerVolumenTotalOcupado(listaContenedores) <= 96000.0 && obtenerPesoTotalCargado(listaContenedores) <= 35.0) {
 
                             calcularVolumenOcupadoYPesoCargado(listaContenedores, vehiculo, volumenTotalOcupado, pesoTotalCargado);
 
@@ -110,8 +110,8 @@ public class ServicioEnvioImpl implements ServicioEnvio {
 
                         }
                     } else if (vehiculo.getTipoVehiculo().equals(TipoVehiculo.AUTO)) {
-                        if (obtenerVolumenTotalOcupado(listaContenedores) > 96000.0 && obtenerPesoTotalCargado(listaContenedores) > 35.0 &&
-                                obtenerVolumenTotalOcupado(listaContenedores) < 360000.0 && obtenerPesoTotalCargado(listaContenedores) < 75.0) {
+                        if (obtenerVolumenTotalOcupado(listaContenedores) > 96000.0 || obtenerPesoTotalCargado(listaContenedores) > 35.0 &&
+                                obtenerVolumenTotalOcupado(listaContenedores) <= 360000.0 && obtenerPesoTotalCargado(listaContenedores) <= 75.0) {
 
                             calcularVolumenOcupadoYPesoCargado(listaContenedores, vehiculo, volumenTotalOcupado, pesoTotalCargado);
 
@@ -136,8 +136,8 @@ public class ServicioEnvioImpl implements ServicioEnvio {
 
                         }
                     } else {
-                        if (obtenerVolumenTotalOcupado(listaContenedores) > 360000.0 && obtenerPesoTotalCargado(listaContenedores) > 75.0 &&
-                                obtenerVolumenTotalOcupado(listaContenedores) < 5100000.0 && obtenerPesoTotalCargado(listaContenedores) < 700.0) {
+                        if (obtenerVolumenTotalOcupado(listaContenedores) > 360000.0 || obtenerPesoTotalCargado(listaContenedores) > 75.0 &&
+                                obtenerVolumenTotalOcupado(listaContenedores) <= 5100000.0 && obtenerPesoTotalCargado(listaContenedores) <= 700.0) {
 
                             calcularVolumenOcupadoYPesoCargado(listaContenedores, vehiculo, volumenTotalOcupado, pesoTotalCargado);
 
@@ -169,8 +169,8 @@ public class ServicioEnvioImpl implements ServicioEnvio {
 
                     }
                     if (vehiculo.getTipoVehiculo().equals(TipoVehiculo.MOTO)) {
-                        if (obtenerVolumenTotalOcupado(listaContenedores) < 96000.0 && obtenerPesoTotalCargado(listaContenedores) < 35.0 &&
-                                obtenerVolumenTotalOcupado(listaContenedores) < vehiculo.getVolumenDisponible() && obtenerPesoTotalCargado(listaContenedores) < vehiculo.getPesoDisponible()) {
+                        if (obtenerVolumenTotalOcupado(listaContenedores) <= 96000.0 && obtenerPesoTotalCargado(listaContenedores) <= 35.0 &&
+                                obtenerVolumenTotalOcupado(listaContenedores) <= vehiculo.getVolumenDisponible() && obtenerPesoTotalCargado(listaContenedores) <= vehiculo.getPesoDisponible()) {
 
                             calcularVolumenOcupadoYPesoCargado(listaContenedores, vehiculo, volumenTotalOcupado, pesoTotalCargado);
 
@@ -195,9 +195,9 @@ public class ServicioEnvioImpl implements ServicioEnvio {
 
                         }
                     } else if (vehiculo.getTipoVehiculo().equals(TipoVehiculo.AUTO)) {
-                        if (obtenerVolumenTotalOcupado(listaContenedores) > 96000.0 && obtenerPesoTotalCargado(listaContenedores) > 35.0 &&
-                                obtenerVolumenTotalOcupado(listaContenedores) < 360000.0 && obtenerPesoTotalCargado(listaContenedores) < 75.0 &&
-                                obtenerVolumenTotalOcupado(listaContenedores) < vehiculo.getVolumenDisponible() && obtenerPesoTotalCargado(listaContenedores) < vehiculo.getPesoDisponible()) {
+                        if (obtenerVolumenTotalOcupado(listaContenedores) > 96000.0 || obtenerPesoTotalCargado(listaContenedores) > 35.0 &&
+                                obtenerVolumenTotalOcupado(listaContenedores) <= 360000.0 && obtenerPesoTotalCargado(listaContenedores) <= 75.0 &&
+                                obtenerVolumenTotalOcupado(listaContenedores) <= vehiculo.getVolumenDisponible() && obtenerPesoTotalCargado(listaContenedores) <= vehiculo.getPesoDisponible()) {
 
                             calcularVolumenOcupadoYPesoCargado(listaContenedores, vehiculo, volumenTotalOcupado, pesoTotalCargado);
 
@@ -222,9 +222,9 @@ public class ServicioEnvioImpl implements ServicioEnvio {
 
                         }
                     } else {
-                        if (obtenerVolumenTotalOcupado(listaContenedores) > 360000.0 && obtenerPesoTotalCargado(listaContenedores) > 75.0 &&
-                                obtenerVolumenTotalOcupado(listaContenedores) < 5100000.0 && obtenerPesoTotalCargado(listaContenedores) < 700.0 &&
-                                obtenerVolumenTotalOcupado(listaContenedores) < vehiculo.getVolumenDisponible() && obtenerPesoTotalCargado(listaContenedores) < vehiculo.getPesoDisponible()) {
+                        if (obtenerVolumenTotalOcupado(listaContenedores) > 360000.0 || obtenerPesoTotalCargado(listaContenedores) > 75.0 &&
+                                obtenerVolumenTotalOcupado(listaContenedores) <= 5100000.0 && obtenerPesoTotalCargado(listaContenedores) <= 700.0 &&
+                                obtenerVolumenTotalOcupado(listaContenedores) <= vehiculo.getVolumenDisponible() && obtenerPesoTotalCargado(listaContenedores) <= vehiculo.getPesoDisponible()) {
                             calcularVolumenOcupadoYPesoCargado(listaContenedores, vehiculo, volumenTotalOcupado, pesoTotalCargado);
 
                             vehiculoAsignado = vehiculo;
