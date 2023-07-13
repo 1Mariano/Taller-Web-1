@@ -31,14 +31,15 @@
                 </c:forEach>
                 </tbody>
                 <tfoot class="text-end">
-                <tr>
+                <tr class="fw-bold">
                     <td id="total-carrito" colspan="8">Total: $${total}</td>
                 </tr>
                 </tfoot>
             </table>
             <c:if test="${tamano != 0}">
                 <a class="text-white text-decoration-none" href="compra">
-                    <button id="btn-comprar" class="btn btn-lg btn-primary btn-block" Type="submit"/>Comprar</button>
+                    <button id="btn-comprar" class="btn btn-lg btn-primary btn-block" Type="submit"/>
+                    Comprar</button>
                 </a>
             </c:if>
 
@@ -48,7 +49,6 @@
 
 
 <script src="${pageContext.request.contextPath}/js/carrito.js"></script>
-
 
 
 <script src="../../static/js/script.js"></script>

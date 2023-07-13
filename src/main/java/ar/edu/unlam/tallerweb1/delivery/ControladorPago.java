@@ -90,6 +90,7 @@ public class ControladorPago {
 
         model.put("costoProductos", this.servicioCompra.obtenerCostoTotalDeLosProductos((List<Producto>) request.getSession().getAttribute("arrayProductos")));
         model.put("costoEnvio", this.servicioEnvio.obtenerEnvio((Envio) request.getSession().getAttribute("envio")).getCostoEnvio());
+        model.put("distancia", this.servicioEnvio.obtenerEnvio((Envio) request.getSession().getAttribute("envio")).getDistanciaEnKilometros());
         model.put("costoTotal", this.servicioCompra.obtenerCostoTotalDelPedido((Pedido) request.getSession().getAttribute("pedido"), (Envio) request.getSession().getAttribute("envio")));
 
         model.put("datosPago", new DatosPago());
