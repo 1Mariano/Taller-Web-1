@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +38,7 @@ public class ControladorCarrito {
     }
 
     @RequestMapping("/agregarProducto")
-    public ResponseEntity<String> agregarProducto(@RequestParam("id") Long productoId) {
+    public ResponseEntity<String> agregarProducto(@RequestParam("id") Long productoId, HttpServletRequest request, HttpServletResponse response) {
         if (request.getSession().getAttribute("idUsuario") == null) {
             // El usuario no está logueado, devolver un mensaje o código de error
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario no logueado");
