@@ -17,7 +17,7 @@
                 <td class="text-end">$${costoProductos}</td>
             </tr>
             <tr class="mb-2">
-                <td>Costo de envío</td>
+                <td>Costo de envío por kms = ${distancia}</td>
                 <td class="text-end">$${costoEnvio}</td>
             </tr>
             <tr class="fw-bold table-warning">

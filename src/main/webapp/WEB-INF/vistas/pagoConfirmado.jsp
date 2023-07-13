@@ -8,7 +8,7 @@
 
     <div class="m-5 p-5 rounded alert alert-success">
         <h3 class="m-auto text-center">Se ha confirmado el pago correctamente: ${numeroPago}</h3>
-        <ul class="list-unstyled d-flex flex-column align-items-center m-0 mt-4 gap-3" style="width: fit-content">
+        <ul class="list-unstyled d-flex flex-column align-items-center m-0 mt-4 gap-3">
             <li class="nav-item nav-underline fs-5">
                 <a class="nav-link" href="estado-pedido">Ver el estado de mi pedido</a>
             </li>
